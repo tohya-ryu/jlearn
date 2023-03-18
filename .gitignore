@@ -1,5 +1,4 @@
-_html/
-example/.sass-cache/
+build.dev.sh
 
 *.gem
 *.rbc
