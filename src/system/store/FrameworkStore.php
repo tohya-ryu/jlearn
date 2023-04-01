@@ -10,9 +10,17 @@ interface FrameworkStore {
 
     public function begin_transaction();
     public function commit_transaction();
-    public function query($sql, $types = null, $params = null);
+    public function rollback();
+    public function handle_exception($e);
+    public function query($sql);
+    public function pquery($sql, $types, ...$params);
     public function insert($sql, $types = null, $params = null);
     public function update($sql, $types = null, $params = null);
     public function delete($sql, $types = null, $params = null);
+
+    public function prepare($sql);
+    public function bind($types, &...$params);
+    public function exec();
+    public function close_statement();
 
 }

@@ -21,6 +21,8 @@ FrameworkRoute::set('get', 'auth/pwreset/confirm/:token',
 FrameworkRoute::set('post', 'auth/pwreset/confirm/:token',
     'auth#pwreset_confirm');
 
+FrameworkRoute::set('get', 'test', 'main#test');
+
 #FrameworkRoute::set('get', 'page/data/:id{[0-9]+}', 'main#data');
 #
 FrameworkRoute::set_default('main#index'); // 404 goes here

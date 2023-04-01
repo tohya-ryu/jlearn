@@ -18,6 +18,9 @@ class FrameworkMariadb implements FrameworkStore {
     private $connections;
     private $default_conn_key;
 
+    private $statement;
+    private $result;
+
     public function __construct($config)
     {
         $this->name = $config['name'];
@@ -27,6 +30,8 @@ class FrameworkMariadb implements FrameworkStore {
         $this->charset = $config['charset'];
         $this->collate = $config['collate'];
         $this->transaction_f = false;
+        $this->statement = null;
+        $this->result =  null;
 
         $this->connections = array();
 
@@ -75,6 +80,85 @@ class FrameworkMariadb implements FrameworkStore {
     public function commit_transaction()
     {
         $this->transaction_f = false;
+        // execute commit
+    }
+
+    public function rollback()
+    {
+    }
+
+    public function pquery($sql, $types, ...$params)
+    {
+        try {
+            $conn = $this->connections[$this->default_conn_key]->get();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param($types, ...$params);
+            $stmt->execute();
+            $this->result = $stmt->get_result();
+            $stmt->close();
+            return $this->result;
+        } catch (Exception $e) {
+            if ($this->transaction_f) {
+                $this->rollback();
+            }
+            $this->handle_exception($e);
+        }
+
+    }
+
+    public function prepare($sql)
+    {
+        try {
+            $conn = $this->connections[$this->default_conn_key]->get();
+            $this->statement = $conn->prepare($sql);
+        } catch (Exception $e) {
+            if ($this->transaction_f) {
+                $this->rollback();
+            }
+            $this->handle_exception($e);
+        }
+    }
+
+    public function bind($types, &...$params)
+    {
+        try {
+            $this->statement->bind_param($types, ...$params);
+        } catch (Exception $e) {
+            if ($this->transaction_f) {
+                $this->rollback();
+            }
+            $this->handle_exception($e);
+        }
+    }
+
+    public function exec()
+    {
+        try {
+            $this->statement->execute();
+        } catch (Exception $e) {
+            if ($this->transaction_f) {
+                $this->rollback();
+            }
+            $this->handle_exception($e);
+        }
+    }
+
+    public function get_result()
+    {
+        try {
+            return $this->statement->get_result();
+        } catch (Exception $e) {
+            $this->handle_exception($e);
+        }
+    }
+
+    public function close_statement()
+    {
+        try {
+            $this->statement->close();
+        } catch (Exception $e) {
+            $this->handle_exception($e);
+        }
     }
 
     public function query($sql, $types = null, $params = null)
@@ -92,5 +176,12 @@ class FrameworkMariadb implements FrameworkStore {
     public function delete($sql, $types = null, $params = null)
     {
     }
+
+    public function handle_exception($e)
+    {
+        echo "DB error :(";
+        exit();
+    }
+
 
 }
