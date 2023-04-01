@@ -14,7 +14,9 @@ framework.form.send = function(uri, form_id)
     let element = null;
     xhttp.onload = function()
     {
+        console.log(this.responseText);
         let response = JSON.parse(this.responseText);
+        console.log(response);
         let msg_cont; // error message container for each input
         let notice_cont; // message container for form
         let str = "";

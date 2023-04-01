@@ -85,11 +85,18 @@ class FrameworkValidator {
         return $ret;
     }
 
-    public function unique($table, $col)
+    public function unique($table, $col, $msg = "")
     {
+        $db = FrameworkStoreManager::get()->store();
         $ret = true;
         foreach ($this->values as $param) {
-
+            $sql = "SELECT COUNT(`$col`) FROM `$table` WHERE `$col` = ?";
+            $email = $param->value;
+            $res = $db->pquery($sql, "s", $email)->fetch_row()[0];
+            if ($res === 1) {
+                $this->set_error($param->key, $msg);
+                $ret = false;
+            }
         }
         return $ret;
     }
@@ -166,7 +173,7 @@ class FrameworkValidator {
                 }
             }
         }
-        return $ret
+        return $ret;
     }
 
     public function equals($str, $error_msg)

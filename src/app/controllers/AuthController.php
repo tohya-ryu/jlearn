@@ -40,7 +40,7 @@ class AuthController extends FrameworkControllerBase {
         $this->response->set_type(FrameworkResponse::JSON);
         $this->auth->use_csrf_prot();
         $this->auth->validate_signup();
-        $this->auth->handle_signup();
+        $response = $this->auth->handle_signup();
         echo json_encode($response);
     }
 

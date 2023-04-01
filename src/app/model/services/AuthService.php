@@ -99,7 +99,7 @@ class AuthService implements FrameworkServiceBase {
         $this->validator->validate(
             $this->request->param->post('auth-password-check'));
         $this->validator->match_input(
-            $this->request->param->post('auth-password'),
+            $this->request->param->post('auth-password')->value,
             Framework::locale()->inp_password());
 
         $this->validator->validate_csrf_token($this->csrf_mod->token, true);
@@ -120,15 +120,18 @@ class AuthService implements FrameworkServiceBase {
     private function handle_valid_signup()
     {
         $response = array();
+        $this->validator->dismiss_errors();
         $this->validator->validate($this->request->param->post('auth-email'));
         if ($this->validator->unique('user', 'email')) {
             // create user and token, send email with activation link
+            $response['result'] = "email not found";
         } else {
             // user exists, send email 
+            $response['result'] = "email found";
         }
         $response['state'] = 'valid-clear';
-        $response['notice'] = FrameworkLocale()->signup_success(
-            $this->request->param->post('auth-email'));
+        $response['notice'] = Framework::locale()->signup_success(
+            $this->request->param->post('auth-email')->value);
         return $response;
     }
 
