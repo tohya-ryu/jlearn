@@ -1,21 +1,80 @@
 "use strict";
 var framework = {
-    version: "1.0.0",
-    root_dir: "jlearn",
-    util: {},
-    form: {}
+  version: "1.0.0",
+  root_dir: "jlearn",
+  util: {},
+  form: {}
 };
 
 // initiate form handling
 document.querySelectorAll(".framework-form-submit").forEach((btn) => {
 
-    btn.addEventListener("click", (event) => {
-        // get form node
-        let form_node = framework.util.get_ancestor(event.target, "tag+class",
-            {tag:"form", class:"framework-form"});
-        if (form_node !== null) {
+  btn.addEventListener("click", (event) => {
+    /* get form */
+    const form_node = framework.util.get_ancestor(event.target, "tag+class",
+      {tag:"form", class:"framework-form"});
+    if (form_node === null)
+      return;
+
+    /* get requirements */
+    const form_obj = new FormData(form_node);
+    const request_uri = event.target.dataset.uri
+    const method = form_node.dataset.method.toUpperCase();
+    const notice_node = form_node.querySelector(".framework-validation-notice");
+    const promise = fetch(request_uri, { method: method, body: form_obj });
+    let inp_val_errors = null;
+    let csrf_failed = false;
+    let error_cnt = 0;
+
+    promise
+      .then((response) => {
+      if (!response.ok)
+        throw new Error(`HTTP error: ${response.status}`);
+      return response.json();
+    }).then((data) => {
+      /* handle response data */
+      switch(data.state) {
+      case "invalid":
+        /* reset form errors */
+        framework.form.clear_errors(form_obj);
+        for (const key in data.errors) {
+          if (key != "csrf-token") {
+            /* for each invalid input: append a list of error messages
+             * to the field's error container */
+            const list = document.createElement("ul");
+            error_cnt++;
+            form_node.querySelector(`#${key}`).classList.add(
+              "framework-validation-error");
+            inp_val_errors = form_node.querySelector(
+              `#validation-errors-${key}`);
+            framework.util.rsubnodes(inp_val_errors);
+            inp_val_errors.appendChild(list);
+            for (const error of data.errors[key]) {
+              let list_node = document.createElement("li");
+              list_node.textContent = error;
+              list.appendChild(list_node);
+            }
+          } else {
+            /* special case for failed csrf check */
+            csrf_failed = true;
+          }
         }
+        break;
+      case "valid-keep":
+        /* reset form errors */
+        framework.form.clear_errors(form_obj);
+        break;
+      case "valid-clear":
+        /* reset form errors */
+        framework.form.clear_errors(form_obj);
+        break;
+      }
+    }).catch((error) => {
+      /* handle error in promise chain */
+      console.log(error);
     });
+
+  });
 });
 
 framework.form.send = function(uri, form_id)
@@ -129,4 +188,11 @@ framework.util.get_ancestor = function(node, type, data)
     }
   }
   return null
+}
+
+framework.util.rsubnodes = function(node) // remove sub nodes
+{
+  while (node.firstChild) {
+    node.removdeChild(node.firstChild);
+  }
 }

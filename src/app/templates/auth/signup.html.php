@@ -2,8 +2,8 @@
     <b>SIGN UP</b>
 </div>
 <div>
-    <form id="auth-signup" class="framework-form">
-        <div id="validation-notice-auth-signup"></div>
+    <form id="auth-signup" class="framework-form" data-method="post">
+        <div class="framework-validation-notice"></div>
         <div>
             <label for="auth-name">Username</label>
             <input type="text" id="auth-name" name="auth-name"/>
@@ -36,7 +36,8 @@
                   Register Account
             </button>
 -->
-          <button type="button" class="framework-form-submit">
+          <button type="button" data-uri="auth/signup" 
+            class="framework-form-submit">
             Register Account
           </button>
           <button type="button" class="framework-form-test">
