@@ -6,7 +6,7 @@
     <link rel="stylesheet" 
       href="<?php $this->base_uri('assets/style.css');?>"/>
     <script type="text/javascript" src="
-      <?php $this->base_uri('assets/framework.js');?>"></script>
+      <?php $this->base_uri('assets/framework.js');?>" defer></script>
     <script type="text/javascript" src="/assets/framework-auth.js"></script>    
 
     <title><?php echo $this->view->title;?></title>

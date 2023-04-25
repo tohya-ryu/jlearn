@@ -29,6 +29,7 @@ class AuthController extends FrameworkControllerBase {
     public function signup()
     {
         # GET | Sign Up Form | Sends Confirmation Mail on success
+        $this->response->set_type(FrameworkResponse::HTML);
         $this->auth->use_csrf_prot();
         $view = new AuthView($this);
         $view->signup();

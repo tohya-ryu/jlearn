@@ -2,9 +2,21 @@
 var framework = {
     version: "1.0.0",
     root_dir: "jlearn",
+    util: {},
     form: {}
-
 };
+
+// initiate form handling
+document.querySelectorAll(".framework-form-submit").forEach((btn) => {
+
+    btn.addEventListener("click", (event) => {
+        // get form node
+        let form_node = framework.util.get_ancestor(event.target, "tag+class",
+            {tag:"form", class:"framework-form"});
+        if (form_node !== null) {
+        }
+    });
+});
 
 framework.form.send = function(uri, form_id)
 {
@@ -95,4 +107,26 @@ framework.form.clear_errors = function (form_obj)
             element.classList.remove("framework-validation-error");
         }
     }
+}
+
+// utility functions
+framework.util.get_ancestor = function(node, type, data)
+{
+  if (!["tag+class"].includes(type)) {
+      console.log("Error in 'framework.util.get_ancestor': invalid type name '"
+          + type + "'.");
+      return null;
+  }
+  while (node.parentNode !== null) {
+    node = node.parentNode;
+    switch (type) {
+    case "tag+class":
+      if (node.tagName === data.tag.toUpperCase() &&
+          node.classList.contains(data.class))
+      {
+        return node;
+      }
+    }
+  }
+  return null
 }
