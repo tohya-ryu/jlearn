@@ -38,6 +38,16 @@ class AuthService implements FrameworkServiceBase {
     {
     }
 
+    public function hashpw($pswd)
+    {
+        return password_hash($pswd, PASSWORD_DEFAULT);
+    }
+
+    public function checkpw($pswd, $pswd_hash)
+    {
+        return password_verify($pswd, $pswd_hash);
+    }
+
     public function use_csrf_prot()
     {
         if (is_null($this->csrf_mod)) {
