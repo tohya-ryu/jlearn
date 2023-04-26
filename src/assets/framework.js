@@ -105,6 +105,13 @@ framework.form.clear_errors = function (form_obj)
 }
 
 /* utility functions */
+
+/* attempt to find a certain ancestor node of <node>
+ * features various search types expecting varying data
+ *
+ * type: "tag+class", data: { "<tag-name>", "<class-name>"
+ *
+ */
 framework.util.get_ancestor = function(node, type, data)
 {
   if (!["tag+class"].includes(type)) {
