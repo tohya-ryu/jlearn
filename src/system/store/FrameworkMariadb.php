@@ -87,6 +87,16 @@ class FrameworkMariadb implements FrameworkStore {
     {
     }
 
+    public function insert($sql, $types, ...$params)
+    {
+        try {
+            $this->pquery($sql, $types, ...$params);
+            return $conn->insert_id;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
     public function pquery($sql, $types, ...$params)
     {
         try {
@@ -162,10 +172,6 @@ class FrameworkMariadb implements FrameworkStore {
     }
 
     public function query($sql, $types = null, $params = null)
-    {
-    }
-
-    public function insert($sql, $types = null, $params = null)
     {
     }
 
