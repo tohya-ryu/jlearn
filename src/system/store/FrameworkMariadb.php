@@ -90,6 +90,7 @@ class FrameworkMariadb implements FrameworkStore {
     public function insert($sql, $types, ...$params)
     {
         try {
+            $conn = $this->connections[$this->default_conn_key]->get();
             $this->pquery($sql, $types, ...$params);
             return $conn->insert_id;
         } catch (Exception $e) {

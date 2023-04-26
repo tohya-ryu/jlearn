@@ -14,7 +14,7 @@ interface FrameworkStore {
     public function handle_exception($e);
     public function query($sql);
     public function pquery($sql, $types, ...$params);
-    public function insert($sql, $types = null, $params = null);
+    public function insert($sql, $types, ...$params);
     public function update($sql, $types = null, $params = null);
     public function delete($sql, $types = null, $params = null);
 
