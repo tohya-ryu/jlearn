@@ -13,6 +13,11 @@ class LocaleEn implements LocaleInterface {
         return "Invalid username.";
     }
 
+    public function button_signup()
+    {
+        return "Register Account";
+    }
+
     public function signup_success($email)
     {
         return "Account creation successful. Follow the link sent to ".

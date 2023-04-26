@@ -29,19 +29,10 @@
           <input type="hidden" id="csrf-token" name="csrf-token"
             value="<?php echo $this->view->csrf_token ?>"/>
         <div>
-<!--
-            <button type="button" 
-              onclick="framework.form.send(
-                '<?php $this->base_uri('auth/signup'); ?>','auth-signup')">
-                  Register Account
-            </button>
--->
-          <button type="button" data-uri="auth/signup" 
+          <button type="button" 
+            data-uri="<?php $this->base_uri('auth/signup'); ?>" 
             class="framework-form-submit">
-            Register Account
-          </button>
-          <button type="button" class="framework-form-test">
-            Register Account (no func)
+            <?php echo Framework::locale()->button_signup(); ?>
           </button>
         </div>  
     </form>    

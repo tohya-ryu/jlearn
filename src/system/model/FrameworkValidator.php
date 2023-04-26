@@ -54,6 +54,7 @@ class FrameworkValidator {
     public function validate_csrf_token($tok, $secure)
     {
         $ret = true;
+        $code = null;
         if ($secure) {
             $code = $tok->to_hash();
         } else {

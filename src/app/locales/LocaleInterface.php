@@ -14,6 +14,7 @@ interface LocaleInterface {
 
     public function username_regex_failed();
 
+    public function button_signup();
     public function signup_success($email);
 
 }
