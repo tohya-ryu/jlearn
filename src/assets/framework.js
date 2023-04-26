@@ -7,63 +7,69 @@ var framework = {
 };
 
 framework.form.submit = function(event) {
-    /* get form */
-    const form_node = framework.util.get_ancestor(event.target, "tag+class",
-      {tag:"form", class:"framework-form"});
-    if (form_node === null)
-      return;
+  /* check if request is already pending */
+  if (event.target.getAttribute("disabled") === "") {
+    return;
+  } else {
+    /* lock button */
+    event.target.toggleAttribute("disabled")
+  }
+  /* get form */
+  const form_node = framework.util.get_ancestor(event.target, "tag+class",
+    {tag:"form", class:"framework-form"});
+  if (form_node === null)
+    return;
 
-    /* prepare requirements */
-    const form_obj = new FormData(form_node);
-    const request_uri = event.target.dataset.uri
-    const method = form_node.dataset.method;
-    const notice_node = form_node.querySelector(".framework-validation-notice");
-    const content_type = form_node.getAttribute("enctype");
-    const promise = fetch(request_uri,
-      { credentials: "include", method: method, body: form_obj });
-    let inp_val_errors = null;
-    let csrf_failed = false;
-    //let error_cnt = 0;
-    framework.util.rsubnodes(notice_node);
-    let notice_list = document.createElement("ul");
-    let list_node = null;
-    notice_node.appendChild(notice_list);
+  /* prepare requirements */
+  const form_obj = new FormData(form_node);
+  const request_uri = event.target.dataset.uri
+  const method = form_node.dataset.method;
+  const notice_node = form_node.querySelector(".framework-validation-notice");
+  const content_type = form_node.getAttribute("enctype");
+  const promise = fetch(request_uri,
+    { credentials: "include", method: method, body: form_obj });
+  let inp_val_errors = null;
+  let csrf_failed = false;
+  //let error_cnt = 0;
+  framework.util.rsubnodes(notice_node);
+  let notice_list = document.createElement("ul");
+  let list_node = null;
+  notice_node.appendChild(notice_list);
 
-    promise
-      .then((response) => {
-      if (!response.ok)
-        throw new Error(`HTTP error: ${response.status}`);
-      return response.json();
-    }).then((data) => {
-      console.log(data);
-      /* handle response data */
-      switch(data.state) {
-      case "invalid":
-        /* reset form errors */
-        framework.form.clear_errors(form_obj);
-        for (const key in data.errors) {
-          if (key != "csrf-token") {
-          /* for each invalid input: append a list of error messages
-           * to the field's error container */
-          const list = document.createElement("ul");
-          //error_cnt++;
-          form_node.querySelector(`#${key}`).classList.add(
-            "framework-validation-error");
-          inp_val_errors = form_node.querySelector(
-            `#validation-errors-${key}`);
-          framework.util.rsubnodes(inp_val_errors);
-          inp_val_errors.appendChild(list);
-          for (const error of data.errors[key]) {
-            list_node = document.createElement("li");
-            list_node.textContent = error;
-            list.appendChild(list_node);
-          }
-        } else {
-          /* special case for failed csrf check */
-          csrf_failed = true;
+  promise
+    .then((response) => {
+    if (!response.ok)
+      throw new Error(`HTTP error: ${response.status}`);
+    return response.json();
+  }).then((data) => {
+    /* handle response data */
+    switch(data.state) {
+    case "invalid":
+      /* reset form errors */
+      framework.form.clear_errors(form_obj);
+      for (const key in data.errors) {
+        if (key != "csrf-token") {
+        /* for each invalid input: append a list of error messages
+         * to the field's error container */
+        const list = document.createElement("ul");
+        //error_cnt++;
+        form_node.querySelector(`#${key}`).classList.add(
+          "framework-validation-error");
+        inp_val_errors = form_node.querySelector(
+          `#validation-errors-${key}`);
+        framework.util.rsubnodes(inp_val_errors);
+        inp_val_errors.appendChild(list);
+        for (const error of data.errors[key]) {
+          list_node = document.createElement("li");
+          list_node.textContent = error;
+          list.appendChild(list_node);
         }
+      } else {
+        /* special case for failed csrf check */
+        csrf_failed = true;
       }
-      break;
+    }
+    break;
     case "valid-keep":
       /* reset form errors */
       framework.form.clear_errors(form_obj);
@@ -83,9 +89,15 @@ framework.form.submit = function(event) {
       notice_list.appendChild(list_node);
       form_node.querySelector("#csrf-token").value = data.csrf_update;
     }
+    /* unlock button clickable state */
+    if (event.target.getAttribute("disabled") !== null)
+      event.target.toggleAttribute("disabled")
   }).catch((error) => {
     /* handle error in promise chain */
     console.log(error);
+    /* unlock button */
+    if (event.target.getAttribute("disabled") !== null)
+      event.target.toggleAttribute("disabled")
   });
 }
 
