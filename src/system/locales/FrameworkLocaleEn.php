@@ -83,4 +83,14 @@ trait FrameworkLocaleEn {
         return "Remember me";
     }
 
+    public function auth_link_signup()
+    {
+        return "Sign up";
+    }
+
+    public function auth_link_pwreset()
+    {
+        return "I forgot my password";
+    }
+
 }

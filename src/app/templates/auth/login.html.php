@@ -1,26 +1,36 @@
 <div>
-  <b>LOGIN</b>
+  <b><?php echo strtoupper(Framework::locale()->auth_header_login()); ?></b>
 </div>
 <div>
   <form>
     <div>
-      <label for="auth-email">E-Mail</label>
-      <input type="text" id="auth-email"/>
+      <label for="auth-email">
+        <?php echo Framework::locale()->auth_inp_name_email(); ?>
+      </label>
+      <input type="email" name="auth-email" id="auth-email"/>
     </div>
     <div>
-      <label for="auth-password">Password</label>
-      <input type="password" id="auth-password"/>
+      <label for="auth-password">
+        <?php echo Framework::locale()->auth_inp_name_password(); ?>
+      </label>
+      <input type="password" name="auth-password" id="auth-password"/>
     </div>
     <input type="hidden" id="csrf-token" name="csrf-token"
       value="<?php echo $this->view->csrf_token ?>"/>
     <div>
-      <button type="button" onclick="send_form()">Submit</button>
+      <button type="button">
+        <?php echo Framework::locale()->auth_button_login(); ?>
+      </button>
     </div>  
   </form>    
   <div>
-    <a href="<?php $this->base_uri('auth/signup'); ?>">Sign Up</a> <br>
+    <a href="<?php $this->base_uri('auth/signup'); ?>">
+      <?php echo Framework::locale()->auth_link_signup(); ?>
+    </a>
+    <br>
     <a href="
-      <?php $this->base_uri('auth/pwreset/apply'); ?>">I forgot my password
+      <?php $this->base_uri('auth/pwreset/apply'); ?>">
+      <?php echo Framework::locale()->auth_link_pwreset(); ?>
     </a>
   </div>
 </div>
