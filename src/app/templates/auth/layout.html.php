@@ -7,7 +7,10 @@
       href="<?php $this->base_uri('assets/style.css');?>"/>
     <script type="text/javascript" src="
       <?php $this->base_uri('assets/framework.js');?>" defer></script>
-    <script type="text/javascript" src="/assets/framework-auth.js"></script>    
+    <script type="text/javascript" src="
+      <?php $this->base_uri('assets/framework-auth.js');?>" defer></script>
+    <script type="text/javascript" src="
+      <?php $this->base_uri('assets/jlearn.js');?>" defer></script>
 
     <title><?php echo $this->view->title;?></title>
   </head>
