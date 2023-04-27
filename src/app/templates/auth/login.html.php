@@ -15,6 +15,12 @@
       </label>
       <input type="password" name="auth-password" id="auth-password"/>
     </div>
+    <div>
+      <input type="checkbox" name="auth-remember" id="auth-remember" />
+      <label for="auth-remember">
+        <?php echo Framework::locale()->auth_remember_login(); ?>
+      </label>
+    </div>
     <input type="hidden" id="csrf-token" name="csrf-token"
       value="<?php echo $this->view->csrf_token ?>"/>
     <div>
