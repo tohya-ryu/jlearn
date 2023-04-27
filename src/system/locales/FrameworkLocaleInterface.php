@@ -10,4 +10,15 @@ interface FrameworkLocaleInterface {
     public function validation_csrf_check_failed();
     public function validation_errors_notice();
 
+    # authentication
+    public function auth_header_signup();
+    public function auth_header_login();
+    public function auth_inp_name_username();
+    public function auth_inp_name_email();
+    public function auth_inp_name_password();
+    public function auth_inp_name_password_check();
+    public function auth_button_signup();
+    public function auth_button_login();
+    public function auth_remember_login();
+
 }

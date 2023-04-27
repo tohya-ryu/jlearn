@@ -38,5 +38,49 @@ trait FrameworkLocaleEn {
             "input hints below.";
     }
 
+    public function auth_header_signup()
+    {
+        return "Sign up";
+    }
+
+    public function auth_header_login()
+    {
+        return "Login";
+    }
+
+    public function auth_inp_name_username()
+    {
+        return "Username";
+    }
+
+    public function auth_inp_name_email()
+    {
+        return "E-Mail";
+    }
+
+    public function auth_inp_name_password()
+    {
+        return "Password";
+    }
+
+    public function auth_inp_name_password_check()
+    {
+        return "Verify password";
+    }
+
+    public function auth_button_signup()
+    {
+        return "Register Account";
+    }
+
+    public function auth_button_login()
+    {
+        return "Login";
+    }
+
+    public function auth_remember_login()
+    {
+        return "Remember me";
+    }
 
 }
