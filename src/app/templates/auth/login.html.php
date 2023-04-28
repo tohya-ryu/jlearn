@@ -2,7 +2,7 @@
   <b><?php echo strtoupper(Framework::locale()->auth_header_login()); ?></b>
 </div>
 <div>
-  <form>
+  <form id="auth-login" class="framework-form" data-method="post">
     <div>
       <label for="auth-email">
         <?php echo Framework::locale()->auth_inp_name_email(); ?>
@@ -24,7 +24,8 @@
     <input type="hidden" id="csrf-token" name="csrf-token"
       value="<?php echo $this->view->csrf_token ?>"/>
     <div>
-      <button type="button">
+      <button type="button" data-uri="<?php $this->base_uri("auth/login"); ?>" 
+        class="framework-form-submit">
         <?php echo Framework::locale()->auth_button_login(); ?>
       </button>
     </div>  
