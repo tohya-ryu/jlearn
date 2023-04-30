@@ -21,6 +21,9 @@ interface FrameworkLocaleInterface {
     public function auth_button_login();
     public function auth_remember_login();
 
+    public function auth_valid_login();
+    public function auth_invalid_login();
+
     public function auth_link_signup();
     public function auth_link_pwreset();
 

@@ -191,7 +191,7 @@ class FrameworkValidator {
         return $ret;
     }
 
-    private function set_error($key, $msg)
+    public function set_error($key, $msg)
     {
         $this->err_cnt++;
         if ($this->collect_errors_f) {

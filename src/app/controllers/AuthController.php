@@ -12,23 +12,47 @@ class AuthController extends FrameworkControllerBase {
 
     public function login()
     {
-        # GET / POST | Login Form | Redirect to Index on success
+        # GET | login form
+        $this->response->set_type(FrameworkResponse::HTML);
         $this->auth->use_csrf_prot();
-        $this->auth->login();
-        $view = new AuthView($this);
-        $view->login();
-        //var_dump($this->auth->user->check_login());
+        if ($this->auth->attempt_login()) {
+            // redirect
+            echo "LOL";
+            $this->redirect($this->base_uri());
+        } else {
+            echo "LOL-b";
+            $view = new AuthView($this);
+            $view->login();
+            $this->response->send();
+        }
+    }
+
+    public function login_submit()
+    {
+        # POST | validates login form data
+        $this->response->set_type(FrameworkResponse::JSON);
+        $this->auth->use_csrf_prot();
+        if ($this->auth->attempt_login()) {
+            $this->response->set_data('redirect', $this->base_uri());
+            $this->response->send();
+        } else {
+            $this->auth->form_login();
+            if ($this->auth->user_exists()) {
+                $this->response->set_data('redirect', $this->base_uri());
+            }
+            $this->response->send();
+        }
     }
 
     public function logout()
     {
-        # GET | Logout and Redirect to Index
+        # GET | logout and redirect to Index
 
     }
 
     public function signup()
     {
-        # GET | Sign Up Form | Sends Confirmation Mail on success
+        # GET | sign up form | sends confirmation mail on success
         $this->response->set_type(FrameworkResponse::HTML);
         $this->auth->use_csrf_prot();
         $view = new AuthView($this);
@@ -37,7 +61,7 @@ class AuthController extends FrameworkControllerBase {
 
     public function signup_submit()
     {
-        # POST | Validates Form Data
+        # POST | validates form data
         $this->response->set_type(FrameworkResponse::JSON);
         $this->auth->use_csrf_prot();
         $this->auth->validate_signup();

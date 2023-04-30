@@ -3,17 +3,20 @@
 </div>
 <div>
   <form id="auth-login" class="framework-form" data-method="post">
+    <div class="framework-validation-notice"></div>
     <div>
       <label for="auth-email">
         <?php echo Framework::locale()->auth_inp_name_email(); ?>
       </label>
       <input type="email" name="auth-email" id="auth-email"/>
+      <div id="validation-errors-auth-email"></div>
     </div>
     <div>
       <label for="auth-password">
         <?php echo Framework::locale()->auth_inp_name_password(); ?>
       </label>
       <input type="password" name="auth-password" id="auth-password"/>
+      <div id="validation-errors-auth-password"></div>
     </div>
     <div>
       <input type="checkbox" name="auth-remember" id="auth-remember" />

@@ -30,10 +30,6 @@ class FrameworkTemplate {
 
     private function base_uri($str)
     {
-        if (!empty(AppConf::get('root_dir'))) {
-            echo "/".AppConf::get('root_dir')."/$str";
-        } else {
-            echo "/$str";
-        }
+        echo $this->view->controller->base_uri($str);
     }
 }

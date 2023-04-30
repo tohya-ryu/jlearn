@@ -1,19 +1,15 @@
 <?php
 
-class SessionAuth {
+class SessionAuth extends FrameworkSessionModule {
     use FrameworkMagicGet;
     private static $magic_get_attr = array(
-        'userid'
     );
 
-    private $key;
-    private $userid;
+    public $userid;
 
-    public function __construct($key)
+    public function __construct()
     {
-        $this->key = $key;
+        $this->userid = null;
     }
-
-
 
 }

@@ -3,7 +3,7 @@
 FrameworkRoute::set('get', '/', 'main#index');
 
 FrameworkRoute::set('get', 'auth/login', 'auth#login');
-FrameworkRoute::set('post', 'auth/login', 'auth#login');
+FrameworkRoute::set('post', 'auth/login', 'auth#login_submit');
 
 FrameworkRoute::set('get', 'auth/logout', 'auth#logout');
 

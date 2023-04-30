@@ -38,11 +38,17 @@ framework.form.submit = function(event) {
 
   promise
     .then((response) => {
-    if (!response.ok)
-      throw new Error(`HTTP error: ${response.status}`);
-    return response.json();
+      if (!response.ok)
+        throw new Error(`HTTP error: ${response.status}`);
+      return response.json();
   }).then((data) => {
     /* handle response data */
+    if (data.debug) {
+      console.log(data);
+    }
+    if (data.redirect) {
+      window.location.replace(data.redirect);
+    }
     switch(data.state) {
     case "invalid":
       /* reset form errors */

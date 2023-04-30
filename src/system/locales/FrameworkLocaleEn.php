@@ -93,4 +93,15 @@ trait FrameworkLocaleEn {
         return "I forgot my password";
     }
 
+    public function auth_valid_login()
+    {
+        return "Login successful.";
+    }
+
+    public function auth_invalid_login()
+    {
+        return "Invalid login. Check your e-mail".
+            " and password for correctness.";
+    }
+
 }

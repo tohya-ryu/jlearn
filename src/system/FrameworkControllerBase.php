@@ -4,7 +4,7 @@ class FrameworkControllerBase {
 
     protected $request;
     protected $lang;
-    protected $response;
+    public    $response;
 
     public function set_request()
     {
@@ -14,6 +14,21 @@ class FrameworkControllerBase {
     public function init_response()
     {
         $this->response = FrameworkResponse::get();
+    }
+
+    public function redirect($url, $statusCode = 303)
+    {
+        header('Location: ' . $url, true, $statusCode);
+        die();
+    }
+
+    public function base_uri($str = '')
+    {
+        if (!empty(AppConf::get('root_dir'))) {
+            return "/".AppConf::get('root_dir')."/$str";
+        } else {
+            return "/$str";
+        }
     }
 
     protected function init_language()
