@@ -17,10 +17,8 @@ class AuthController extends FrameworkControllerBase {
         $this->auth->use_csrf_prot();
         if ($this->auth->attempt_login()) {
             // redirect
-            echo "LOL";
             $this->redirect($this->base_uri());
         } else {
-            echo "LOL-b";
             $view = new AuthView($this);
             $view->login();
             $this->response->send();

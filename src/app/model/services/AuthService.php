@@ -31,7 +31,9 @@ class AuthService implements FrameworkServiceBase {
     public function attempt_login()
     {
         # attempt to match session
-        $this->auth_mod = $this->session->get_module('framework-auth-user');
+        //$this->auth_mod = $this->session->get_module('framework-auth-user');
+        $this->auth_mod = new SessionAuth();
+        $this->auth_mod->register('framework-auth-user');
         if (!is_null($this->auth_mod->userid)) {
             $sql = "SELECT * FROM `user` WHERE `id` = ?";
             $res = $this->db->pquery($sql, "i", $this->auth_mod->userid);
