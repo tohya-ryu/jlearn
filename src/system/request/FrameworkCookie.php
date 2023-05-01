@@ -68,7 +68,8 @@ class FrameworkCookie {
     {
         $this->value = null;
         $this->state = false;
-        setcookie($this->name, '', time() - 3600);
+        unset($_COOKIE[$this->name]);
+        setcookie($this->name, '', time() - 3600, $this->path, $this->domain);
     }
 
 }

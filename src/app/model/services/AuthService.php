@@ -148,6 +148,9 @@ class AuthService implements FrameworkServiceBase {
 
     public function logout()
     {
+        $this->user->logout();
+        $this->auth_mod->unregister();
+        $this->request->cookies['auth-login-memory']->unset();
     }
 
     public function user_exists()

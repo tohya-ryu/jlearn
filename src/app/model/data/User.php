@@ -38,6 +38,23 @@ class User {
         $this->login_state = true;
     }
 
+    public function logout()
+    {
+        $this->login_state = false;
+        $this->auth_tokens = null;
+
+        $this->id                = null;
+        $this->name              = null;
+        $this->email             = null;
+        $this->password          = null;
+        $this->token             = null;
+        $this->activated         = null;
+        $this->tag               = null;
+        $this->lang_tag          = null;
+        $this->token_datetime    = null;
+        $this->creation_datetime = null;
+    }
+
     public function fetch_auth_tokens($force_refresh = false)
     {
         if (is_null($this->auth_tokens) || $force_refresh) {

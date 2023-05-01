@@ -44,7 +44,9 @@ class AuthController extends FrameworkControllerBase {
     public function logout()
     {
         # GET | logout and redirect to Index
-
+        if ($this->auth->attempt_login())
+            $this->auth->logout();
+        $this->redirect($this->base_uri());
     }
 
     public function signup()
