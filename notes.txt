@@ -1,7 +1,2 @@
-< TODO >
-app/model/services/AuthService handle_signup() (esp. handle_valid_signup() )
-
-system/model/FrameworkValidator unique()
-
-system/store/FrameworkMariadb query()
-
+TODO
+----
