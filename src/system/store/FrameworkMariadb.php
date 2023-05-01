@@ -172,8 +172,18 @@ class FrameworkMariadb implements FrameworkStore {
         }
     }
 
-    public function query($sql, $types = null, $params = null)
+    public function query($sql)
     {
+        try {
+            $conn = $this->connections[$this->default_conn_key]->get();
+            $this->result = $conn->query($sql);
+            return $this->result;
+        } catch (Exception $e) {
+            if ($this->transaction_f) {
+                $this->rollback();
+            }
+            $this->handle_exception($e);
+        }
     }
 
     public function update($sql, $types = null, $params = null)
@@ -186,7 +196,7 @@ class FrameworkMariadb implements FrameworkStore {
 
     public function handle_exception($e)
     {
-        echo "DB error :(";
+        echo "DB error: $e";
         exit();
     }
 
