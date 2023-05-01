@@ -2,8 +2,10 @@
 
 class User {
 
+    private $db;
+
     private $login_state;
-    private $login_tokens;
+    private $auth_tokens;
 
     private $id;
     private $name;
@@ -19,7 +21,8 @@ class User {
     public function __construct()
     {
         $this->login_state = false;
-        $this->login_tokens = array();
+        $this->auth_tokens = null;
+        $this->db = FrameworkStoreManager::get()->store();
     }
 
     public function check_login()
@@ -33,5 +36,30 @@ class User {
             $this->$k = $v;
         }
         $this->login_state = true;
+    }
+
+    public function fetch_auth_tokens($force_refresh = false)
+    {
+        if (is_null($this->auth_tokens) || $force_refresh) {
+            $sql = "SELECT * FROM `auth_token` WHERE `user_id` = ".
+                (int)$this->id.";";
+            $res = $this->db->query($sql);
+            if ($res->num_rows > 0) {
+                $this->auth_tokens = array();
+                while ($row = $res->fetch_assoc()) {
+                    array_push($this->auth_tokens, $row);
+                }
+            }
+        }
+    }
+
+    public function get_id()
+    {
+        return $this->id;
+    }
+
+    public function get_auth_tokens()
+    {
+        return $this->auth_tokens;
     }
 }

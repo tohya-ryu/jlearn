@@ -16,7 +16,6 @@ class AuthController extends FrameworkControllerBase {
         $this->response->set_type(FrameworkResponse::HTML);
         $this->auth->use_csrf_prot();
         if ($this->auth->attempt_login()) {
-            // redirect
             $this->redirect($this->base_uri());
         } else {
             $view = new AuthView($this);
@@ -53,8 +52,12 @@ class AuthController extends FrameworkControllerBase {
         # GET | sign up form | sends confirmation mail on success
         $this->response->set_type(FrameworkResponse::HTML);
         $this->auth->use_csrf_prot();
-        $view = new AuthView($this);
-        $view->signup();
+        if ($this->auth->attempt_login()) {
+            $this->redirect($this->base_uri());
+        } else {
+            $view = new AuthView($this);
+            $view->signup();
+        }
     }
 
     public function signup_submit()

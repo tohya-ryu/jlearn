@@ -35,19 +35,29 @@ class AuthService implements FrameworkServiceBase {
         $this->auth_mod = new SessionAuth();
         $this->auth_mod->register('framework-auth-user');
         if (!is_null($this->auth_mod->userid)) {
-            $sql = "SELECT * FROM `user` WHERE `id` = ?";
-            $res = $this->db->pquery($sql, "i", $this->auth_mod->userid);
-            if ($res->num_rows == 1) {
-                $user = $res->fetch_assoc();
-                if ($user['activated']) {
+            $user = $this->fetch_user_data($this->auth_mod->userid);
+            if ($user && $user['activated']) {
+                $this->user->login($user);
+                return true;
+            }
+        }
+        # attempt to match cookie
+        $cookie = $this->request->cookies['auth-login-memory'];
+        if (!is_null($cookie->value)) {
+            $sql = "SELECT `user_id` FROM `auth_token` WHERE ".
+                "`text` = ? AND `device` = ?;";
+            $res = $this->db->pquery($sql, 'ss', $cookie->value,
+                $this->request->useragent);
+            if ($res->num_rows === 1) {
+                $row = $res->fetch_assoc();
+                $user = $this->fetch_user_data($row['user_id']);
+                if ($user && $user['activated']) {
                     $this->user->login($user);
                     return true;
                 }
             }
         }
-        # attempt to match cookie
-        # attempt to match credentials
-        # fail
+        # user is not logged in
         return false;
     }
 
@@ -74,19 +84,47 @@ class AuthService implements FrameworkServiceBase {
                 $matched = (bool) $user['activated'];
         }
 
-        /*
-        $this->controller->response->set_data('test', $matched);
-        $this->controller->response->set_data('debug', true);
-        $this->controller->response->send();
-        exit();
-         */
-
         if ($matched && $this->validator->is_valid()) {
             # login
             $this->user->login($user);
+            
+            # setup session
             $this->auth_mod->userid = $user['id'];
             $this->session->register_module('framework-auth-user',
                 $this->auth_mod);
+
+            # setup cookie
+            if (!is_null(
+                $this->request->param->post('auth-remember')->value))
+            {
+                $token = $this->get_uniq_token();
+                $this->user->fetch_auth_tokens();
+                $auth_tokens = $this->user->get_auth_tokens();
+                if ($auth_tokens) {
+                    $agent_found = false;
+                    foreach ($auth_tokens as $auth_token) {
+                        if ($auth_token['device'] === 
+                            $this->request->useragent)
+                        {
+                            $sql = "UPDATE `auth_token` SET `text` = ? ".
+                                "WHERE `id` = ? AND `device` = ?;";
+                            $res = $this->db->pquery($sql, 'sis', $token,
+                                $auth_token['id'], $this->request->useragent);
+                            $agent_found = true;
+                            break;
+                        }
+                    }
+                    if (!$agent_found) {
+                        $this->insert_auth_token($token);
+                    }
+                } else {
+                    $this->insert_auth_token($token);
+                }
+                $cookie = $this->request->cookies['auth-login-memory'];
+                $cookie->set($token);
+            }  
+
+            # clean response in case of no redirect
             $this->controller->response->set_data('state',
                 FrameworkResponse::VALID_KEEP);
             $this->controller->response->set_data('notice',
@@ -236,6 +274,37 @@ class AuthService implements FrameworkServiceBase {
                 $this->get_csrf_token(true);
         }
         return $response;
+    }
+
+    private function get_uniq_token()
+    {
+        $token = null;
+        do {
+            $token = new FrameworkToken();
+            $sql = "SELECT COUNT(`id`) FROM `auth_token` WHERE `text` = ?";
+            $tmp = $token->code;
+            $res = $this->db->pquery($sql, 's', $tmp)->fetch_row()[0];
+        } while ($res === 1);
+        return $token->code;
+    }
+
+    private function insert_auth_token($token)
+    {
+        $sql = "INSERT INTO `auth_token` (`user_id`, `text`,".
+            "`device`) VALUES (?,?,?);";
+        $id = $this->db->insert($sql, 'iss', $this->user->get_id(),
+            $token, $this->request->useragent);
+    }
+
+    private function fetch_user_data($id)
+    {
+        $sql = "SELECT * FROM `user` WHERE `id` = ?";
+        $res = $this->db->pquery($sql, "i", $id);
+        if ($res->num_rows == 1) {
+            return $res->fetch_assoc();
+        } else {
+            return false;
+        }
     }
 
 }
