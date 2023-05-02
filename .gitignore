@@ -1,5 +1,5 @@
 build.dev.sh
-/import/
+/src/scripts/import*
 
 *.gem
 *.rbc
