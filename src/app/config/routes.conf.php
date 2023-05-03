@@ -2,7 +2,7 @@
 
 FrameworkRoute::set('get', '/', 'main#index');
 
-FrameworkRoute::set('post', 'count-words', 'main#count_words');
+FrameworkRoute::set('get', 'update/counters', 'main#count_words');
 FrameworkRoute::set('get', 'add/vocab', 'main#add_vocab');
 FrameworkRoute::set('get', 'add/kanji', 'main#add_kanji');
 FrameworkRoute::set('get', 'fetch/vocab/:search', 'main#fetch_vocab');
