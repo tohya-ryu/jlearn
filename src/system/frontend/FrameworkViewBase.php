@@ -50,4 +50,9 @@ class FrameworkViewBase {
     {
         $this->render($this->content_template_file);
     }
+
+    public function enc($str)
+    {
+        return htmlspecialchars($str, ENT_QUOTES);
+    }
 }
