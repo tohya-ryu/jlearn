@@ -28,6 +28,11 @@ class AuthService implements FrameworkServiceBase {
         $this->db = FrameworkStoreManager::get()->store();
     }
 
+    public function get_user_name()
+    {
+        return $this->user->name;
+    }
+
     public function attempt_login()
     {
         # attempt to match session
@@ -295,7 +300,7 @@ class AuthService implements FrameworkServiceBase {
     {
         $sql = "INSERT INTO `auth_token` (`user_id`, `text`,".
             "`device`) VALUES (?,?,?);";
-        $id = $this->db->insert($sql, 'iss', $this->user->get_id(),
+        $id = $this->db->insert($sql, 'iss', $this->user->id(),
             $token, $this->request->useragent);
     }
 

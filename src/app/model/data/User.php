@@ -7,16 +7,16 @@ class User {
     private $login_state;
     private $auth_tokens;
 
-    private $id;
-    private $name;
-    private $email;
-    private $password;
-    private $token;
-    private $activated;
-    private $tag;
-    private $lang_tag;
-    private $token_datetime;
-    private $creation_datetime;
+    public $id;
+    public $name;
+    public $email;
+    public $password;
+    public $token;
+    public $activated;
+    public $tag;
+    public $lang_tag;
+    public $token_datetime;
+    public $creation_datetime;
 
     public function __construct()
     {
@@ -68,11 +68,6 @@ class User {
                 }
             }
         }
-    }
-
-    public function get_id()
-    {
-        return $this->id;
     }
 
     public function get_auth_tokens()
