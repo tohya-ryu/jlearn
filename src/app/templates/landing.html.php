@@ -17,6 +17,9 @@ $ignore_month    = $time - 2419200;
   <span class="title">Vocab Filter</span>
   <form action="<?php $this->base_uri('practice/vocab') ?>" method="post" 
     accept-charset="utf-8">
+
+    <input type="hidden" name="csrf-token" 
+      value="<?php $this->view->csrf_token ?>" />
     
     <p>Look for a specific kanji</p>
     <input name="search_by_kanji" value="" maxlength="10" size="10" />
@@ -127,6 +130,9 @@ $ignore_month    = $time - 2419200;
   <span class="title">Kanji Filter</span>
   <form action="<?php $this->base_uri('practice/kanji') ?>" method="post" 
     accept-charset="utf-8">
+
+    <input type="hidden" name="csrf-token" 
+      value="<?php $this->view->csrf_token ?>" />
     
     <p>Look for a specific kanji</p>
     <input name="search_by_kanji" value="" maxlength="10" size="10" />
