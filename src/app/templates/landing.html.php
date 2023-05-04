@@ -2,7 +2,7 @@
 
 <?php
 
-$time = time();
+$time = new DateTime()->getTimestamp();
 $ignore_recent   = $time - (86400 / 4);
 $ignore_today    = $time - 86400;
 $ignore_week     = $time - 604800;
@@ -56,11 +56,11 @@ $ignore_month    = $time - 2419200;
       <option value="2" selected>Limit By Learn Date</option>
     </select></p>
     <p>From
-    <?php $timespace = date("Y-m-d 00:00", time()-86400); ?>
+    <?php $timespace = date("Y-m-d 00:00", $time-86400); ?>
     <input type="text" name="timespace_start" 
       value="<?php echo $timespace ?>" maxlength="16" size="16" />
     to 
-    <?php $timespace = date("Y-m-d 00:00", time()); ?>
+    <?php $timespace = date("Y-m-d 00:00", $time); ?>
     <input type="text" name="timespace_end" 
       value="<?php echo $timespace ?>" maxlength="16" size="16" /></p>
     <div class="line"></div>
@@ -169,11 +169,11 @@ $ignore_month    = $time - 2419200;
       <option value="2" selected>Limit By Learn Date</option>
     </select></p>
     <p>From
-    <?php $timespace = date("Y-m-d 00:00", time()-86400); ?>
+    <?php $timespace = date("Y-m-d 00:00", $time-86400); ?>
     <input type="text" name="timespace_start" 
       value="<?php echo $timespace ?>" maxlength="16" size="16" />
     to 
-    <?php $timespace = date("Y-m-d 00:00", time()); ?>
+    <?php $timespace = date("Y-m-d 00:00", $time); ?>
     <input type="text" name="timespace_end" 
       value="<?php echo $timespace ?>" maxlength="16" size="16" /></p>
     <div class="line"></div>
