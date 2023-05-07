@@ -14,7 +14,7 @@
   </head>
     
   <body>
-    <?php $this->view->render_content(); ?>
+    <?php $this->view->render_content($this->data); ?>
   </body>
 
 </html>

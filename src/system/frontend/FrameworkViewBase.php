@@ -30,7 +30,7 @@ class FrameworkViewBase {
         if ($this->render_stack_pos == 0) {
             $this->render_stack_pos = $this->render_stack_pos + 1;
             $this->content_template_file = $template_file;
-            $this->render($this->layout_template_file);
+            $this->render($this->layout_template_file, $data);
         } else {
             if (in_array($path, $this->render_stack)) {
                 debug_print_backtrace(0,$this->render_stack_pos-1);
@@ -46,13 +46,16 @@ class FrameworkViewBase {
         }
     }
 
-    public function render_content()
+    public function render_content($data = array())
     {
-        $this->render($this->content_template_file);
+        $this->render($this->content_template_file, $data);
     }
 
     public function enc($str)
     {
-        return htmlspecialchars($str, ENT_QUOTES);
+        if (is_null($str))
+            return "";
+        else
+            return htmlspecialchars($str, ENT_QUOTES);
     }
 }

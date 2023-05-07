@@ -2,7 +2,7 @@
 
 <?php
 
-$time = new DateTime()->getTimestamp();
+$time = (new DateTime())->getTimestamp();
 $ignore_recent   = $time - (86400 / 4);
 $ignore_today    = $time - 86400;
 $ignore_week     = $time - 604800;
@@ -19,7 +19,8 @@ $ignore_month    = $time - 2419200;
     accept-charset="utf-8">
 
     <input type="hidden" name="csrf-token" 
-      value="<?php $this->view->csrf_token ?>" />
+      value="<?php echo $this->view->csrf_token ?>" />
+    <input type="hidden" name="practice-start" value="true" />
     
     <p>Look for a specific kanji</p>
     <input name="search_by_kanji" value="" maxlength="10" size="10" />
@@ -53,7 +54,7 @@ $ignore_month    = $time - 2419200;
     <input type="checkbox" name="custom_timespace" value="accept" />
     <select name="timespace_type">
       <option value="1" selected>Limit By Entry Date</option>
-      <option value="2" selected>Limit By Learn Date</option>
+      <option value="2">Limit By Learn Date</option>
     </select></p>
     <p>From
     <?php $timespace = date("Y-m-d 00:00", $time-86400); ?>
@@ -78,40 +79,40 @@ $ignore_month    = $time - 2419200;
     <p>JLPT Filter</p>
     <select name="jlpt">
       <option value="0" selected>Filter Off</option>
-      <option value="1" selected>N1</option>
-      <option value="2" selected>N2</option>
-      <option value="3" selected>N3</option>
-      <option value="4" selected>N4</option>
-      <option value="5" selected>N5</option>
+      <option value="1">N1</option>
+      <option value="2">N2</option>
+      <option value="3">N3</option>
+      <option value="4">N4</option>
+      <option value="5">N5</option>
     </select>
     <div class="line"></div>
 
     <p>Type Filter</p>
     <select name="type">
       <option value="0" selected>Filter Off</option>
-      <option value="1" selected>Noun</option>
-      <option value="2" selected>Verb (suru)</option>
-      <option value="3" selected>Verb (ichidan)</option>
-      <option value="4" selected>Verb (godan)</option>
-      <option value="5" selected>Adjective (i)</option>
-      <option value="6" selected>Adjective (na)</option>
-      <option value="11" selected>Adjective (no)</option>
-      <option value="14" selected>Adjective (taru)</option>
-      <option value="7" selected>Adverb</option>
-      <option value="15" selected>Adverb (to)</option>
-      <option value="8" selected>Expression</option>
-      <option value="9" selected>Conjunction</option>
-      <option value="10" selected>Prenominal</option>
-      <option value="12" selected>Prefix</option>
-      <option value="13" selected>Suffix</option>
-      <option value="16" selected>Place</option>
-      <option value="17" selected>Name</option>
+      <option value="1">Noun</option>
+      <option value="2">Verb (suru)</option>
+      <option value="3">Verb (ichidan)</option>
+      <option value="4">Verb (godan)</option>
+      <option value="5">Adjective (i)</option>
+      <option value="6">Adjective (na)</option>
+      <option value="11">Adjective (no)</option>
+      <option value="14">Adjective (taru)</option>
+      <option value="7">Adverb</option>
+      <option value="15">Adverb (to)</option>
+      <option value="8">Expression</option>
+      <option value="9">Conjunction</option>
+      <option value="10">Prenominal</option>
+      <option value="12">Prefix</option>
+      <option value="13">Suffix</option>
+      <option value="16">Place</option>
+      <option value="17">Name</option>
     </select>
     <select name="transitivity">
       <option value="0" selected>-</option>
-      <option value="1" selected>Transitive</option>
-      <option value="2" selected>Intransitive</option>
-      <option value="3" selected>Both</option>
+      <option value="1">Transitive</option>
+      <option value="2">Intransitive</option>
+      <option value="3">Both</option>
     </select>
     <div class="line"></div>
 
@@ -132,7 +133,8 @@ $ignore_month    = $time - 2419200;
     accept-charset="utf-8">
 
     <input type="hidden" name="csrf-token" 
-      value="<?php $this->view->csrf_token ?>" />
+      value="<?php echo $this->view->csrf_token ?>" />
+    <input type="hidden" name="practice-start" value="true" />
     
     <p>Look for a specific kanji</p>
     <input name="search_by_kanji" value="" maxlength="10" size="10" />
@@ -166,7 +168,7 @@ $ignore_month    = $time - 2419200;
     <input type="checkbox" name="custom_timespace" value="accept" />
     <select name="timespace_type">
       <option value="1" selected>Limit By Entry Date</option>
-      <option value="2" selected>Limit By Learn Date</option>
+      <option value="2">Limit By Learn Date</option>
     </select></p>
     <p>From
     <?php $timespace = date("Y-m-d 00:00", $time-86400); ?>
@@ -191,11 +193,11 @@ $ignore_month    = $time - 2419200;
     <p>JLPT Filter</p>
     <select name="jlpt">
       <option value="0" selected>Filter Off</option>
-      <option value="1" selected>N1</option>
-      <option value="2" selected>N2</option>
-      <option value="3" selected>N3</option>
-      <option value="4" selected>N4</option>
-      <option value="5" selected>N5</option>
+      <option value="1">N1</option>
+      <option value="2">N2</option>
+      <option value="3">N3</option>
+      <option value="4">N4</option>
+      <option value="5">N5</option>
     </select>
     <div class="line"></line>
 

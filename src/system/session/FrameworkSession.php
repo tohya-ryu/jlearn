@@ -4,6 +4,7 @@ class FrameworkSession {
     use FrameworkSingleton;
 
     private $modules;
+    private $id;
 
     private final function __construct()
     {
@@ -24,6 +25,12 @@ class FrameworkSession {
                 E_USER_ERROR);
         }
         session_start();
+        $this->id = session_id();
+    }
+
+    public function get_id()
+    {
+        return $this->id;
     }
 
     public function register_module($key, $obj)

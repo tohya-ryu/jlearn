@@ -200,5 +200,18 @@ class FrameworkMariadb implements FrameworkStore {
         exit();
     }
 
+    public function escape($str)
+    {
+        try {
+            $conn = $this->connections[$this->default_conn_key]->get();
+            return $conn->real_escape_string($str);
+        } catch (Exception $e) {
+            if ($this->transaction_f) {
+                $this->rollback();
+            }
+            $this->handle_exception($e);
+        }
+    }
+
 
 }

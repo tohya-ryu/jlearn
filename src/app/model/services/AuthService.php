@@ -33,10 +33,14 @@ class AuthService implements FrameworkServiceBase {
         return $this->user->name;
     }
 
+    public function get_user_id()
+    {
+        return $this->user->id;
+    }
+
     public function attempt_login()
     {
         # attempt to match session
-        //$this->auth_mod = $this->session->get_module('framework-auth-user');
         $this->auth_mod = new SessionAuth();
         $this->auth_mod->register('framework-auth-user');
         if (!is_null($this->auth_mod->userid)) {
@@ -239,6 +243,17 @@ class AuthService implements FrameworkServiceBase {
 
         $this->validator->validate_csrf_token($this->csrf_mod->token, true);
 
+    }
+
+    public function check_csrf()
+    {
+        $this->validator->dismiss_errors();
+        //var_dump($this->csrf_mod->token->to_hash());
+        //var_dump($this->request->param->post('csrf-token')->value);
+        //exit();
+        $this->validator->validate_csrf_token($this->csrf_mod->token, true);
+        $this->validator->collect_errors();
+        return $this->validator->is_valid();
     }
 
     public function handle_signup()
