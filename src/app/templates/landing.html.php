@@ -185,6 +185,12 @@ $ignore_month    = $time - 2419200;
       size="10" />
     <div class="line"></div>
 
+    <p>Number of associated words (min - max)</p>
+    <input type="text" name="min_words" value="0" maxlength="11" size="10" />
+    <input type="text" name="max_words" value="20000" maxlength="11" 
+      size="10" />
+    <div class="line"></div>
+
     <p>Maximum Success Rate</p>
     <input type="text" name="success_limit" value="100" maxlength="3" 
       size="3"/>

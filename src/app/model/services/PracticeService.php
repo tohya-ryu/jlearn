@@ -87,6 +87,9 @@ class PracticeService implements FrameworkServiceBase {
 
     public function kanji()
     {
+        $this->collect_formdata('kanji');
+        $this->construct_query('kanji');
+        $this->prepare_session('kanji');
     }
 
     private function calc_success_rate($a, $b)
@@ -169,11 +172,31 @@ class PracticeService implements FrameworkServiceBase {
             $this->validator->regex_match('/^(0|1|2|3){1}$/',
                 'Requires integer (0-3).');
         }
+        if ($type == "kanji") {
+            $this->validator->validate(
+                $this->request->param->post('min_words'));
+            $this->validator->validate(
+                $this->request->param->post('min_words'));
+            $this->validator->required();
+            if ($this->validator->regex_match(
+                '/^[0-9]*$/', 'Requires integer.'))
+            {
+                if ($this->request->param->post('min_words')->value >=
+                    $this->request->param->post('max_words')->value)
+                {
+                    $this->validator->set_error('min_words',
+                        'Has to be lower value than max_words.');
+                }
+            }
+        }
 
         if ($this->request->param->post('custom')->value) {
             $this->validator->validate($this->request->param->post('custom'));
             $this->validator->maxlen(120);
         }
+
+        //$this->validator->validate_csrf_token(
+        //    $this->controller->auth->csrf_mod->token, true);
 
         return $this->validator->is_valid();
 
@@ -196,7 +219,10 @@ class PracticeService implements FrameworkServiceBase {
             $this->continue = false;
         } else {
             $row = $res->fetch_assoc();
-            $this->data_obj = new VocabData($row);
+            if ($type == 'vocab')
+                $this->data_obj = new VocabData($row);
+            if ($type == 'kanji')
+                $this->data_obj = new KanjiData($row);
             $this->formdata->inc_current_word_counter();
             $this->formdata->id = $this->data_obj->id;
         }
@@ -256,8 +282,9 @@ class PracticeService implements FrameworkServiceBase {
             $this->setqp('i', $this->formdata->get_jlpt());
         }
         # apply search by word type (vocab only)
-        if ($this->formdata->get_type()) {
-            $this->sqltmp .= "AND (`wtype1` = ? OR `wtype2` = ? OR `wtype3` = ? "
+        if ($this->formdata->get_type() && $type == 'vocab') {
+            $this->sqltmp .= "AND (`wtype1` = ? OR `wtype2` = ? OR "
+                ."`wtype3` = ? "
                 ."OR `wtype4` = ? OR `wtype5` = ? OR `wtype6` = ? "
                 ."OR `wtype7` = ?) ";
             $this->setqp('s', $this->formdata->get_type());
@@ -269,9 +296,15 @@ class PracticeService implements FrameworkServiceBase {
             $this->setqp('s', $this->formdata->get_type());
         }
         # apply search by transitivity (vocab only)
-        if ($this->formdata->get_transitivity()) {
+        if ($this->formdata->get_transitivity() && $type == 'vocab') {
             $this->sqltmp .= "AND `transitivity` = ? ";
             $this->setqp('i', $this->formdata->get_transitivity());
+        }
+        # apply search by number of vocabs associated with kanji
+        if ($type == 'kanji') {
+            $this->sqltmp .= "AND (`word_count` BETWEEN ? AND ?) ";
+            $this->setqp('i', $this->formdata->get_min_words());
+            $this->setqp('i', $this->formdata->get_max_words());
         }
         # apply order rule
         $session_id = $this->db->escape((FrameworkSession::get())->get_id());

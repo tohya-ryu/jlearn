@@ -24,7 +24,7 @@ class PracticeFormData {
     private $success_limit;
     private $jlpt;
     private $query_counter;
-    private $current_word_counter;
+    private $current_word_counter; # word = vocab/kanji
 
     # used by vocab practice exclusively
     private $type;
