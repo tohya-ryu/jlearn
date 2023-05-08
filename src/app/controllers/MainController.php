@@ -36,8 +36,17 @@ class MainController extends FrameworkControllerBase {
             //    $this->redirect($this->base_uri(''));
             //}
 
+            # validate
+            if (!$this->practice->validate_formdata('vocab')) {
+                echo "<p><b>validation errors</b></p>";
+                var_dump($this->practice->validator->get_errors());
+                exit();
+                $this->redirect($this->base_uri(''));
+            }
+
             # update last vocab if not first request of a practice session
-            $this->practice->update('vocab');
+            if (!$this->request->param->post('practice-start'))
+                $this->practice->update('vocab');
             # session handling
             $this->practice->vocab();
 

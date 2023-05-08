@@ -3,7 +3,7 @@
 class PracticeService implements FrameworkServiceBase {
     use FrameworkMagicGet;
     private static $magic_get_attr = array(
-         'controller'
+         'controller', 'validator'
     );
 
     private $controller;
@@ -43,44 +43,38 @@ class PracticeService implements FrameworkServiceBase {
 
     public function update($type)
     {
-        $this->validator->dismiss_errors();
-        $this->validator->validate($this->request->param->post('id'));
-        $this->validator->required();
-        $this->validator->regex_match('/^[0-9]*$/','');
-        if ($this->validator->is_valid()) {
-            $id = $this->request->param->post('id')->value;
-            $success = $this->request->param->post('success')->value;
-            $miss = $this->request->param->post('miss')->value;
-            $counter = $this->request->param->post('counter')->value;
-            $update_type = $this->request->param->post('update_type')->value;
+        $id = $this->request->param->post('id')->value;
+        $success = $this->request->param->post('success')->value;
+        $miss = $this->request->param->post('miss')->value;
+        $counter = $this->request->param->post('counter')->value;
+        $update_type = $this->request->param->post('update_type')->value;
 
-            switch($update_type) {
-            case 2:
-                $counter++;
-                $success++;
-                $success_rate = $this->calc_success_rate($success, $counter);
-                $time = (new DateTime())->getTimestamp();
-                $sql = "UPDATE `$type` SET `success_counter` = ?, ".
-                    "`counter` = ?, `success_rate` = ?, ".
-                    "`update_datetime` = ? WHERE `id` = ?;";
-                $this->db->pquery($sql, 'iidii', $success, $counter,
-                    $success_rate, $time, $id);
-                break;
-            case 3:
-                $counter++;
-                $success++;
-                $success_rate = $this->calc_success_rate($success, $counter);
-                $time = (new DateTime())->getTimestamp();
-                $sql = "UPDATE `$type` SET `miss_counter` = ?, ".
-                    "`counter` = ?, `success_rate` = ?, ".
-                    "`update_datetime` = ? WHERE `id` = ?;";
-                $this->db->pquery($sql, 'iidii', $miss, $counter,
-                    $success_rate, $time, $id);
-                break;
-            case 1:
-            default:
-                # do nothing
-            }
+        switch($update_type) {
+        case 2:
+            $counter++;
+            $success++;
+            $success_rate = $this->calc_success_rate($success, $counter);
+            $time = (new DateTime())->getTimestamp();
+            $sql = "UPDATE `$type` SET `success_counter` = ?, ".
+                "`counter` = ?, `success_rate` = ?, ".
+                "`update_datetime` = ? WHERE `id` = ?;";
+            $this->db->pquery($sql, 'iidii', $success, $counter,
+                $success_rate, $time, $id);
+            break;
+        case 3:
+            $counter++;
+            $success++;
+            $success_rate = $this->calc_success_rate($success, $counter);
+            $time = (new DateTime())->getTimestamp();
+            $sql = "UPDATE `$type` SET `miss_counter` = ?, ".
+                "`counter` = ?, `success_rate` = ?, ".
+                "`update_datetime` = ? WHERE `id` = ?;";
+            $this->db->pquery($sql, 'iidii', $miss, $counter,
+                $success_rate, $time, $id);
+            break;
+        case 1:
+        default:
+            # do nothing
         }
     }
 
@@ -106,6 +100,83 @@ class PracticeService implements FrameworkServiceBase {
     {
         $this->formdata = new PracticeFormData($type);
         $this->formdata->setup();
+    }
+
+    public function validate_formdata($type)
+    {
+        if (!$this->request->param->post('practice-start')->value) {
+            # these only require validation when session is in progress
+            $this->validator->validate($this->request->param->post('id'));
+            $this->validator->validate($this->request->param->post('counter'));
+            $this->validator->validate($this->request->param->post('success'));
+            $this->validator->validate($this->request->param->post('miss'));
+            $this->validator->validate(
+                $this->request->param->post('query_counter'));
+            $this->validator->validate(
+                $this->request->param->post('current_word_counter'));
+            $this->validator->required();
+            $this->validator->regex_match('/^[0-9]*$/', 'Requires integer.');
+
+            $this->validator->validate(
+                $this->request->param->post('update_type'));
+            $this->validator->required();
+            $this->validator->regex_match('/^(1|2|3){1}$/',
+                'Requires integer (1-3).');
+        }
+        $this->validator->validate($this->request->param->post('order_rule'));
+        $this->validator->required();
+        $this->validator->regex_match('/^(0|1|2|3|4){1}$/',
+            'Requires integer (0-4).');
+
+        $this->validator->validate(
+            $this->request->param->post('ignore_latest'));
+        $this->validator->validate(
+            $this->request->param->post('counter_limit'));
+        $this->validator->validate(
+            $this->request->param->post('success_limit'));
+        $this->validator->required();
+        $this->validator->regex_match('/^[0-9]*$/', 'Requires integer.');
+
+        $this->validator->validate(
+            $this->request->param->post('timespace_type'));
+        $this->validator->required();
+        $this->validator->regex_match('/^(1|2){1}$/',
+            'Requires integer (1-2).');
+
+        if (!strtotime($this->request->param->post('timespace_start')->value))
+            $this->validator->set_error('timespace_start', 'Invalid input');
+
+        if (!strtotime($this->request->param->post('timespace_end')->value))
+            $this->validator->set_error('timespace_end', 'Invalid input');
+
+        $this->validator->validate($this->request->param->post('jlpt'));
+        $this->validator->required();
+        $this->validator->regex_match('/^(0|1|2|3|4|5){1}$/',
+            'Requires integer (0-5).');
+
+        if ($type == 'vocab') {
+            $this->validator->validate($this->request->param->post('type'));
+            $this->validator->required();
+            if ($this->validator->regex_match(
+                '/^[0-9]*$/', 'Requires integer.'))
+            {
+                if ($this->request->param->post('type')->value > 17)
+                    $this->validator->set_error('type', 'allowed range 0-17');
+            }
+            $this->validator->validate(
+                $this->request->param->post('transitivity'));
+            $this->validator->required();
+            $this->validator->regex_match('/^(0|1|2|3){1}$/',
+                'Requires integer (0-3).');
+        }
+
+        if ($this->request->param->post('custom')->value) {
+            $this->validator->validate($this->request->param->post('custom'));
+            $this->validator->maxlen(120);
+        }
+
+        return $this->validator->is_valid();
+
     }
 
     private function prepare_session($type)

@@ -9,6 +9,7 @@ class PracticeFormData {
     private $counter;
     private $success;
     private $miss;
+    private $update_type;
 
     private $practice_start;
     private $search_kanji;
@@ -81,6 +82,12 @@ class PracticeFormData {
             $this->max_words = $request->param->post('max_words')->value;
             break;
         }
+
+        $this->id = $request->param->post('id')->value;
+        $this->counter = $request->param->post('counter')->value;
+        $this->success = $request->param->post('success')->value;
+        $this->miss = $request->param->post('miss')->value;
+        $this->update_type = $request->param->post('update_type')->value;
     }
 
     public function get_search_kanji()
@@ -209,6 +216,11 @@ class PracticeFormData {
     public function get_miss()
     {
         return $this->miss;
+    }
+
+    public function get_update_type()
+    {
+        return $this->update_type;
     }
 
 }
