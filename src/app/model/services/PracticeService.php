@@ -195,8 +195,9 @@ class PracticeService implements FrameworkServiceBase {
             $this->validator->maxlen(120);
         }
 
-        //$this->validator->validate_csrf_token(
-        //    $this->controller->auth->csrf_mod->token, true);
+        $this->validator->validate_csrf_token(
+            $this->controller->auth->csrf_mod->token, true,
+            'jlearn');
 
         return $this->validator->is_valid();
 

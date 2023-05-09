@@ -199,13 +199,13 @@ class AuthService implements FrameworkServiceBase {
         }
     }
 
-    public function get_csrf_token($secure = false)
+    public function get_csrf_token($secure = false, $salt = false)
     {
         if (is_null($this->csrf_mod)) {
             return false;
         } else {
             if ($secure) {
-                return $this->csrf_mod->token->to_hash();
+                return $this->csrf_mod->token->to_hash($salt);
             } else {
                 return $this->csrf_mod->token->code;
             }

@@ -153,7 +153,8 @@ class MainView extends FrameworkViewBase {
 
     private function set_token()
     {
-        $this->csrf_token = $this->controller->auth->get_csrf_token(true);
+        $this->csrf_token = $this->controller->auth->get_csrf_token(true,
+            'jlearn');
     }
 
 }

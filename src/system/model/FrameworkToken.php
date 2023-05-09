@@ -16,9 +16,11 @@ class FrameworkToken {
         }
     }
 
-    public function to_hash()
+    public function to_hash($salt = false)
     {
-        return hash_hmac('sha256', FrameworkRequest::get()->uri, $this->code);
+        if (!$salt)
+            $salt = FrameworkRequest::get()->uri;
+        return hash_hmac('sha256', $salt, $this->code);
     }
 
 }

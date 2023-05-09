@@ -51,12 +51,12 @@ class FrameworkValidator {
         }
     }
 
-    public function validate_csrf_token($tok, $secure)
+    public function validate_csrf_token($tok, $secure, $salt = false)
     {
         $ret = true;
         $code = null;
         if ($secure) {
-            $code = $tok->to_hash();
+            $code = $tok->to_hash($salt);
         } else {
             $code = $tok->code;
         }
