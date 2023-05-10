@@ -107,9 +107,9 @@
     </div>
 
     <div>
-      <input type="checkbox" name="vocab-new-allow-dup" 
-        id="vocab-new-allow-dup" />
-      <label for="vocab-new-allow-dup">Allow duplicate</label>
+      <input type="checkbox" name="allow-duplicate" 
+        id="allow-duplicate" />
+      <label for="allow-duplicate">Allow duplicate</label>
     </div>
 
     <div>

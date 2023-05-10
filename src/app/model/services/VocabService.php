@@ -32,6 +32,10 @@ class VocabService implements FrameworkServiceBase {
         $this->db = FrameworkStoreManager::get()->store();
     }
 
+    public function insert_new()
+    {
+    }
+
     public function validate()
     {
         # kanji
@@ -42,6 +46,25 @@ class VocabService implements FrameworkServiceBase {
         $this->validator->validate($this->request->param->post('hiragana'));
         $this->validator->required();
         $this->validator->maxlen(120);
+
+        # duplicate entry check
+        if ($this->validator->is_valid() &&
+            !$this->request->param->post('allow-duplicate')->value)
+        {
+            $kanji = trim($this->request->param->post('kanji')->value);
+            $kana = trim($this->request->param->post('hiragana')->value);
+            $sql = "SELECT COUNT(`id`) FROM `vocab` WHERE `kanji_name` = ? "
+                ."AND `hiragana_name` = ?";
+            $res = $this->db->pquery($sql, 'ss', $kanji,
+                $kana)->fetch_row()[0];
+            if ($res >= 1) {
+                # duplicate found
+                $this->validator->set_error('kanji', 'Duplicate entry: '.
+                    'a word with this kanji and hiragana combination already '.
+                    'exists.');
+                $this->validator->set_error('hiragana', ' ');
+            }
+        }
         # meanings
         $this->validator->validate($this->request->param->post('meanings'));
         $this->validator->required();
@@ -97,6 +120,8 @@ class VocabService implements FrameworkServiceBase {
 
     public function handle_valid_response($response)
     {
+        $response->set_data('state', FrameworkResponse::VALID_CLEAR);
+        $response->set_data('notice', 'Database submission successful.');
     }
 
     public function handle_invalid_response($response)
