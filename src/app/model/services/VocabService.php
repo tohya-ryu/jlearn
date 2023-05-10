@@ -121,7 +121,8 @@ class VocabService implements FrameworkServiceBase {
     public function handle_valid_response($response)
     {
         $response->set_data('state', FrameworkResponse::VALID_CLEAR);
-        $response->set_data('notice', 'Database submission successful.');
+        $response->set_data('notice', 'Database submission successful.'.
+            ' You may keep entering data.');
     }
 
     public function handle_invalid_response($response)
