@@ -192,7 +192,7 @@ class PracticeService implements FrameworkServiceBase {
 
         if ($this->request->param->post('custom')->value) {
             $this->validator->validate($this->request->param->post('custom'));
-            $this->validator->maxlen(120);
+            $this->validator->maxlen(255);
         }
 
         $this->validator->validate_csrf_token(
