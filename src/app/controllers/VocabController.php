@@ -34,12 +34,14 @@ class VocabController extends FrameworkControllerBase {
         if ($this->auth->attempt_login()) {
             if ($this->service->validate()) {
                 $this->service->insert_new();
+                $this->service->handle_valid_response($this->response);
             } else {
-                # return errors and keep form
+                $this->service->handle_invalid_response($this->response);
             }
         } else {
-            # set response redirect to login
+            $this->response->set_data('redirect', $this->base_uri());
         }
+        $this->response->send();
     }
 
     public function practice()

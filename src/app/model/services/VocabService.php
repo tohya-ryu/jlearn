@@ -73,7 +73,7 @@ class VocabService implements FrameworkServiceBase {
                 $this->validator->set_error('wtype7', 'allowed range 0-17');
             if ($this->request->param->post('wtype1')->value == 0)
                 $this->validator->set_error('wtype1',
-                    'Actual typre required.');
+                    'Actual type required.');
         }
         # transitivity
         $this->validator->validate(
@@ -87,14 +87,28 @@ class VocabService implements FrameworkServiceBase {
         $this->validator->regex_match('/^(0|1|2|3|4|5){1}$/',
             'Requires integer (0-5).');
         # tags
-        if ($this->request->param->post('tags')->value) {
-            $this->validator->validate($this->request->param->post('tags'));
-            $this->validator->maxlen(255);
-        }
+        $this->validator->validate($this->request->param->post('tags'));
+        $this->validator->maxlen(255);
         # csrf
         $this->validator->validate_csrf_token(
             $this->controller->auth->csrf_mod->token, true);
         return $this->validator->is_valid();
+    }
+
+    public function handle_valid_response($response)
+    {
+    }
+
+    public function handle_invalid_response($response)
+    {
+        $response->set_data('state', FrameworkResponse::INVALID);
+        $response->set_data('errors', $this->validator->get_errors());
+        $response->set_data('notice',
+            'Invalid data. Please correct where applicable.');
+        if (!$this->validator->csrf_token_is_valid()) {
+            $response->set_data('csrf_update',
+                $this->controller->auth->get_csrf_token(true));
+        }
     }
 
 }
