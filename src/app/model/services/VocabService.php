@@ -43,8 +43,8 @@ class VocabService implements FrameworkServiceBase {
             ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
         $id = $this->db->insert($sql, 'isssiiiiidiiiiiiiisi',
             $this->controller->auth->get_user_id(),
-            $this->request->param->post('kanji')->value,
-            $this->request->param->post('hiragana')->value,
+            trim($this->request->param->post('kanji')->value),
+            trim($this->request->param->post('hiragana')->value),
             $this->request->param->post('meanings')->value,
             $time, $time, 1, 0, 1, 0.00,
             $this->request->param->post('wtype1')->value,
@@ -55,7 +55,7 @@ class VocabService implements FrameworkServiceBase {
             $this->request->param->post('wtype6')->value,
             $this->request->param->post('wtype7')->value,
             $this->request->param->post('jlpt')->value,
-            $this->request->param->post('tags')->value,
+            trim($this->request->param->post('tags')->value),
             $this->request->param->post('transitivity')->value);
         $this->new_str = HtmlUtil::escape(
             $this->request->param->post('kanji')->value);
