@@ -10,6 +10,36 @@ class VocabController extends FrameworkControllerBase {
         $this->auth = new AuthService($this);
         $this->practice = new PracticeService($this);
         $this->init_language();
+        $this->service = new VocabService($this);
+    }
+
+    public function new_form()
+    {
+        # GET | Returns submission form
+        $this->response->set_type(FrameworkResponse::HTML);
+        $this->auth->use_csrf_prot();
+        if ($this->auth->attempt_login()) {
+            $view = new VocabView($this);
+            $view->new();
+        } else {
+            $this->redirect($this->base_uri('auth/login'));
+        }
+    }
+
+    public function new_submit()
+    {
+        # POST | Handles form submission
+        $this->response->set_type(FrameworkResponse::JSON);
+        $this->auth->use_csrf_prot();
+        if ($this->auth->attempt_login()) {
+            if ($this->service->validate()) {
+                $this->service->insert_new();
+            } else {
+                # return errors and keep form
+            }
+        } else {
+            # set response redirect to login
+        }
     }
 
     public function practice()

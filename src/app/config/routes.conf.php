@@ -3,11 +3,11 @@
 FrameworkRoute::set('get', '/', 'main#index');
 FrameworkRoute::set('get', 'update/counters', 'main#count_words');
 
-FrameworkRoute::set('get', 'new/vocab', 'vocab#new');
+FrameworkRoute::set('get', 'new/vocab', 'vocab#new_form');
 FrameworkRoute::set('post', 'new/vocab', 'vocab#new_submit');
 FrameworkRoute::set('post', 'practice/vocab', 'vocab#practice');
 
-FrameworkRoute::set('get', 'new/kanji', 'kanji#new');
+FrameworkRoute::set('get', 'new/kanji', 'kanji#new_form');
 FrameworkRoute::set('post', 'new/kanji', 'kanji#new_submit');
 FrameworkRoute::set('post', 'practice/kanji', 'kanji#practice');
 

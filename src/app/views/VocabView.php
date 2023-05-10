@@ -10,23 +10,24 @@ class VocabView extends FrameworkViewBase {
     public $vocab;
     public $kanji;
 
+    public function new()
+    {
+        $this->init();
+        $this->render('new_vocab.html.php');
+    }
+
     public function practice_end()
     {
-        $this->title = 'jlearn 2.0';
-        $this->username = $this->enc(
-            $this->controller->auth->get_user_name());
-        $this->set_layout('layout.html.php');
+        $this->init();
         $this->render('practice_end.html.php');
     }
 
     public function practice()
     {
+        $this->init();
+
         $this->csrf_token = $this->controller->auth->get_csrf_token(true,
             'jlearn');
-        $this->title = 'jlearn 2.0';
-        $this->username = $this->enc(
-            $this->controller->auth->get_user_name());
-        $this->set_layout('layout.html.php');
 
         $this->formdata = $this->controller->practice->get_formdata();
         $this->vocab = $this->controller->practice->get_data();
@@ -95,6 +96,14 @@ class VocabView extends FrameworkViewBase {
         );
 
         $this->render('practice_vocab.html.php', $data);
+    }
+
+    private function init()
+    {
+        $this->title = 'jlearn 2.0';
+        $this->username = $this->enc(
+            $this->controller->auth->get_user_name());
+        $this->set_layout('layout.html.php');
     }
 
 }
