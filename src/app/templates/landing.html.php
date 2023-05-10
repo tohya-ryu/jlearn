@@ -89,24 +89,8 @@ $ignore_month    = $time - 2419200;
 
     <p>Type Filter</p>
     <select name="type">
-      <option value="0" selected>Filter Off</option>
-      <option value="1">Noun</option>
-      <option value="2">Verb (suru)</option>
-      <option value="3">Verb (ichidan)</option>
-      <option value="4">Verb (godan)</option>
-      <option value="5">Adjective (i)</option>
-      <option value="6">Adjective (na)</option>
-      <option value="11">Adjective (no)</option>
-      <option value="14">Adjective (taru)</option>
-      <option value="7">Adverb</option>
-      <option value="15">Adverb (to)</option>
-      <option value="8">Expression</option>
-      <option value="9">Conjunction</option>
-      <option value="10">Prenominal</option>
-      <option value="12">Prefix</option>
-      <option value="13">Suffix</option>
-      <option value="16">Place</option>
-      <option value="17">Name</option>
+      <?php $this->view->render('_wtype_options.html.php',
+        array('default' =>'Filter Off')); ?>
     </select>
     <select name="transitivity">
       <option value="0" selected>-</option>

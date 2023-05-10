@@ -13,6 +13,7 @@ class VocabView extends FrameworkViewBase {
     public function new()
     {
         $this->init();
+        $this->csrf_token = $this->controller->auth->get_csrf_token(true);
         $this->render('new_vocab.html.php');
     }
 
