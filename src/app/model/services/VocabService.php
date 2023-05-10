@@ -34,6 +34,32 @@ class VocabService implements FrameworkServiceBase {
 
     public function insert_new()
     {
+        $time = (new DateTime())->getTimestamp();
+        $sql = 'INSERT INTO `vocab` (`user_id`, `kanji_name`, '.
+            '`hiragana_name`, `meanings`, `creation_datetime`, '.
+            '`update_datetime`, `counter`, `success_counter`, `miss_counter`,'.
+            ' `success_rate`, `wtype1`, `wtype2`, `wtype3`, `wtype4`, '.
+            '`wtype5`, `wtype6`, `wtype7`, `jlpt`, `tags`, `transitivity`)'.
+            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        $id = $this->db->insert($sql, 'isssiiiiidiiiiiiiisi',
+            $this->controller->auth->get_user_id(),
+            $this->request->param->post('kanji')->value,
+            $this->request->param->post('hiragana')->value,
+            $this->request->param->post('meanings')->value,
+            $time, $time, 1, 0, 1, 0.00,
+            $this->request->param->post('wtype1')->value,
+            $this->request->param->post('wtype2')->value,
+            $this->request->param->post('wtype3')->value,
+            $this->request->param->post('wtype4')->value,
+            $this->request->param->post('wtype5')->value,
+            $this->request->param->post('wtype6')->value,
+            $this->request->param->post('wtype7')->value,
+            $this->request->param->post('jlpt')->value,
+            $this->request->param->post('tags')->value,
+            $this->request->param->post('transitivity')->value);
+        $this->new_str = HtmlUtil::escape(
+            $this->request->param->post('kanji')->value);
+        $this->new_id = $id;
     }
 
     public function validate()
@@ -120,9 +146,13 @@ class VocabService implements FrameworkServiceBase {
 
     public function handle_valid_response($response)
     {
+        $id = $this->new_id;
+        $str = '<a href="'.
+            $this->controller->base_uri("edit/vocab/$id").'">'.$this->new_str.
+            '</a>';
         $response->set_data('state', FrameworkResponse::VALID_CLEAR);
-        $response->set_data('notice', 'Database submission successful.'.
-            ' You may keep entering data.');
+        $response->set_data('notice', "Successfully added $str to database.".
+            " You may keep entering data.");
     }
 
     public function handle_invalid_response($response)

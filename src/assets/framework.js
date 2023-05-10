@@ -100,7 +100,7 @@ framework.form.submit = function(event) {
     }
     /* set form notice */
     list_node = document.createElement("li");
-    list_node.textContent = data.notice;
+    list_node.innerHTML = data.notice;
     notice_list.appendChild(list_node);
     if (csrf_failed) {
       list_node = document.createElement("li");
