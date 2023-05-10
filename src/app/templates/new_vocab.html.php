@@ -78,7 +78,7 @@
       <label for="transitivity">Verb Transitivity</label>
       <select name="transitivity">
         <option value="0" selected>-</option>
-        <option value="1">Transitive<option>
+        <option value="1">Transitive</option>
         <option value="2">Intransitive</option>
         <option value="3">Both</option>
       </select>
@@ -89,7 +89,7 @@
       <label for="jlpt">JLPT Level</label>
       <select name="jlpt">
         <option value="0" selected>-</option>
-        <option value="1">N1<option>
+        <option value="1">N1</option>
         <option value="2">N2</option>
         <option value="3">N3</option>
         <option value="4">N4</option>
