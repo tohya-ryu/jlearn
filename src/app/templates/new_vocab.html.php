@@ -31,37 +31,37 @@
     <div>
       <label>Word Types</label>
 
-      <select name="wtype1" id="wtype1">
+      <select name="wtype1" id="wtype1" data-default="0">
       <?php $this->view->render('_wtype_options.html.php',
         array('default' =>'-')); ?>
       </select>
 
-      <select name="wtype2" id="wtype2">
+      <select name="wtype2" id="wtype2" data-default="0">
       <?php $this->view->render('_wtype_options.html.php',
         array('default' =>'-')); ?>
       </select>
 
-      <select name="wtype3" id="wtype3">
+      <select name="wtype3" id="wtype3" data-default="0">
       <?php $this->view->render('_wtype_options.html.php',
         array('default' =>'-')); ?>
       </select>
 
-      <select name="wtype4" id="wtype4">
+      <select name="wtype4" id="wtype4" data-default="0">
       <?php $this->view->render('_wtype_options.html.php',
         array('default' =>'-')); ?>
       </select>
 
-      <select name="wtype5" id="wtype5">
+      <select name="wtype5" id="wtype5" data-default="0">
       <?php $this->view->render('_wtype_options.html.php',
         array('default' =>'-')); ?>
       </select>
 
-      <select name="wtype6" id="wtype6">
+      <select name="wtype6" id="wtype6" data-default="0">
       <?php $this->view->render('_wtype_options.html.php',
         array('default' =>'-')); ?>
       </select>
 
-      <select name="wtype7" id="wtype7">
+      <select name="wtype7" id="wtype7" data-default="0">
       <?php $this->view->render('_wtype_options.html.php',
         array('default' =>'-')); ?>
       </select>
@@ -76,7 +76,7 @@
 
     <div>
       <label for="transitivity">Verb Transitivity</label>
-      <select name="transitivity">
+      <select name="transitivity" id="transitivity" data-default="0">
         <option value="0" selected>-</option>
         <option value="1">Transitive</option>
         <option value="2">Intransitive</option>
@@ -87,7 +87,7 @@
 
     <div>
       <label for="jlpt">JLPT Level</label>
-      <select name="jlpt">
+      <select name="jlpt" id="jlpt" data-default="0">
         <option value="0" selected>-</option>
         <option value="1">N1</option>
         <option value="2">N2</option>

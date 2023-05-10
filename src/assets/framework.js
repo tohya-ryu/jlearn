@@ -83,6 +83,19 @@ framework.form.submit = function(event) {
     case "valid-clear":
       /* reset form errors */
       framework.form.clear_errors(form_obj);
+      for (let [key, value] of form_obj) {
+        if (key == "csrf-token")
+          continue;
+        let element = form_node.querySelector('#'+key);
+        if (element.tagName == 'INPUT' && element.type == 'text')
+          element.value = '';
+        if (element.tagName == 'TEXTAREA')
+          element.value = '';
+        if (element.tagName == 'SELECT')
+          element.value = element.dataset.default
+        //console.log(key + " : " + value);
+        //console.log(element);
+      }
       break;
     }
     /* set form notice */
