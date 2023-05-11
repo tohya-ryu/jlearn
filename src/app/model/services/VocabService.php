@@ -15,13 +15,7 @@ class VocabService implements FrameworkServiceBase {
     private $db;
 
     private $formdata;
-    private $sqltmp;
-    private $query_param_types;
-    private $query_params;
-
     private $data_obj;
-
-    private $continue;
 
     public function __construct($controller)
     {
@@ -117,6 +111,7 @@ class VocabService implements FrameworkServiceBase {
         if ($this->validate()) {
             $this->validator->validate($this->request->param->post('id'));
             $this->validator->required();
+            $this->validator->regex_match('/^[0-9]+$/', 'Requires integer.');
             return $this->validator->is_valid();
         }
         return false;
@@ -247,7 +242,7 @@ class VocabService implements FrameworkServiceBase {
             'Invalid data. Please correct where applicable.');
         if (!$this->validator->csrf_token_is_valid()) {
             $response->set_data('csrf_update',
-                $this->controller->auth->get_csrf_token(true));
+                $this->controller->auth->get_csrf_token(true, 'jlearn/vocab'));
         }
     }
 

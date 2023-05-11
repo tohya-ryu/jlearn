@@ -26,6 +26,24 @@ class KanjiController extends FrameworkControllerBase {
         }
     }
 
+    public function edit_form()
+    {
+        # GET |
+        $this->response->set_type(FrameworkResponse::HTML);
+        $this->auth->use_csrf_prot();
+        if ($this->auth->attempt_login()) {
+            $view = new KanjiView($this);
+            $view->kanji = $this->service->fetch($this->request->param->uri(
+                'id')->value);
+            if (is_null($view->kanji))
+                $view->invalid_id();
+            else
+                $view->edit();
+        } else {
+            $this->redirect($this->base_uri('auth/login'));
+        }
+    }
+
     public function new_submit()
     {
         # POST | Handles form submission
@@ -35,6 +53,31 @@ class KanjiController extends FrameworkControllerBase {
             if ($this->service->validate() && $this->service->valid_dup()) {
                 $this->service->insert_new();
                 $this->service->handle_valid_response($this->response);
+            } else {
+                $this->service->handle_invalid_response($this->response);
+            }
+        } else {
+            $this->response->set_data('redirect', $this->base_uri());
+        }
+        $this->response->send();
+    }
+
+    public function edit_submit()
+    {
+        # PATCH |
+        $this->response->set_type(FrameworkResponse::JSON);
+        $this->auth->use_csrf_prot();
+        if ($this->auth->attempt_login()) {
+            if ($this->service->validate_update()) {
+                if (!$this->service->check_kanji() &&
+                    !$this->service->valid_dup())
+                {
+                    $this->service->handle_invalid_response($this->response);
+                    $this->response->send();
+                    return;
+                }
+                $this->service->update();
+                $this->service->handle_valid_update_response($this->response);
             } else {
                 $this->service->handle_invalid_response($this->response);
             }

@@ -17,7 +17,7 @@
     </div>
 
     <div>
-      <button type="button" data-uri="<?php $this->base_uri("kanji/vocab"); ?>" 
+      <button type="button" data-uri="<?php $this->base_uri("new/kanji"); ?>" 
         class="framework-form-submit">
         Submit
       </button>
