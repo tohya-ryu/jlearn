@@ -35,6 +35,7 @@ class VocabData {
     {
         $this->kanji_name = HtmlUtil::escape($this->kanji_name);
         $this->hiragana_name = HtmlUtil::escape($this->hiragana_name);
+        $this->tags = HtmlUtil::escape($this->tags);
         $this->meanings = HtmlUtil::escape($this->meanings);
         $this->meanings = nl2br($this->meanings);
     }

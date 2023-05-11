@@ -79,10 +79,19 @@ framework.form.submit = function(event) {
     case "valid-keep":
       /* reset form errors */
       framework.form.clear_errors(form_obj);
+      /* update select default values */
+      for (let [key, value] of form_obj) {
+        if (key == "csrf-token")
+          continue;
+        let element = form_node.querySelector('#'+key);
+        if (element.tagName == "SELECT")
+          element.dataset.default = data['select_defaults'][key]
+      }
       break;
     case "valid-clear":
       /* reset form errors */
       framework.form.clear_errors(form_obj);
+      /* clear form */
       for (let [key, value] of form_obj) {
         if (key == "csrf-token")
           continue;

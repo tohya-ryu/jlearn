@@ -34,6 +34,11 @@ class FrameworkTemplate {
         echo $this->data[$key];
     }
 
+    private function get($key)
+    {
+        return $this->data[$key];
+    }
+
     private function base_uri($str)
     {
         echo $this->view->controller->base_uri($str);

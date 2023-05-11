@@ -6,8 +6,8 @@ FrameworkRoute::set('get', 'update/counters', 'main#count_words');
 FrameworkRoute::set('get', 'new/vocab', 'vocab#new_form');
 FrameworkRoute::set('post', 'new/vocab', 'vocab#new_submit');
 FrameworkRoute::set('post', 'practice/vocab', 'vocab#practice');
-FrameworkRoute::set('get', 'edit/vocab/:id{[0-9]*}', 'vocab#edit_form');
-FrameworkRoute::set('patch', 'edit/vocab', 'vocab#edit_submit');
+FrameworkRoute::set('get', 'edit/vocab/:id{[0-9]+}', 'vocab#edit_form');
+FrameworkRoute::set('post', 'edit/vocab', 'vocab#edit_submit');
 
 FrameworkRoute::set('get', 'new/kanji', 'kanji#new_form');
 FrameworkRoute::set('post', 'new/kanji', 'kanji#new_submit');

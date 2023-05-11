@@ -13,8 +13,53 @@ class VocabView extends FrameworkViewBase {
     public function new()
     {
         $this->init();
-        $this->csrf_token = $this->controller->auth->get_csrf_token(true);
+        $this->csrf_token = $this->controller->auth->get_csrf_token(true,
+            'jlearn/vocab');
+        $this->formdata = array(
+            'kanji' => '',
+            'hiragana' => '',
+            'meanings' => '',
+            'wtype1' => 0,
+            'wtype2' => 0,
+            'wtype3' => 0,
+            'wtype4' => 0,
+            'wtype5' => 0,
+            'wtype6' => 0,
+            'wtype7' => 0,
+            'jlpt' => 0,
+            'tags' => '',
+            'transitivity' => 0
+        );
         $this->render('new_vocab.html.php');
+    }
+
+    public function invalid_id()
+    {
+        $this->init();
+        $this->render('edit_invalid_id.html.php');
+    }
+
+    public function edit()
+    {
+        $this->init();
+        $this->csrf_token = $this->controller->auth->get_csrf_token(true,
+            'jlearn/vocab');
+        $this->formdata = array(
+            'kanji' => $this->vocab->kanji_name,
+            'hiragana' => $this->vocab->hiragana_name,
+            'meanings' => $this->vocab->meanings,
+            'wtype1' => $this->vocab->wtype1,
+            'wtype2' => $this->vocab->wtype2,
+            'wtype3' => $this->vocab->wtype3,
+            'wtype4' => $this->vocab->wtype4,
+            'wtype5' => $this->vocab->wtype5,
+            'wtype6' => $this->vocab->wtype6,
+            'wtype7' => $this->vocab->wtype7,
+            'jlpt' => $this->vocab->jlpt,
+            'tags' => $this->vocab->tags,
+            'transitivity' => $this->vocab->transitivity
+        );
+        $this->render('edit_vocab.html.php');
     }
 
     public function practice_end()

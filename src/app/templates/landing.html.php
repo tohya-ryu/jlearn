@@ -90,7 +90,7 @@ $ignore_month    = $time - 2419200;
     <p>Type Filter</p>
     <select name="type">
       <?php $this->view->render('_wtype_options.html.php',
-        array('default' =>'Filter Off')); ?>
+        array('default' =>'Filter Off', 'default_value'=>0)); ?>
     </select>
     <select name="transitivity">
       <option value="0" selected>-</option>

@@ -32,6 +32,44 @@ class VocabService implements FrameworkServiceBase {
         $this->db = FrameworkStoreManager::get()->store();
     }
 
+    public function fetch($id)
+    {
+        $sql = "SELECT * FROM `vocab` WHERE `id` = ? AND `user_id` = ?";
+        $res = $this->db->pquery($sql, 'ii', $id,
+            $this->controller->auth->get_user_id());
+        $row = $res->fetch_assoc();
+        if (is_null($row))
+            $this->data_obj = null;
+        else
+            $this->data_obj = new VocabData($row);
+        return $this->data_obj;
+    }
+
+    public function update()
+    {
+        $sql = "UPDATE `vocab` SET `kanji_name` = ?, `hiragana_name` = ?, ".
+            "`meanings` = ?, `wtype1` = ?, `wtype2` = ?, `wtype3` = ?, ".
+            "`wtype4` = ?, `wtype5` = ?, `wtype6` = ?, `wtype7` = ?, ".
+            "`jlpt` = ?, `transitivity` = ?, `tags` = ? WHERE ".
+            "`id` = ? AND `user_id` = ?";
+        $this->db->pquery($sql, 'sssiiiiiiiiisii',
+            trim($this->request->param->post('kanji')->value),
+            trim($this->request->param->post('hiragana')->value),
+            $this->request->param->post('meanings')->value,
+            $this->request->param->post('wtype1')->value,
+            $this->request->param->post('wtype2')->value,
+            $this->request->param->post('wtype3')->value,
+            $this->request->param->post('wtype4')->value,
+            $this->request->param->post('wtype5')->value,
+            $this->request->param->post('wtype6')->value,
+            $this->request->param->post('wtype7')->value,
+            $this->request->param->post('jlpt')->value,
+            $this->request->param->post('transitivity')->value,
+            trim($this->request->param->post('tags')->value),
+            $this->request->param->post('id')->value,
+            $this->controller->auth->get_user_id());
+    }
+
     public function insert_new()
     {
         $time = (new DateTime())->getTimestamp();
@@ -60,6 +98,16 @@ class VocabService implements FrameworkServiceBase {
         $this->new_str = HtmlUtil::escape(
             $this->request->param->post('kanji')->value);
         $this->new_id = $id;
+    }
+
+    public function validate_update()
+    {
+        if ($this->validate()) {
+            $this->validator->validate($this->request->param->post('id'));
+            $this->validator->required();
+            return $this->validator->is_valid();
+        }
+        return false;
     }
 
     public function validate()
@@ -140,7 +188,7 @@ class VocabService implements FrameworkServiceBase {
         $this->validator->maxlen(255);
         # csrf
         $this->validator->validate_csrf_token(
-            $this->controller->auth->csrf_mod->token, true);
+            $this->controller->auth->csrf_mod->token, true, 'jlearn/vocab');
         return $this->validator->is_valid();
     }
 
@@ -153,6 +201,24 @@ class VocabService implements FrameworkServiceBase {
         $response->set_data('state', FrameworkResponse::VALID_CLEAR);
         $response->set_data('notice', "Successfully added $str to database.".
             " You may keep entering data.");
+    }
+
+    public function handle_valid_update_response($response)
+    {
+        $response->set_data('select_defaults', array(
+            'wtype1' => $this->request->param->post('wtype1')->value,
+            'wtype2' => $this->request->param->post('wtype2')->value,
+            'wtype3' => $this->request->param->post('wtype3')->value,
+            'wtype4' => $this->request->param->post('wtype4')->value,
+            'wtype5' => $this->request->param->post('wtype5')->value,
+            'wtype6' => $this->request->param->post('wtype6')->value,
+            'wtype7' => $this->request->param->post('wtype7')->value,
+            'jlpt' => $this->request->param->post('jlpt')->value,
+            'transitivity' => $this->request->param->post(
+                'transitivity')->value
+        ));
+        $response->set_data('state', FrameworkResponse::VALID_KEEP);
+        $response->set_data('notice', 'Resource update successful.');
     }
 
     public function handle_invalid_response($response)
