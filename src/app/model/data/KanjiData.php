@@ -30,6 +30,7 @@ class KanjiData {
         $this->kanji = HtmlUtil::escape($this->kanji);
         $this->onyomi = HtmlUtil::escape($this->onyomi);
         $this->kunyomi = HtmlUtil::escape($this->kunyomi);
+        $this->tags = HtmlUtil::escape($this->tags);
         $this->meanings = HtmlUtil::escape($this->meanings);
         $this->meanings = nl2br($this->meanings);
     }

@@ -8,7 +8,6 @@ class VocabView extends FrameworkViewBase {
     public $username;
     public $formdata;
     public $vocab;
-    public $kanji;
 
     public function new()
     {

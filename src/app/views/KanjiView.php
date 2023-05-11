@@ -7,15 +7,49 @@ class KanjiView extends FrameworkViewBase {
 
     public $username;
     public $formdata;
-    public $vocab;
     public $kanji;
+
+    public function new()
+    {
+        $this->init();
+        $this->csrf_token = $this->controller->auth->get_csrf_token(true,
+            'jlearn/kanji');
+        $this->formdata = array(
+            'kanji'    => '',
+            'onyomi'   => '',
+            'kunyomi'  => '',
+            'meanings' => '',
+            'jlpt'     => 0,
+            'tags'     => ''
+        );
+        $this->render('new_kanji.html.php');
+    }
+
+    public function invalid_id()
+    {
+        $this->init();
+        $this->render('edit_invalid_id.html.php');
+    }
+
+    public function edit()
+    {
+        $this->init();
+        $this->csrf_token = $this->controller->auth->get_csrf_token(true,
+            'jlearn/kanji');
+        $this->formdata = array(
+            'kanji'    => $this->kanji->kanji,
+            'onyomi'   => $this->kanji->onyomi,
+            'kunyomi'  => $this->kanji->kunyomi,
+            'meanings' => $this->kanji->meanings,
+            'jlpt'     => $this->kanji->jlpt,
+            'tags'     => $this->kanji->tags
+        );
+        $this->render('edit_kanji.html.php');
+    }
 
     public function practice_end()
     {
-        $this->title = 'jlearn 2.0';
-        $this->username = $this->enc(
-            $this->controller->auth->get_user_name());
-        $this->set_layout('layout.html.php');
+        $this->init();
         $this->render('practice_end.html.php');
     }
 
@@ -23,10 +57,7 @@ class KanjiView extends FrameworkViewBase {
     {
         $this->csrf_token = $this->controller->auth->get_csrf_token(true,
             'jlearn');
-        $this->title = 'jlearn 2.0';
-        $this->username = $this->enc(
-            $this->controller->auth->get_user_name());
-        $this->set_layout('layout.html.php');
+        $this->init();
 
         $this->formdata = $this->controller->practice->get_formdata();
         $this->kanji = $this->controller->practice->get_data();
@@ -62,6 +93,14 @@ class KanjiView extends FrameworkViewBase {
         );
 
         $this->render('practice_kanji.html.php', $data);
+    }
+
+    private function init()
+    {
+        $this->title = 'jlearn 2.0';
+        $this->username = $this->enc(
+            $this->controller->auth->get_user_name());
+        $this->set_layout('layout.html.php');
     }
 
 }
