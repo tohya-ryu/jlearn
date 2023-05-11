@@ -50,7 +50,7 @@ class VocabController extends FrameworkControllerBase {
         $this->response->set_type(FrameworkResponse::JSON);
         $this->auth->use_csrf_prot();
         if ($this->auth->attempt_login()) {
-            if ($this->service->validate() &&$this->service->valid_dup()) {
+            if ($this->service->validate() && $this->service->valid_dup()) {
                 $this->service->insert_new();
                 $this->service->handle_valid_response($this->response);
             } else {

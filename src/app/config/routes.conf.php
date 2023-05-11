@@ -12,12 +12,12 @@ FrameworkRoute::set('post', 'edit/vocab', 'vocab#edit_submit');
 FrameworkRoute::set('get', 'new/kanji', 'kanji#new_form');
 FrameworkRoute::set('post', 'new/kanji', 'kanji#new_submit');
 FrameworkRoute::set('post', 'practice/kanji', 'kanji#practice');
+FrameworkRoute::set('get', 'edit/kanji/:id{[0-9]+}', 'kanji#edit_form');
+FrameworkRoute::set('post', 'edit/kanji', 'kanji#edit_submit');
 
 FrameworkRoute::set('get', 'fetch/vocab/:search', 'main#fetch_vocab');
 FrameworkRoute::set('get', 'fetch/kanji/:search', 'main#fetch_kanji');
-FrameworkRoute::set('get', 'get/kanji/:id', 'main#kanji');
 FrameworkRoute::set('get', 'find', 'main#find_data');
-FrameworkRoute::set('patch', 'update/kanji', 'main#update_kanji');
 
 require 'app/config/auth-routes.conf.php';
 
