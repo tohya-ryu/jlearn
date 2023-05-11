@@ -13,8 +13,11 @@
     <?php $this->view->render('_vocab_form_body.html.php',
       $this->view->formdata); ?>
 
-      <input type="hidden" name="allow-duplicate" 
-        id="allow-duplicate" value="checked" />
+    <div>
+      <input type="checkbox" name="allow-duplicate" 
+        id="allow-duplicate" />
+      <label for="allow-duplicate">Allow duplicate</label>
+    </div>
 
     <div>
       <button type="button" data-uri="<?php $this->base_uri("edit/vocab"); ?>" 

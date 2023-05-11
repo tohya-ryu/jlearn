@@ -34,6 +34,8 @@ class VocabService implements FrameworkServiceBase {
 
     public function fetch($id)
     {
+        if ($this->data_obj)
+            return $this->data_obj;
         $sql = "SELECT * FROM `vocab` WHERE `id` = ? AND `user_id` = ?";
         $res = $this->db->pquery($sql, 'ii', $id,
             $this->controller->auth->get_user_id());
@@ -43,6 +45,16 @@ class VocabService implements FrameworkServiceBase {
         else
             $this->data_obj = new VocabData($row);
         return $this->data_obj;
+    }
+
+    public function check_names()
+    {
+        $request = FrameworkRequest::get();
+        $obj = $this->fetch($request->param->post('id')->value);
+        return ($obj->kanji_name == 
+            trim($request->param->post('kanji')->value) &&
+            $obj->hiragana_name == 
+            trim($request->param->post('hiragana')->value));
     }
 
     public function update()
@@ -110,20 +122,10 @@ class VocabService implements FrameworkServiceBase {
         return false;
     }
 
-    public function validate()
+    public function valid_dup()
     {
-        # kanji
-        $this->validator->validate($this->request->param->post('kanji'));
-        $this->validator->required();
-        $this->validator->maxlen(120);
-        # hiragana
-        $this->validator->validate($this->request->param->post('hiragana'));
-        $this->validator->required();
-        $this->validator->maxlen(120);
-
         # duplicate entry check
-        if ($this->validator->is_valid() &&
-            !$this->request->param->post('allow-duplicate')->value)
+        if (!$this->request->param->post('allow-duplicate')->value)
         {
             $kanji = trim($this->request->param->post('kanji')->value);
             $kana = trim($this->request->param->post('hiragana')->value);
@@ -137,8 +139,24 @@ class VocabService implements FrameworkServiceBase {
                     'a word with this kanji and hiragana combination already '.
                     'exists.');
                 $this->validator->set_error('hiragana', ' ');
+                return false;
             }
         }
+        # no duplicates found
+        return true;
+    }
+
+    public function validate()
+    {
+        # kanji
+        $this->validator->validate($this->request->param->post('kanji'));
+        $this->validator->required();
+        $this->validator->maxlen(120);
+        # hiragana
+        $this->validator->validate($this->request->param->post('hiragana'));
+        $this->validator->required();
+        $this->validator->maxlen(120);
+
         # meanings
         $this->validator->validate($this->request->param->post('meanings'));
         $this->validator->required();
