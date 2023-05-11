@@ -53,7 +53,7 @@ class FrameworkRoute {
                     $start = strpos($str, '{');
                     if ($start !== false) {
                         $end = strpos($str, '}');
-                        $tok->name = substr($str, 1, $start);
+                        $tok->name = substr($str, 1, $start-1);
                         $tok->match_condition = substr(
                             $str, $start+1, $end-$start-1);
                     } else {
