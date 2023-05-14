@@ -21,6 +21,11 @@ class FrameworkMariadb implements FrameworkStore {
     private $statement;
     private $result;
 
+    # query builder
+    private $values;
+    private $typeident;
+    private $columns;
+
     public function __construct($config)
     {
         $this->name = $config['name'];
@@ -32,6 +37,10 @@ class FrameworkMariadb implements FrameworkStore {
         $this->transaction_f = false;
         $this->statement = null;
         $this->result =  null;
+
+        $this->columns = array();
+        $this->values = array();
+        $this->typeident = "";
 
         $this->connections = array();
 
@@ -85,17 +94,6 @@ class FrameworkMariadb implements FrameworkStore {
 
     public function rollback()
     {
-    }
-
-    public function insert($sql, $types, ...$params)
-    {
-        try {
-            $conn = $this->connections[$this->default_conn_key]->get();
-            $this->pquery($sql, $types, ...$params);
-            return $conn->insert_id;
-        } catch (Exception $e) {
-            return null;
-        }
     }
 
     public function pquery($sql, $types, ...$params)
@@ -205,6 +203,43 @@ class FrameworkMariadb implements FrameworkStore {
         try {
             $conn = $this->connections[$this->default_conn_key]->get();
             return $conn->real_escape_string($str);
+        } catch (Exception $e) {
+            if ($this->transaction_f) {
+                $this->rollback();
+            }
+            $this->handle_exception($e);
+        }
+    }
+
+    public function assoc($column, $typeident, $value)
+    {
+        array_push($this->columns, $this->escape($column));
+        array_push($this->values, $value);
+        $this->typeident .= $typeident;
+    }
+
+    public function insert($table)
+    {
+        $columns = "";
+        $values = "";
+        $last_key = ArrayUtil::last_key($this->columns);
+        foreach ($this->columns as $k => $v) {
+            $columns .= "`$v`";
+            $values .= "?";
+            if (!($k == $last_key)) {
+                $columns .= ",";
+                $values  .= ",";
+            }
+        }
+        $sql = "INSERT INTO `$table` ($columns) VALUES ($values);";
+        try {
+            $conn = $this->connections[$this->default_conn_key]->get();
+            $this->pquery($sql, $this->typeident, ...($this->values));
+            $id = $conn->insert_id;
+            $this->values = array();
+            $this->columns = array();
+            $this->typeident = "";
+            return $id;
         } catch (Exception $e) {
             if ($this->transaction_f) {
                 $this->rollback();

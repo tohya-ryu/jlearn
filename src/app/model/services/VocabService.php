@@ -78,32 +78,37 @@ class VocabService implements FrameworkServiceBase {
 
     public function insert_new()
     {
+        $request = FrameworkRequest::get();
         $time = (new DateTime())->getTimestamp();
-        $sql = 'INSERT INTO `vocab` (`user_id`, `kanji_name`, '.
-            '`hiragana_name`, `meanings`, `creation_datetime`, '.
-            '`update_datetime`, `counter`, `success_counter`, `miss_counter`,'.
-            ' `success_rate`, `wtype1`, `wtype2`, `wtype3`, `wtype4`, '.
-            '`wtype5`, `wtype6`, `wtype7`, `jlpt`, `tags`, `transitivity`)'.
-            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-        $id = $this->db->insert($sql, 'isssiiiiidiiiiiiiisi',
-            $this->controller->auth->get_user_id(),
-            trim($this->request->param->post('kanji')->value),
-            trim($this->request->param->post('hiragana')->value),
-            $this->request->param->post('meanings')->value,
-            $time, $time, 1, 0, 1, 0.00,
-            $this->request->param->post('wtype1')->value,
-            $this->request->param->post('wtype2')->value,
-            $this->request->param->post('wtype3')->value,
-            $this->request->param->post('wtype4')->value,
-            $this->request->param->post('wtype5')->value,
-            $this->request->param->post('wtype6')->value,
-            $this->request->param->post('wtype7')->value,
-            $this->request->param->post('jlpt')->value,
-            trim($this->request->param->post('tags')->value),
-            $this->request->param->post('transitivity')->value);
+        $this->db->assoc('user_id', 'i',
+            $this->controller->auth->get_user_id());
+        $this->db->assoc('kanji_name', 's',
+            trim($request->param->post('kanji')->value));
+        $this->db->assoc('hiragana_name', 's',
+            trim($request->param->post('hiragana')->value));
+        $this->db->assoc('meanings', 's',
+            $request->param->post('meanings')->value);
+        $this->db->assoc('creation_datetime', 'i', $time);
+        $this->db->assoc('update_datetime', 'i', $time);
+        $this->db->assoc('counter', 'i', 1);
+        $this->db->assoc('success_counter', 'i', 0);
+        $this->db->assoc('miss_counter', 'i', 1);
+        $this->db->assoc('success_rate', 'd', 0.00);
+        $this->db->assoc('wtype1', 'i',$request->param->post('wtype1')->value);
+        $this->db->assoc('wtype2', 'i',$request->param->post('wtype2')->value);
+        $this->db->assoc('wtype3', 'i',$request->param->post('wtype3')->value);
+        $this->db->assoc('wtype4', 'i',$request->param->post('wtype4')->value);
+        $this->db->assoc('wtype5', 'i',$request->param->post('wtype5')->value);
+        $this->db->assoc('wtype6', 'i',$request->param->post('wtype6')->value);
+        $this->db->assoc('wtype7', 'i',$request->param->post('wtype7')->value);
+        $this->db->assoc('jlpt', 'i', $request->param->post('jlpt')->value);
+        $this->db->assoc('tags', 's',
+            trim($request->param->post('tags')->value));
+        $this->db->assoc('transitivity', 'i',
+            $request->param->post('transitivity')->value);
+        $this->new_id = $this->db->insert('vocab');
         $this->new_str = HtmlUtil::escape(
             $this->request->param->post('kanji')->value);
-        $this->new_id = $id;
     }
 
     public function validate_update()

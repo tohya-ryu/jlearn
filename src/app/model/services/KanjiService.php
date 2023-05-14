@@ -66,24 +66,29 @@ class KanjiService implements FrameworkServiceBase {
 
     public function insert_new()
     {
+        $request = FrameworkRequest::get();
         $time = (new DateTime())->getTimestamp();
-        $sql = 'INSERT INTO `kanji` (`user_id`, `kanji`, '.
-            '`onyomi`, `kunyomi`, `meanings`, `creation_datetime`, '.
-            '`update_datetime`, `counter`, `success_counter`, `miss_counter`,'.
-            ' `success_rate`, `jlpt`, `tags`)'.
-            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)';
-        $id = $this->db->insert($sql, 'issssiiiiidis',
-            $this->controller->auth->get_user_id(),
-            $this->request->param->post('kanji')->value,
-            trim($this->request->param->post('onyomi')->value),
-            trim($this->request->param->post('kunyomi')->value),
-            $this->request->param->post('meanings')->value,
-            $time, $time, 1, 0, 1, 0.00,
-            $this->request->param->post('jlpt')->value,
-            trim($this->request->param->post('tags')->value));
+        $this->db->assoc('user_id', 'i',
+            $this->controller->auth->get_user_id());
+        $this->db->assoc('kanji', 's', $request->param->post('kanji')->value);
+        $this->db->assoc('onyomi', 's',
+            trim($request->param->post('onyomi')->value));
+        $this->db->assoc('kunyomi', 's',
+            trim($request->param->post('kunyomi')->value));
+        $this->db->assoc('meanings', 's',
+            $request->param->post('meanings')->value);
+        $this->db->assoc('creation_datetime', 'i', $time);
+        $this->db->assoc('update_datetime', 'i', $time);
+        $this->db->assoc('counter', 'i', 1);
+        $this->db->assoc('success_counter', 'i', 0);
+        $this->db->assoc('miss_counter', 'i', 1);
+        $this->db->assoc('success_rate', 'd', 0.00);
+        $this->db->assoc('jlpt', 'i', $request->param->post('jlpt')->value);
+        $this->db->assoc('tags', 's',
+            trim($request->param->post('tags')->value));
+        $this->new_id = $this->db->insert('kanji');
         $this->new_str = HtmlUtil::escape(
             $this->request->param->post('kanji')->value);
-        $this->new_id = $id;
     }
 
     public function validate_update()

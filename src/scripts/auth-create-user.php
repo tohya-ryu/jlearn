@@ -32,11 +32,13 @@ if (!$db) {
     exit();
 }
 
-$sql = "INSERT INTO `user` (`name`, `email`, `password`, `activated`) VALUES ("
-    ."?, ?, ?, 1);";
+$db->assoc('name',      's', $user);
+$db->assoc('email',     's', $email);
+$db->assoc('password',  's', $passw);
+$db->assoc('activated', 'i', 1);
 
 try {
-    $id = $db->insert($sql, "sss", $user, $email, $passw);
+    $id = $db->insert('user');
     echo "Successfully created user with id $id.\n";
 } catch (Exception $e) {
     echo "Failed to create user: $e\n";
