@@ -46,6 +46,7 @@ class FrameworkRoute {
             if ($ar[count($ar)-1] == '') {
                 array_pop($ar);
             }
+            $last_key = ArrayUtil::last_key($ar);
             foreach ($ar as $key => $str) {
                 $tok = new FrameworkRouteToken();
                 if (substr($str, 0, 1) == ':') {
@@ -64,7 +65,7 @@ class FrameworkRoute {
                     // regular token
                     $tok->name = $str;
                 }
-                if ($key === array_key_last($ar)) {
+                if ($key === $last_key) {
                     $tok->controller_name = ucfirst($target[0]).'Controller';
                     $tok->action_name = $target[1];
                 }

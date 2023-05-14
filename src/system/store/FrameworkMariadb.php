@@ -226,7 +226,7 @@ class FrameworkMariadb implements FrameworkStore {
         foreach ($this->columns as $k => $v) {
             $columns .= "`$v`";
             $values .= "?";
-            if (!($k == $last_key)) {
+            if (!($k === $last_key)) {
                 $columns .= ",";
                 $values  .= ",";
             }

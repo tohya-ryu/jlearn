@@ -49,16 +49,14 @@ class FrameworkRouter {
             array_push($uri_route, $el);
         }
         $tokens = $this->prepared_routes[0]->next;
+        $last_key = ArrayUtil::last_key($uri_route);
         foreach ($uri_route as $key => $str) {
             foreach ($tokens as $tok) {
                 if ($tok->wildcard_f) {
                     if ($tok->match_condition) {
                         if (preg_match("/".$tok->match_condition."/", $str)) {
                             $this->params[$tok->name] = $str;
-                            if ($key === 
-                                array_key_last($uri_route) &&
-                                $tok->controller_name)
-                            {
+                            if (($key === $last_key)&& $tok->controller_name) {
                                 $this->match_controller =
                                     $tok->controller_name;
                                 $this->match_action = $tok->action_name;
@@ -72,10 +70,7 @@ class FrameworkRouter {
                         }
                     } else {
                         $this->params[$tok->name] = $str;
-                        if ($key ===
-                            array_key_last($uri_route) &&
-                            $tok->controller_name)
-                        {
+                        if (($key === $last_key) && $tok->controller_name) {
                             $this->match_controller = $tok->controller_name;
                             $this->match_action = $tok->action_name;
                             break 2;
@@ -86,10 +81,7 @@ class FrameworkRouter {
                     }
                 } else {
                     if ($tok->name == $str) {
-                        if ($key ===
-                            array_key_last($uri_route) &&
-                            $tok->controller_name)
-                        {
+                        if (($key === $last_key) && $tok->controller_name) {
                             $this->match_controller = $tok->controller_name;
                             $this->match_action = $tok->action_name;
                             break 2;
