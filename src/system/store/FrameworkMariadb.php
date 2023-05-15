@@ -24,9 +24,11 @@ class FrameworkMariadb implements FrameworkStore {
     # query builder
     private $query_type;
     private $table;
+    private $table_alias;
     private $values;
     private $typeident;
     private $columns;
+    private $conditions;
 
     public function __construct($config)
     {
@@ -43,6 +45,7 @@ class FrameworkMariadb implements FrameworkStore {
         $this->columns = array();
         $this->values = array();
         $this->typeident = "";
+        $this->conditions = array();
 
         $this->connections = array();
 
@@ -186,10 +189,6 @@ class FrameworkMariadb implements FrameworkStore {
         }
     }
 
-    public function update($sql, $types = null, $params = null)
-    {
-    }
-
     public function delete($sql, $types = null, $params = null)
     {
     }
@@ -223,13 +222,13 @@ class FrameworkMariadb implements FrameworkStore {
     public function insert_into($table)
     {
         $this->query_type = 'insert';
-        $this->table = $this->escape($table);
+        $this->table = $table;
     }
 
     public function update($table)
     {
         $this->query_type = 'update';
-        $this->table = $this->escape($table);
+        $this->table = $table;
     }
 
     public function run()
@@ -240,13 +239,87 @@ class FrameworkMariadb implements FrameworkStore {
             $ret = $this->insert();
             break;
         case 'update':
-            $ret = $this->update_table()
+            $ret = $this->update_table();
             break;
         }
-        $this->values = array();
-        $this->columns = array();
-        $this->typeident = "";
+        $this->values      = array();
+        $this->columns     = array();
+        $this->typeident   = "";
+        $this->table       = null;
+        $this->table_alias = false;
         return $ret;
+    }
+
+    public function select($column, $alias = false)
+    {
+    }
+
+    public function count($column)
+    {
+    }
+
+    public function from($table, $alias = false)
+    {
+        $this->table = $table;
+        $this->table_alias = $alias;
+    }
+
+    public function where($column, $op, $typeident, $value)
+    {
+        $ar = array(
+            'column' => $column,
+            'op' => $op,
+            'typeident' => $typeident,
+            'value' => $value,
+            'or' => false
+        );
+        array_push($this->conditions, $ar);
+        array_push($this->values, $value);
+        $this->typeident .= $typeident;
+    }
+
+    public function or_where($column, $op, $typeident, $value)
+    {
+    }
+
+    public function where_between($column, $typeidents, $value1, $value2)
+    {
+    }
+
+    public function or_where_between($column, $typeidents, $value1, $value2)
+    {
+    }
+
+    private function update_table()
+    {
+        $setters = "";
+        $values = "";
+        $last_key = ArrayUtil::last_key($this->columns);
+        foreach ($this->columns as $k => $v) {
+            $setters .= "`$v` = ?";
+            if (!($k === $last_key)) {
+                $setters .= ",";
+            }
+        }
+        $conditions = $this->collapse_conditions();
+        $sql = "UPDATE `{$this->table}` SET $setters $conditions;";
+        /*
+        var_dump($sql);
+        var_dump($this->typeident);
+        var_dump($this->values);
+        exit();
+         */
+        try {
+            $conn = $this->connections[$this->default_conn_key]->get();
+            $this->pquery($sql, $this->typeident, ...($this->values));
+            return true;
+        } catch (Exception $e) {
+            if ($this->transaction_f) {
+                $this->rollback();
+            }
+            $this->handle_exception($e);
+        }
+        return false;
     }
 
     private function insert()
@@ -273,6 +346,42 @@ class FrameworkMariadb implements FrameworkStore {
             }
             $this->handle_exception($e);
         }
+    }
+
+    private function collapse_conditions()
+    {
+        $sql = "";
+        $i = 0;
+        $handling_or = false;
+        foreach ($this->conditions as $cond) {
+            if ($i == 0) {
+                $sql = "WHERE ";
+            } else {
+                if ($cond['or'] && $handling_or) {
+                    $sql .= " OR ";
+                } else {
+                    $sql .= " AND ";
+                }
+            }
+            if ($i+1 < count($this->conditions) &&
+                $this->conditions[$i+1]['or'] &&
+                !$handling_or)
+            {
+                $sql .= "( ";
+                $handling_or = true;
+            }
+            $sql .= $cond['column'] . " ";
+            $sql .= $cond['op'] . " ? ";
+
+            $i++;
+            if ($handling_or && ($i == count($this->conditions)) ||
+                ($i+1 < count($this->conditions) && 
+                !$this->conditions[$i+1]['or']))
+            {
+                $sql .= ") ";
+            }
+        }
+        return $sql;
     }
 
 

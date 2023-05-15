@@ -53,27 +53,26 @@ class VocabService implements FrameworkServiceBase {
 
     public function update()
     {
-        $sql = "UPDATE `vocab` SET `kanji_name` = ?, `hiragana_name` = ?, ".
-            "`meanings` = ?, `wtype1` = ?, `wtype2` = ?, `wtype3` = ?, ".
-            "`wtype4` = ?, `wtype5` = ?, `wtype6` = ?, `wtype7` = ?, ".
-            "`jlpt` = ?, `transitivity` = ?, `tags` = ? WHERE ".
-            "`id` = ? AND `user_id` = ?";
-        $this->db->pquery($sql, 'sssiiiiiiiiisii',
-            trim($this->request->param->post('kanji')->value),
-            trim($this->request->param->post('hiragana')->value),
-            $this->request->param->post('meanings')->value,
-            $this->request->param->post('wtype1')->value,
-            $this->request->param->post('wtype2')->value,
-            $this->request->param->post('wtype3')->value,
-            $this->request->param->post('wtype4')->value,
-            $this->request->param->post('wtype5')->value,
-            $this->request->param->post('wtype6')->value,
-            $this->request->param->post('wtype7')->value,
-            $this->request->param->post('jlpt')->value,
-            $this->request->param->post('transitivity')->value,
-            trim($this->request->param->post('tags')->value),
-            $this->request->param->post('id')->value,
+        $rp = $this->request->param;
+        $this->db->update('vocab');
+        $this->db->set('kanji_name', 's', trim($rp->post('kanji')->value));
+        $this->db->set('hiragana_name', 's',
+            trim($rp->post('hiragana')->value));
+        $this->db->set('meanings', 's', $rp->post('meanings')->value);
+        $this->db->set('wtype1', 'i', $rp->post('wtype1')->value);
+        $this->db->set('wtype2', 'i', $rp->post('wtype2')->value);
+        $this->db->set('wtype3', 'i', $rp->post('wtype3')->value);
+        $this->db->set('wtype4', 'i', $rp->post('wtype4')->value);
+        $this->db->set('wtype5', 'i', $rp->post('wtype5')->value);
+        $this->db->set('wtype6', 'i', $rp->post('wtype6')->value);
+        $this->db->set('wtype7', 'i', $rp->post('wtype7')->value);
+        $this->db->set('jlpt', 'i', $rp->post('jlpt')->value);
+        $this->db->set('transitivity', 'i', $rp->post('transitivity')->value);
+        $this->db->set('tags', 's', trim($rp->post('tags')->value));
+        $this->db->where('`id`', '=', 'i', $rp->post('id')->value);
+        $this->db->where('`user_id`', '=', 'i',
             $this->controller->auth->get_user_id());
+        $this->db->run();
     }
 
     public function insert_new()

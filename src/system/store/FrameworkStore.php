@@ -14,12 +14,18 @@ interface FrameworkStore {
     public function handle_exception($e);
     public function query($sql);
     public function pquery($sql, $types, ...$params);
-    public function update($sql, $types = null, $params = null);
     public function delete($sql, $types = null, $params = null);
 
     public function insert_into($table);
     public function update($table);
     public function set($column, $typeident, $value);
+    public function select($column, $alias = false);
+    public function count($column);
+    public function where($column, $op, $typeident, $value);
+    public function or_where($column, $op, $typeident, $value);
+    public function where_between($column, $typeidents, $value1, $value2);
+    public function or_where_between($column, $typeidents, $value1, $value2);
+    public function from($table, $alias = false);
     public function run();
 
     public function prepare($sql);

@@ -50,18 +50,18 @@ class KanjiService implements FrameworkServiceBase {
 
     public function update()
     {
-        $sql = "UPDATE `kanji` SET `kanji` = ?, `onyomi` = ?, ".
-            "`kunyomi` = ?, `meanings` = ?, `jlpt` = ?, `tags` = ? WHERE ".
-            "`id` = ? AND `user_id` = ?";
-        $this->db->pquery($sql, 'ssssisii',
-            $this->request->param->post('kanji')->value,
-            trim($this->request->param->post('onyomi')->value),
-            trim($this->request->param->post('kunyomi')->value),
-            $this->request->param->post('meanings')->value,
-            $this->request->param->post('jlpt')->value,
-            trim($this->request->param->post('tags')->value),
-            $this->request->param->post('id')->value,
+        $rp = $this->request->param;
+        $this->db->update('kanji');
+        $this->db->set('kanji', 's', $rp->post('kanji')->value);
+        $this->db->set('onyomi', 's', trim($rp->post('onyomi')->value));
+        $this->db->set('kunyomi', 's', trim($rp->post('kunyomi')->value));
+        $this->db->set('meanings', 's', $rp->post('meanings')->value);
+        $this->db->set('jlpt', 'i', $rp->post('jlpt')->value);
+        $this->db->set('tags', 's', trim($rp->post('tags')->value));
+        $this->db->where('`id`', '=', 'i', $rp->post('id')->value);
+        $this->db->where('`user_id`', '=', 'i',
             $this->controller->auth->get_user_id());
+        $this->db->run();
     }
 
     public function insert_new()
@@ -127,7 +127,9 @@ class KanjiService implements FrameworkServiceBase {
         # kanji
         $this->validator->validate($this->request->param->post('kanji'));
         $this->validator->required();
-        $this->validator->maxlen(1);
+        if (mb_strlen($this->request->param->post('kanji')->value, 'UTF-8')>1){
+            $this->validator->set_error('kanji', 'String exceeds limit (1)');
+        }
         # onyomi
         $this->validator->validate($this->request->param->post('onyomi'));
         $this->validator->required();
