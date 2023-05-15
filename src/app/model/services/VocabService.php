@@ -80,33 +80,34 @@ class VocabService implements FrameworkServiceBase {
     {
         $request = FrameworkRequest::get();
         $time = (new DateTime())->getTimestamp();
-        $this->db->assoc('user_id', 'i',
+        $this->db->insert_into('vocab');
+        $this->db->set('user_id', 'i',
             $this->controller->auth->get_user_id());
-        $this->db->assoc('kanji_name', 's',
+        $this->db->set('kanji_name', 's',
             trim($request->param->post('kanji')->value));
-        $this->db->assoc('hiragana_name', 's',
+        $this->db->set('hiragana_name', 's',
             trim($request->param->post('hiragana')->value));
-        $this->db->assoc('meanings', 's',
+        $this->db->set('meanings', 's',
             $request->param->post('meanings')->value);
-        $this->db->assoc('creation_datetime', 'i', $time);
-        $this->db->assoc('update_datetime', 'i', $time);
-        $this->db->assoc('counter', 'i', 1);
-        $this->db->assoc('success_counter', 'i', 0);
-        $this->db->assoc('miss_counter', 'i', 1);
-        $this->db->assoc('success_rate', 'd', 0.00);
-        $this->db->assoc('wtype1', 'i',$request->param->post('wtype1')->value);
-        $this->db->assoc('wtype2', 'i',$request->param->post('wtype2')->value);
-        $this->db->assoc('wtype3', 'i',$request->param->post('wtype3')->value);
-        $this->db->assoc('wtype4', 'i',$request->param->post('wtype4')->value);
-        $this->db->assoc('wtype5', 'i',$request->param->post('wtype5')->value);
-        $this->db->assoc('wtype6', 'i',$request->param->post('wtype6')->value);
-        $this->db->assoc('wtype7', 'i',$request->param->post('wtype7')->value);
-        $this->db->assoc('jlpt', 'i', $request->param->post('jlpt')->value);
-        $this->db->assoc('tags', 's',
+        $this->db->set('creation_datetime', 'i', $time);
+        $this->db->set('update_datetime', 'i', $time);
+        $this->db->set('counter', 'i', 1);
+        $this->db->set('success_counter', 'i', 0);
+        $this->db->set('miss_counter', 'i', 1);
+        $this->db->set('success_rate', 'd', 0.00);
+        $this->db->set('wtype1', 'i',$request->param->post('wtype1')->value);
+        $this->db->set('wtype2', 'i',$request->param->post('wtype2')->value);
+        $this->db->set('wtype3', 'i',$request->param->post('wtype3')->value);
+        $this->db->set('wtype4', 'i',$request->param->post('wtype4')->value);
+        $this->db->set('wtype5', 'i',$request->param->post('wtype5')->value);
+        $this->db->set('wtype6', 'i',$request->param->post('wtype6')->value);
+        $this->db->set('wtype7', 'i',$request->param->post('wtype7')->value);
+        $this->db->set('jlpt', 'i', $request->param->post('jlpt')->value);
+        $this->db->set('tags', 's',
             trim($request->param->post('tags')->value));
-        $this->db->assoc('transitivity', 'i',
+        $this->db->set('transitivity', 'i',
             $request->param->post('transitivity')->value);
-        $this->new_id = $this->db->insert('vocab');
+        $this->new_id = $this->db->run();
         $this->new_str = HtmlUtil::escape(
             $this->request->param->post('kanji')->value);
     }

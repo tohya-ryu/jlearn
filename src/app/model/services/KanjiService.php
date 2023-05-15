@@ -68,25 +68,26 @@ class KanjiService implements FrameworkServiceBase {
     {
         $request = FrameworkRequest::get();
         $time = (new DateTime())->getTimestamp();
-        $this->db->assoc('user_id', 'i',
+        $this->db->insert_into('kanji');
+        $this->db->set('user_id', 'i',
             $this->controller->auth->get_user_id());
-        $this->db->assoc('kanji', 's', $request->param->post('kanji')->value);
-        $this->db->assoc('onyomi', 's',
+        $this->db->set('kanji', 's', $request->param->post('kanji')->value);
+        $this->db->set('onyomi', 's',
             trim($request->param->post('onyomi')->value));
-        $this->db->assoc('kunyomi', 's',
+        $this->db->set('kunyomi', 's',
             trim($request->param->post('kunyomi')->value));
-        $this->db->assoc('meanings', 's',
+        $this->db->set('meanings', 's',
             $request->param->post('meanings')->value);
-        $this->db->assoc('creation_datetime', 'i', $time);
-        $this->db->assoc('update_datetime', 'i', $time);
-        $this->db->assoc('counter', 'i', 1);
-        $this->db->assoc('success_counter', 'i', 0);
-        $this->db->assoc('miss_counter', 'i', 1);
-        $this->db->assoc('success_rate', 'd', 0.00);
-        $this->db->assoc('jlpt', 'i', $request->param->post('jlpt')->value);
-        $this->db->assoc('tags', 's',
+        $this->db->set('creation_datetime', 'i', $time);
+        $this->db->set('update_datetime', 'i', $time);
+        $this->db->set('counter', 'i', 1);
+        $this->db->set('success_counter', 'i', 0);
+        $this->db->set('miss_counter', 'i', 1);
+        $this->db->set('success_rate', 'd', 0.00);
+        $this->db->set('jlpt', 'i', $request->param->post('jlpt')->value);
+        $this->db->set('tags', 's',
             trim($request->param->post('tags')->value));
-        $this->new_id = $this->db->insert('kanji');
+        $this->new_id = $this->db->run();
         $this->new_str = HtmlUtil::escape(
             $this->request->param->post('kanji')->value);
     }

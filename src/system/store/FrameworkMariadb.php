@@ -22,6 +22,8 @@ class FrameworkMariadb implements FrameworkStore {
     private $result;
 
     # query builder
+    private $query_type;
+    private $table;
     private $values;
     private $typeident;
     private $columns;
@@ -211,14 +213,43 @@ class FrameworkMariadb implements FrameworkStore {
         }
     }
 
-    public function assoc($column, $typeident, $value)
+    public function set($column, $typeident, $value)
     {
         array_push($this->columns, $this->escape($column));
         array_push($this->values, $value);
         $this->typeident .= $typeident;
     }
 
-    public function insert($table)
+    public function insert_into($table)
+    {
+        $this->query_type = 'insert';
+        $this->table = $this->escape($table);
+    }
+
+    public function update($table)
+    {
+        $this->query_type = 'update';
+        $this->table = $this->escape($table);
+    }
+
+    public function run()
+    {
+        $ret = null;
+        switch ($this->query_type) {
+        case 'insert':
+            $ret = $this->insert();
+            break;
+        case 'update':
+            $ret = $this->update_table()
+            break;
+        }
+        $this->values = array();
+        $this->columns = array();
+        $this->typeident = "";
+        return $ret;
+    }
+
+    private function insert()
     {
         $columns = "";
         $values = "";
@@ -231,15 +262,11 @@ class FrameworkMariadb implements FrameworkStore {
                 $values  .= ",";
             }
         }
-        $sql = "INSERT INTO `$table` ($columns) VALUES ($values);";
+        $sql = "INSERT INTO `{$this->table}` ($columns) VALUES ($values);";
         try {
             $conn = $this->connections[$this->default_conn_key]->get();
             $this->pquery($sql, $this->typeident, ...($this->values));
-            $id = $conn->insert_id;
-            $this->values = array();
-            $this->columns = array();
-            $this->typeident = "";
-            return $id;
+            return $conn->insert_id;
         } catch (Exception $e) {
             if ($this->transaction_f) {
                 $this->rollback();

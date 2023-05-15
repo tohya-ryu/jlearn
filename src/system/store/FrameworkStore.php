@@ -17,8 +17,10 @@ interface FrameworkStore {
     public function update($sql, $types = null, $params = null);
     public function delete($sql, $types = null, $params = null);
 
-    public function assoc($column, $typeident, $value);
-    public function insert($table);
+    public function insert_into($table);
+    public function update($table);
+    public function set($column, $typeident, $value);
+    public function run();
 
     public function prepare($sql);
     public function bind($types, &...$params);
