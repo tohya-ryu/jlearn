@@ -1,7 +1,7 @@
 <?php
 
 FrameworkRoute::set('get', '/', 'main#index');
-FrameworkRoute::set('get', 'update/counters', 'main#count_words');
+FrameworkRoute::set('get', 'update/counters', 'main#update_word_count');
 
 FrameworkRoute::set('get', 'new/vocab', 'vocab#new_form');
 FrameworkRoute::set('post', 'new/vocab', 'vocab#new_submit');

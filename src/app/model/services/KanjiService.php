@@ -28,6 +28,31 @@ class KanjiService implements FrameworkServiceBase {
         $this->db = FrameworkStoreManager::get()->store();
     }
 
+    public function update_word_count()
+    {
+        $vserv = new VocabService($this->controller);
+        $sql = "SELECT `id`, `kanji`, `word_count` ".
+            "FROM `kanji` WHERE `user_id` = ?";
+        $res = $this->db->pquery($sql, 'i',
+            $this->controller->auth->get_user_id());
+        if ($res->num_rows > 0) {
+            while ($row = $res->fetch_assoc()) {
+                $vserv->lookup($row['kanji']); 
+                $words = $vserv->get_lookup_result();
+                if ($words) {
+                    $count = count($words);
+                    if ($count > $row['word_count']) {
+                        $this->db->update('kanji');
+                        $this->db->set('word_count', 'i', $count);
+                        $this->db->where('id', '=', 'i', $row['id']);
+                        $this->db->run();
+                    }
+                }
+            }
+
+        }
+    }
+
     public function fetch($id)
     {
         if ($this->data_obj)

@@ -26,6 +26,22 @@ class MainController extends FrameworkControllerBase {
         }
     }
 
+    public function update_word_count()
+    {
+        # GET
+        $this->response->set_type(FrameworkResponse::HTML);
+        $this->auth->use_csrf_prot();
+        if ($this->auth->attempt_login()) {
+            $serv = new KanjiService($this);
+            $serv->update_word_count();
+            $view = new MainView($this);
+            $view->index();
+            $this->response->send();
+        } else {
+            $this->redirect($this->base_uri('auth/login'));
+        }
+    }
+
     public function test()
     {
         //$db = FrameworkStoreManager::get()->store();

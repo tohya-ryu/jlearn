@@ -244,6 +244,7 @@ class FrameworkMariadb implements FrameworkStore {
         }
         $this->values      = array();
         $this->columns     = array();
+        $this->conditions  = array();
         $this->typeident   = "";
         $this->table       = null;
         $this->table_alias = false;
@@ -307,7 +308,6 @@ class FrameworkMariadb implements FrameworkStore {
         var_dump($sql);
         var_dump($this->typeident);
         var_dump($this->values);
-        exit();
          */
         try {
             $conn = $this->connections[$this->default_conn_key]->get();
