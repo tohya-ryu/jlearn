@@ -2,7 +2,7 @@
   <label for="kanji">Kanji</label>
   <input type="text" name="kanji" id="kanji" 
     placeholder="Japanese word in kanji if applicable" 
-    maxlength="120" size="50" 
+    maxlength="120" size="50" data-type="vocab" 
     value="<?php $this->print('kanji'); ?>" />
   <div id="validation-errors-kanji"></div>
 </div>
@@ -52,26 +52,28 @@
       'default_value' => $this->get('wtype4'))); ?>
   </select>
 
-  <select name="wtype5" id="wtype5" 
-    data-default="<?php $this->print('wtype5') ?>">
-  <?php $this->view->render('_wtype_options.html.php',
-    array('default' =>'-',
-      'default_value' => $this->get('wtype5'))); ?>
-  </select>
+  <div>
+    <select name="wtype5" id="wtype5" 
+      data-default="<?php $this->print('wtype5') ?>">
+    <?php $this->view->render('_wtype_options.html.php',
+      array('default' =>'-',
+        'default_value' => $this->get('wtype5'))); ?>
+    </select>
 
-  <select name="wtype6" id="wtype6" 
-    data-default="<?php $this->print('wtype6') ?>">
-  <?php $this->view->render('_wtype_options.html.php',
-    array('default' =>'-',
-      'default_value' => $this->get('wtype6'))); ?>
-  </select>
+    <select name="wtype6" id="wtype6" 
+      data-default="<?php $this->print('wtype6') ?>">
+    <?php $this->view->render('_wtype_options.html.php',
+      array('default' =>'-',
+        'default_value' => $this->get('wtype6'))); ?>
+    </select>
 
-  <select name="wtype7" id="wtype7" 
-    data-default="<?php $this->print('wtype7') ?>">
-  <?php $this->view->render('_wtype_options.html.php',
-    array('default' =>'-',
-      'default_value' => $this->get('wtype7'))); ?>
-  </select>
+    <select name="wtype7" id="wtype7" 
+      data-default="<?php $this->print('wtype7') ?>">
+    <?php $this->view->render('_wtype_options.html.php',
+      array('default' =>'-',
+        'default_value' => $this->get('wtype7'))); ?>
+    </select>
+  </div>
   <div id="validation-errors-wtype1"></div>
   <div id="validation-errors-wtype2"></div>
   <div id="validation-errors-wtype3"></div>

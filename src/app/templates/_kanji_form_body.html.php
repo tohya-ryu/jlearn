@@ -1,6 +1,7 @@
 <div>
   <label for="kanji">Kanji Character</label>
   <input type="text" name="kanji" id="kanji" maxlength="3" size="3" 
+    data-type="kanji" 
     value="<?php $this->print('kanji'); ?>" />
   <div id="validation-errors-kanji"></div>
 </div>

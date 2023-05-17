@@ -4,6 +4,7 @@ class KanjiController extends FrameworkControllerBase {
 
     public $auth;
     public $practice;
+    public $service;
 
     public function __construct()
     {
@@ -112,6 +113,22 @@ class KanjiController extends FrameworkControllerBase {
             $this->response->send();
         } else {
             $this->redirect($this->base_uri('auth/login'));
+        }
+    }
+
+    public function fetch()
+    {
+        $this->response->set_type(FrameworkResponse::HTML);
+        if ($this->auth->attempt_login()) {
+            $search = $this->request->param->uri('search')->value;
+            $search = urldecode(urldecode(urldecode($search)));
+            $this->service->lookup($search);
+            $view = new KanjiView($this);
+            $view->lookup();
+            $this->response->send();
+        } else {
+            // ideally give http error response
+            exit();
         }
     }
 

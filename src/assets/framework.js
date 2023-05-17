@@ -179,3 +179,11 @@ framework.util.rsubnodes = function(node) // remove sub nodes
     node.removeChild(node.firstChild);
   }
 }
+
+framework.util.base_uri = function(str)
+{
+  if (framework.root_dir.length > 0)
+    return `/${framework.root_dir}/${str}`;
+  else
+    return `/${str}`;
+}

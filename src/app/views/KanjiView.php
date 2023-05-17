@@ -9,6 +9,15 @@ class KanjiView extends FrameworkViewBase {
     public $formdata;
     public $kanji;
 
+    public $lookup_result;
+
+    public function lookup()
+    {
+        $this->set_layout('layout-empty.html.php');
+        $this->lookup_result = $this->controller->service->get_lookup_result();
+        $this->render('lookup_result_kanji.html.php');
+    }
+
     public function new()
     {
         $this->init();

@@ -9,6 +9,15 @@ class VocabView extends FrameworkViewBase {
     public $formdata;
     public $vocab;
 
+    public $lookup_result;
+
+    public function lookup()
+    {
+        $this->set_layout('layout-empty.html.php');
+        $this->lookup_result = $this->controller->service->get_lookup_result();
+        $this->render('lookup_result_vocab.html.php');
+    }
+
     public function new()
     {
         $this->init();

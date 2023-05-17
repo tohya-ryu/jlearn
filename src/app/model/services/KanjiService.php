@@ -17,6 +17,8 @@ class KanjiService implements FrameworkServiceBase {
     private $formdata;
     private $data_obj;
 
+    private $lookup_result;
+
     public function __construct($controller)
     {
         $this->controller = $controller;
@@ -39,6 +41,31 @@ class KanjiService implements FrameworkServiceBase {
         else
             $this->data_obj = new KanjiData($row);
         return $this->data_obj;
+    }
+
+    public function lookup($search)
+    {
+        $search = trim($search);
+        $sql = "SELECT * FROM `kanji` WHERE `user_id` = ? AND `kanji` = ?";
+        $res = $this->db->pquery($sql, 'is',
+            $this->controller->auth->get_user_id(), $search);
+        if ($res->num_rows < 1) {
+            $this->lookup_result = null;
+        } else {
+            $ar = array();
+            while ($row = $res->fetch_assoc()) {
+                $obj = new KanjiData($row);
+                $obj->to_html();
+                array_push($ar, $obj);
+            }
+            $this->lookup_result = $ar;
+        }
+
+    }
+
+    public function get_lookup_result()
+    {
+        return $this->lookup_result;
     }
 
     public function check_kanji()
