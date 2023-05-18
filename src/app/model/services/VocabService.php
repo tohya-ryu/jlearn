@@ -43,12 +43,13 @@ class VocabService implements FrameworkServiceBase {
         return $this->data_obj;
     }
 
-    public function lookup($search)
+    public function lookup($column, $op, $search)
     {
         $search = trim($search);
-        $search = "%$search%";
-        $sql = "SELECT * FROM `vocab` WHERE `user_id` = ? AND `kanji_name` ".
-            "LIKE ?";
+        if ($op === 'LIKE')
+            $search = "%$search%";
+        $sql = "SELECT * FROM `vocab` WHERE `user_id` = ? AND `$column` ".
+            "$op ?";
         $res = $this->db->pquery($sql, 'is',
             $this->controller->auth->get_user_id(), $search);
         if ($res->num_rows < 1) {

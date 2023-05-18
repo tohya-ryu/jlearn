@@ -149,3 +149,7 @@ div.line {
 .framework-validation-error {
   border-color: red;
 }
+
+.lookup-limiter {
+  max-width: 400px;
+}

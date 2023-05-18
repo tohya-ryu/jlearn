@@ -1,3 +1,4 @@
+<?php $request = FrameworkRequest::get() ?>
 <?php $this->view->render('_menu.html.php'); ?>
 
 <div class="left_container">
@@ -15,10 +16,12 @@
         <option value="1" selected>Words by Kanji</option>
         <option value="2">Words by Hiragana</option>
         <option value="3">Words by Meanings</option>
-        <option value="4">Kanji by Kanji</option>
-        <option value="5">Kanji by Onyomi</option>
-        <option value="6">Kanji by Kunyomi</option>
-        <option value="7">Kanji by Meanings</option>
+        <option value="4">Words by Tags</option>
+        <option value="5">Kanji by Kanji</option>
+        <option value="6">Kanji by Onyomi</option>
+        <option value="7">Kanji by Kunyomi</option>
+        <option value="8">Kanji by Meanings</option>
+        <option value="9">Kanji by Tags</option>
       </select>
     </div>
 
@@ -39,6 +42,53 @@
 </div>
 
 <div class="right_container">
-  <div id="keyword_found_container"></div>
+  <div id="keyword_found_container">
+    <?php if ($this->view->find_result): ?>
+      <?php if ($request->param->post('find-type')->value < 5): ?>
+        <?php foreach ($this->view->find_result as $vocab): ?>
+          <div>
+            <a href="<?php $this->base_uri('edit/vocab/'.$vocab->id); ?>" 
+              class="kanji_title"><?php echo $vocab->kanji_name ?>
+            </a>
+          </div>
+          <div class="line"></div>
+          <div>
+            <?php echo $vocab->hiragana_name ?>
+          </div>
+          <div class="line"></div>
+          <div class="lookup-limiter">
+            <?php echo $vocab->meanings ?>
+          </div>
+          <div class="line"></div>
+          <div class="lookup-limiter">
+            <?php echo $vocab->tags ?>
+          </div>
+        <?php endforeach ?>
+      <?php else : ?>
+        <?php foreach ($this->view->find_result as $kanji): ?>
+          <div>
+            <a href="<?php $this->base_uri('edit/kanji/'.$kanji->id); ?>" 
+              class="kanji_title"><?php echo $kanji->kanji ?>
+            </a>
+          </div>
+          <div class="line"></div>
+          <div>
+            <?php echo $kanji->onyomi ?>
+          </div>
+          <div>
+            <?php echo $kanji->kunyomi ?>
+          </div>
+          <div class="line"></div>
+          <div class="lookup-limiter">
+            <?php echo $kanji->meanings ?>
+          </div>
+          <div class="line"></div>
+          <div class="lookup-limiter">
+            <?php echo $kanji->tags ?>
+          </div>
+        <?php endforeach ?>
+      <?php endif ?>
+    <?php endif ?>
+  </div>
 </div>
 <div class="clearfix"></div>

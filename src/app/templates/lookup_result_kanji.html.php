@@ -12,7 +12,7 @@
   <div><?php echo $row->onyomi ?></div>
   <div><?php echo $row->kunyomi ?></div>
   <div class="line"></div>
-  <div><?php echo $row->meanings ?></div>
+  <div class="lookup-limiter"><?php echo $row->meanings ?></div>
   <?php $i++ ?>
 
 <?php endforeach ?>

@@ -6,6 +6,7 @@ class MainView extends FrameworkViewBase {
     public $csrf_token;
 
     public $username;
+    public $find_result;
 
     public function index()
     {
@@ -25,6 +26,7 @@ class MainView extends FrameworkViewBase {
         $this->username = $this->enc(
             $this->controller->auth->get_user_name());
         $this->set_layout('layout.html.php');
+        $this->find_result = $this->controller->service->find_result;
         $this->render('find.html.php');
     }
 

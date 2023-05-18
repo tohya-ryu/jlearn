@@ -124,7 +124,7 @@ class VocabController extends FrameworkControllerBase {
         if ($this->auth->attempt_login()) {
             $search = $this->request->param->uri('search')->value;
             $search = urldecode(urldecode(urldecode($search)));
-            $this->service->lookup($search);
+            $this->service->lookup('kanji_name', 'LIKE', $search);
             $view = new VocabView($this);
             $view->lookup();
             $this->response->send();

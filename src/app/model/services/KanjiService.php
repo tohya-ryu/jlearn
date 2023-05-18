@@ -37,7 +37,7 @@ class KanjiService implements FrameworkServiceBase {
             $this->controller->auth->get_user_id());
         if ($res->num_rows > 0) {
             while ($row = $res->fetch_assoc()) {
-                $vserv->lookup($row['kanji']); 
+                $vserv->lookup('kanji', '=', $row['kanji']); 
                 $words = $vserv->get_lookup_result();
                 if ($words) {
                     $count = count($words);
@@ -68,10 +68,12 @@ class KanjiService implements FrameworkServiceBase {
         return $this->data_obj;
     }
 
-    public function lookup($search)
+    public function lookup($column, $op, $search)
     {
         $search = trim($search);
-        $sql = "SELECT * FROM `kanji` WHERE `user_id` = ? AND `kanji` = ?";
+        if ($op === 'LIKE')
+            $search = "%$search%";
+        $sql = "SELECT * FROM `kanji` WHERE `user_id` = ? AND `$column` $op ?";
         $res = $this->db->pquery($sql, 'is',
             $this->controller->auth->get_user_id(), $search);
         if ($res->num_rows < 1) {

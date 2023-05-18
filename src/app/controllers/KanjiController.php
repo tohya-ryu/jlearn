@@ -122,7 +122,7 @@ class KanjiController extends FrameworkControllerBase {
         if ($this->auth->attempt_login()) {
             $search = $this->request->param->uri('search')->value;
             $search = urldecode(urldecode(urldecode($search)));
-            $this->service->lookup($search);
+            $this->service->lookup('kanji', '=', $search);
             $view = new KanjiView($this);
             $view->lookup();
             $this->response->send();
