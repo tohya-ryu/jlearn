@@ -42,6 +42,14 @@ class MainController extends FrameworkControllerBase {
         }
     }
 
+    public function find_data()
+    {
+    }
+
+    public function find_data_submit()
+    {
+    }
+
     public function test()
     {
         //$db = FrameworkStoreManager::get()->store();

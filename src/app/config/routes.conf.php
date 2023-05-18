@@ -18,6 +18,7 @@ FrameworkRoute::set('post', 'edit/kanji', 'kanji#edit_submit');
 FrameworkRoute::set('get', 'fetch/kanji/:search', 'kanji#fetch');
 
 FrameworkRoute::set('get', 'find', 'main#find_data');
+FrameworkRoute::set('post', 'find', 'main#find_data_submit');
 
 require 'app/config/auth-routes.conf.php';
 
