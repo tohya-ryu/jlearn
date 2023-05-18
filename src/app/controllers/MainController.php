@@ -44,10 +44,21 @@ class MainController extends FrameworkControllerBase {
 
     public function find_data()
     {
+        # GET
+        $this->response->set_type(FrameworkResponse::HTML);
+        $this->auth->use_csrf_prot();
+        if ($this->auth->attempt_login()) {
+            $view = new MainView($this);
+            $view->find();
+            $this->response->send();
+        } else {
+            $this->redirect($this->base_uri('auth/login'));
+        }
     }
 
     public function find_data_submit()
     {
+        # POST
     }
 
     public function test()

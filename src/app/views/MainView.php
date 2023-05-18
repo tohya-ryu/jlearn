@@ -18,4 +18,14 @@ class MainView extends FrameworkViewBase {
         $this->render('landing.html.php');
     }
 
+    public function find()
+    {
+        $this->csrf_token = $this->controller->auth->get_csrf_token(true);
+        $this->title = 'jlearn 2.0';
+        $this->username = $this->enc(
+            $this->controller->auth->get_user_name());
+        $this->set_layout('layout.html.php');
+        $this->render('find.html.php');
+    }
+
 }
