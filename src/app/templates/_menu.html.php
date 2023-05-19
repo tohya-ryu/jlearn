@@ -1,4 +1,4 @@
-<div>Logged in as <?php echo $this->view->username ?></div>
+<!-- <div>Logged in as <?php echo $this->view->username ?></div> -->
 <div id="menu-container">
   <div>
     <a href="<?php $this->base_uri('auth/logout') ?>">Logout</a>

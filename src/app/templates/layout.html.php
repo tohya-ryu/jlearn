@@ -14,7 +14,9 @@
   </head>
     
   <body>
-    <?php $this->view->render_content($this->data); ?>
+    <div id="app-window">
+      <?php $this->view->render_content($this->data); ?>
+    </div>
   </body>
 
 </html>

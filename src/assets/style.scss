@@ -1,0 +1,57 @@
+@import 'normalize';
+
+@mixin media-query($device) {
+  @media screen and (min-width: $device) {
+    @content;
+  }
+}
+
+$primary-color: #9cd6e4;
+$secondary-color: #FFF8E7;
+$app-background-color: $secondary-color;
+$background-color: white;
+
+$desktop-start: 800px;
+
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: $background-color;
+}
+
+div.line {
+	margin-top: 4px;
+	margin-bottom: 4px;
+	margin-left: 0px;
+	height: 1px;
+	width: 300px;
+	background-color: #bdc8cf;
+}
+
+.alert {
+	color: red;
+}
+
+.framework-validation-error {
+  border-color: red;
+}
+
+.lookup-limiter {
+  max-width: 400px;
+}
+
+#app-window {
+  background-color: $app-background-color;
+  padding: 8px;
+  @include media-query($desktop-start) {
+    max-width: 800px;
+    margin: 8px;
+    border: 1px solid $primary-color;
+  }
+}
+
+#menu-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
