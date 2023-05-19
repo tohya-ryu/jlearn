@@ -307,6 +307,19 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   background-color: white; }
 
+/* form elements */
+select {
+  border: 1px solid #1c5765;
+  background-color: #d8eff4;
+  font-size: 0.8em; }
+
+option {
+  font-size: 0.9rem; }
+
+input, button {
+  border: 1px solid #1c5765;
+  background-color: #d8eff4; }
+
 div.line {
   margin-top: 4px;
   margin-bottom: 4px;

@@ -9,7 +9,9 @@
 $alice-blue: #9cd6e4;
 $cosmic-latte: #fff8e7;
 
-$primary-color: darken($alice-blue, 50%);;
+$primary-color: darken($alice-blue, 50%);
+$primary-color-medium: $alice-blue;
+$primary-color-light: lighten($alice-blue, 15%);
 $secondary-color: #FFF8E7;
 $app-background-color: $cosmic-latte;
 $background-color: white;
@@ -22,6 +24,23 @@ $desktop-start: 800px;
 body {
   font-family: Helvetica, Arial, sans-serif;
   background-color: $background-color;
+}
+
+/* form elements */
+
+select {
+  border: 1px solid $primary-color;
+  background-color: $primary-color-light;
+  font-size: 0.8em;
+}
+
+option {
+  font-size: 0.9rem;
+}
+
+input, button {
+  border: 1px solid $primary-color;
+  background-color: $primary-color-light;
 }
 
 div.line {
