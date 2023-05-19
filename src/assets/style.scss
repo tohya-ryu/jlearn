@@ -6,10 +6,15 @@
   }
 }
 
-$primary-color: #9cd6e4;
+$alice-blue: #9cd6e4;
+$cosmic-latte: #fff8e7;
+
+$primary-color: darken($alice-blue, 50%);;
 $secondary-color: #FFF8E7;
-$app-background-color: $secondary-color;
+$app-background-color: $cosmic-latte;
 $background-color: white;
+
+$heading-color: $primary-color;
 
 $desktop-start: 800px;
 
@@ -45,8 +50,24 @@ div.line {
   padding: 8px;
   @include media-query($desktop-start) {
     max-width: 800px;
-    margin: 8px;
+    margin: 0.6em;
     border: 1px solid $primary-color;
+  }
+}
+
+#app-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: $heading-color;
+  @include media-query($desktop-start) {
+    text-decoration: none;
+    position: absolute;
+    top: 0;
+    background-color: $app-background-color;
+    border-left: 1px solid $primary-color;
+    border-right: 1px solid $primary-color;
+    padding: 0 0.2em 0 0.2em;
   }
 }
 

@@ -15,6 +15,7 @@
     
   <body>
     <div id="app-window">
+      <div id="app-title"><?php echo $this->view->title ?></div>
       <?php $this->view->render_content($this->data); ?>
     </div>
   </body>

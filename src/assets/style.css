@@ -325,13 +325,28 @@ div.line {
   max-width: 400px; }
 
 #app-window {
-  background-color: #FFF8E7;
+  background-color: #fff8e7;
   padding: 8px; }
   @media screen and (min-width: 800px) {
     #app-window {
       max-width: 800px;
-      margin: 8px;
-      border: 1px solid #9cd6e4; } }
+      margin: 0.6em;
+      border: 1px solid #1c5765; } }
+
+#app-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #1c5765; }
+  @media screen and (min-width: 800px) {
+    #app-title {
+      text-decoration: none;
+      position: absolute;
+      top: 0;
+      background-color: #fff8e7;
+      border-left: 1px solid #1c5765;
+      border-right: 1px solid #1c5765;
+      padding: 0 0.2em 0 0.2em; } }
 
 #menu-container {
   display: flex;
