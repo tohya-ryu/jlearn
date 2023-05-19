@@ -1,4 +1,4 @@
-<?php $this->view->render('_menu.html.php'); ?>
+<?php $this->view->render('_menu.html.php', array('page'=>'new_kanji')); ?>
 
 <div class="left_container">
   <form id="kanji-new" class="framework-form" data-method="post">

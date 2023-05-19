@@ -1,4 +1,4 @@
-<?php $this->view->render('_menu.html.php'); ?>
+<?php $this->view->render('_menu.html.php', array('page'=>'')); ?>
 
 <div class="left_container">
   <form id="vocab-edit" class="framework-form" data-method="post">

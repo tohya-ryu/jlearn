@@ -6,13 +6,28 @@
   }
 }
 
+
 $alice-blue: #9cd6e4;
 $cosmic-latte: #fff8e7;
+$grey: #e2e2e2;
+
+$text-color: black;
 
 $primary-color: darken($alice-blue, 50%);
 $primary-color-medium: $alice-blue;
 $primary-color-light: lighten($alice-blue, 15%);
-$secondary-color: #FFF8E7;
+$primary-color-shadow: rgba(28, 87, 101, .2);
+
+$secondary-color: darken(#de9ae2, 50%);
+$secondary-color-medium: #de9ae2;
+$secondary-color-light: lighten(#de9ae2, 15%);
+$secondary-color-shadow: rgba(93, 28, 97, .2);
+
+$disabled-color: darken($grey, 50%);
+$disabled-color-medium: $grey;
+$disabled-color-light: lighten($grey, 15%);
+$disabled-color-shadow: rgba(99, 99, 99, .2);
+
 $app-background-color: $cosmic-latte;
 $background-color: white;
 
@@ -20,9 +35,13 @@ $heading-color: $primary-color;
 
 $desktop-start: 800px;
 
+$spacing-unit: 0.4em;
+
 
 body {
+  font-size: 0.9em;
   font-family: Helvetica, Arial, sans-serif;
+  color: $text-color;
   background-color: $background-color;
 }
 
@@ -31,11 +50,6 @@ body {
 select {
   border: 1px solid $primary-color;
   background-color: $primary-color-light;
-  font-size: 0.8em;
-}
-
-option {
-  font-size: 0.9rem;
 }
 
 input, button {
@@ -94,4 +108,41 @@ div.line {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+  margin-top: 0.5em;
+}
+
+a.menu-link {
+  text-decoration: none;
+  flex-basis: 6em;
+  color: $text-color;
+  border: 1px solid $primary-color;
+  padding: 0.2em 1.2em 0.2em 1.2em;
+  text-align: center;
+  background-color: $primary-color-light;
+  margin-bottom: $spacing-unit;
+  box-shadow: 4px 4px 2px 1px $primary-color-shadow;
+  &:visited {
+    color: $text-color;
+  }
+  &:hover {
+    border: 1px solid $secondary-color;
+    background-color: $secondary-color-light;
+    box-shadow: 4px 4px 2px 1px $secondary-color-shadow;
+  }
+}
+
+span.menu-link-disabled {
+  border: 1px solid $disabled-color;
+  padding: 0.2em 1.2em 0.2em 1.2em;
+  text-align: center;
+  background-color: $disabled-color-light;
+  flex-basis: 6em;
+  margin-bottom: $spacing-unit;
+  box-shadow: 4px 4px 2px 1px $disabled-color-shadow;
+}
+
+.button {
+  &:focus {
+    box-shadow: none;
+  }
 }

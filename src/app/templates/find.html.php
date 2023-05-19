@@ -1,5 +1,5 @@
 <?php $request = FrameworkRequest::get() ?>
-<?php $this->view->render('_menu.html.php'); ?>
+<?php $this->view->render('_menu.html.php', array('page'=>'search')); ?>
 
 <div class="left_container">
   <form id="find" class="framework-form" method="post">
