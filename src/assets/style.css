@@ -153,3 +153,9 @@ div.line {
 .lookup-limiter {
   max-width: 400px;
 }
+
+#menu-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
