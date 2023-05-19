@@ -1,7 +1,7 @@
 # jlearn
 build.dev.sh
 /src/scripts/import*
-#.sass-cache/
+.sass-cache/
 
 # Swap
 [._]*.s[a-v][a-z]
