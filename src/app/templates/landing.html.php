@@ -189,7 +189,7 @@ $ignore_month    = $time - 2419200;
       <option value="4">N4</option>
       <option value="5">N5</option>
     </select>
-    <div class="line"></line>
+    <div class="line"></div>
 
     <p>Tags (custom filters)</p>
     <input type="text" name="custom" value="" maxlength="120" size="80" />
