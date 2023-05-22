@@ -37,6 +37,8 @@ $desktop-start: 800px;
 
 $spacing-unit: 0.4em;
 
+$input-marker-color: $primary-color;
+
 
 body {
   font-size: 0.9em;
@@ -166,7 +168,7 @@ span.menu-link-disabled {
 }
 
 .input-container {
-  border-left: 0.3em solid $secondary-color;
+  border-left: 0.3em solid $input-marker-color;
   padding-left: $spacing-unit;
   margin-bottom: $spacing-unit;
 }
@@ -180,7 +182,7 @@ span.menu-link-disabled {
   margin-bottom: $spacing-unit;
   @include media-query($desktop-start) {
     display: inline-block;
-    width: 200px;
+    width: 400px;
   }
 }
 
