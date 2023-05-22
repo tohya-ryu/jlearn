@@ -22,7 +22,7 @@
     </div>
 
     <div>
-      <button ctype="button" data-uri="<?php $this->base_uri("edit/vocab"); ?>" 
+      <button type="button" data-uri="<?php $this->base_uri("edit/vocab"); ?>" 
         class="framework-form-submit button">
         Submit
       </button>

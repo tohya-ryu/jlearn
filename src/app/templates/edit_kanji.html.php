@@ -15,7 +15,7 @@
     <?php $this->view->render('_kanji_form_body.html.php',
       $this->view->formdata); ?>
 
-    <div>
+    <div class="input-container">
       <input type="checkbox" name="allow-duplicate" 
         id="allow-duplicate" />
       <label for="allow-duplicate">Allow duplicate</label>
@@ -23,7 +23,7 @@
 
     <div>
       <button type="button" data-uri="<?php $this->base_uri("edit/kanji"); ?>" 
-        class="framework-form-submit">
+        class="framework-form-submit button">
         Submit
       </button>
     </div>

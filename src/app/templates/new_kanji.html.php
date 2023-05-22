@@ -20,7 +20,7 @@
 
     <div>
       <button type="button" data-uri="<?php $this->base_uri("new/kanji"); ?>" 
-        class="framework-form-submit">
+        class="framework-form-submit button">
         Submit
       </button>
     </div>
