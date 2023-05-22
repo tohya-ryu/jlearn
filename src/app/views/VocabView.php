@@ -21,6 +21,7 @@ class VocabView extends FrameworkViewBase {
     public function new()
     {
         $this->init();
+        $this->title = 'jlearn::new word';
         $this->csrf_token = $this->controller->auth->get_csrf_token(true,
             'jlearn/vocab');
         $this->formdata = array(
@@ -44,12 +45,14 @@ class VocabView extends FrameworkViewBase {
     public function invalid_id()
     {
         $this->init();
+        $this->title = 'jlearn::update word';
         $this->render('edit_invalid_id.html.php');
     }
 
     public function edit()
     {
         $this->init();
+        $this->title = 'jlearn::update word';
         $this->csrf_token = $this->controller->auth->get_csrf_token(true,
             'jlearn/vocab');
         $this->formdata = array(
@@ -73,12 +76,14 @@ class VocabView extends FrameworkViewBase {
     public function practice_end()
     {
         $this->init();
+        $this->title = 'jlearn::practice words';
         $this->render('practice_end.html.php');
     }
 
     public function practice()
     {
         $this->init();
+        $this->title = 'jlearn::practice words';
 
         $this->csrf_token = $this->controller->auth->get_csrf_token(true,
             'jlearn');
@@ -154,7 +159,6 @@ class VocabView extends FrameworkViewBase {
 
     private function init()
     {
-        $this->title = 'jlearn 2.0';
         $this->username = $this->enc(
             $this->controller->auth->get_user_name());
         $this->set_layout('layout.html.php');

@@ -21,6 +21,7 @@ class KanjiView extends FrameworkViewBase {
     public function new()
     {
         $this->init();
+        $this->title = 'jlearn::new kanji';
         $this->csrf_token = $this->controller->auth->get_csrf_token(true,
             'jlearn/kanji');
         $this->formdata = array(
@@ -37,12 +38,14 @@ class KanjiView extends FrameworkViewBase {
     public function invalid_id()
     {
         $this->init();
+        $this->title = 'jlearn::update kanji';
         $this->render('edit_invalid_id.html.php');
     }
 
     public function edit()
     {
         $this->init();
+        $this->title = 'jlearn::update kanji';
         $this->csrf_token = $this->controller->auth->get_csrf_token(true,
             'jlearn/kanji');
         $this->formdata = array(
@@ -59,6 +62,7 @@ class KanjiView extends FrameworkViewBase {
     public function practice_end()
     {
         $this->init();
+        $this->title = 'jlearn::practice kanjis';
         $this->render('practice_end.html.php');
     }
 
@@ -67,6 +71,7 @@ class KanjiView extends FrameworkViewBase {
         $this->csrf_token = $this->controller->auth->get_csrf_token(true,
             'jlearn');
         $this->init();
+        $this->title = 'jlearn::practice kanjis';
 
         $this->formdata = $this->controller->practice->get_formdata();
         $this->kanji = $this->controller->practice->get_data();
@@ -106,7 +111,6 @@ class KanjiView extends FrameworkViewBase {
 
     private function init()
     {
-        $this->title = 'jlearn 2.0';
         $this->username = $this->enc(
             $this->controller->auth->get_user_name());
         $this->set_layout('layout.html.php');
