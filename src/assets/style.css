@@ -374,6 +374,13 @@ div.line {
   justify-content: space-around;
   margin-top: 0.5em; }
 
+a {
+  color: #1c5765; }
+  a:visited {
+    color: #1c5765; }
+  a:hover {
+    cursor: pointer; }
+
 a.menu-link {
   text-decoration: none;
   flex-basis: 6em;
@@ -427,5 +434,11 @@ span.menu-link-disabled {
 
 .input-container.with-border {
   border: 1px solid, #5d1c61; }
+
+#hiragana, #content {
+  display: none; }
+
+.bm {
+  margin-bottom: 0.4em; }
 
 /*# sourceMappingURL=style.css.map */

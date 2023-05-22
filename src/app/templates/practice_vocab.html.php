@@ -1,45 +1,37 @@
 <?php $this->view->render('_menu.html.php', array('page'=>'')); ?>
 
-<div>
+<h2 class="title">
 <?php echo $this->view->formdata->get_current_word_counter() ?> / 
 <?php echo $this->view->formdata->get_query_counter() ?>
+</h2>
 
-</div>
-
-<div>
+<div class="input-container">
   <span class="kanji_title"><?php echo $this->view->vocab->kanji_name ?></span>
   <span class="wordtype">(<?php $this->print('word_type_text') ?>)</span>
 </div>
 
-<div class="line"></div>
-
-<div>
-  <a onclick="document.getElementById('hiragana').style.display = 'block'">
-    ひらがな表示
-  </a>
+<div class="input-container">
+  <div class="bm">
+    <a onclick="document.getElementById('hiragana').style.display = 'block'">
+      ひらがな表示
+    </a>
+  </div>
+  <div id="hiragana" class="hiragana_title bm">
+    <?php echo $this->view->vocab->hiragana_name; $this->print('word_trans') ?>
+  </div>
 </div>
 
-<div class="line"></div>
-
-<div id="hiragana" class="hiragana_title">
-  <?php echo $this->view->vocab->hiragana_name; $this->print('word_trans') ?>
+<div class="input-container">
+  <div class="bm">
+    <a onclick="document.getElementById('content').style.display = 'block'">
+      回答表示 </a>
+  </div>
+  <div id="content" class="content bm">
+    <?php echo $this->view->vocab->meanings; ?>
+  </div>
 </div>
 
-<div class="line"></div>
-
-<div>
-  <a onclick="document.getElementById('content').style.display = 'block'">
-    回答表示 </a>
-</div>
-
-<div class="line"></div>
-
-<div id="content" class="content">
-  <?php echo $this->view->vocab->meanings; ?>
-</div>
-
-<div class="line"></div>
-<div>
+<div class="bm">
   <form action="<?php $this->base_uri('practice/vocab') ?>" method="post" 
       accept-charset="utf-8">
 
@@ -91,8 +83,6 @@
       value="<?php $this->print('query_counter') ?>" />
     <input type="hidden" name="current_word_counter" 
       value="<?php $this->print('current_word_counter') ?>" />
-
-    <div class="line"></div>
 
     <p><input type="submit" name="form-submit" value="次へ" /></p>
 

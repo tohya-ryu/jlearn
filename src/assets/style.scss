@@ -32,6 +32,7 @@ $app-background-color: $cosmic-latte;
 $background-color: white;
 
 $heading-color: $primary-color;
+$link-color: $primary-color;
 
 $desktop-start: 800px;
 
@@ -125,6 +126,16 @@ div.line {
   margin-top: 0.5em;
 }
 
+a {
+  color: $link-color;
+  &:visited {
+    color: $link-color;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 a.menu-link {
   text-decoration: none;
   flex-basis: 6em;
@@ -188,4 +199,12 @@ span.menu-link-disabled {
 
 .input-container.with-border {
   border: 1px solid, $secondary-color;
+}
+
+#hiragana, #content {
+  display: none;
+}
+
+.bm {
+  margin-bottom: $spacing-unit;
 }
