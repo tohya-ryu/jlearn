@@ -37,7 +37,7 @@ class KanjiService implements FrameworkServiceBase {
             $this->controller->auth->get_user_id());
         if ($res->num_rows > 0) {
             while ($row = $res->fetch_assoc()) {
-                $vserv->lookup('kanji', '=', $row['kanji']); 
+                $vserv->lookup('kanji_name', 'LIKE', $row['kanji']); 
                 $words = $vserv->get_lookup_result();
                 if ($words) {
                     $count = count($words);
