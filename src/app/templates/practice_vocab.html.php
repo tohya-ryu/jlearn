@@ -16,7 +16,7 @@
       ひらがな表示
     </a>
   </div>
-  <div id="hiragana" class="hiragana_title bm">
+  <div id="hiragana" class="hiragana_title bm hidden">
     <?php echo $this->view->vocab->hiragana_name; $this->print('word_trans') ?>
   </div>
 </div>
@@ -26,7 +26,7 @@
     <a onclick="document.getElementById('content').style.display = 'block'">
       回答表示 </a>
   </div>
-  <div id="content" class="content bm">
+  <div id="content" class="content bm hidden">
     <?php echo $this->view->vocab->meanings; ?>
   </div>
 </div>

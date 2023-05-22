@@ -57,6 +57,7 @@ body {
 select {
   border: 1px solid $primary-color;
   background-color: $primary-color-light;
+  margin-bottom: $spacing-unit;
 }
 
 input, button {
@@ -178,10 +179,11 @@ span.menu-link-disabled {
   cursor: default;
 }
 
-.input-container {
+.input-container, .input-container-collapse {
   border-left: 0.3em solid $input-marker-color;
   padding-left: $spacing-unit;
   margin-bottom: $spacing-unit;
+  overflow-x: auto;
 }
 
 .input-sub-container {
@@ -197,14 +199,30 @@ span.menu-link-disabled {
   }
 }
 
+.input-container-collapse label {
+  display: block;
+  margin-bottom: $spacing-unit;
+}
+
 .input-container.with-border {
   border: 1px solid, $secondary-color;
 }
 
+/*
 #hiragana, #content, #meanings, #onyomi, #kunyomi {
+  display: none;
+}
+*/
+
+.hidden {
   display: none;
 }
 
 .bm {
   margin-bottom: $spacing-unit;
+}
+
+.kanji_title {
+  font-weight: bold;
+  color: $heading-color;
 }

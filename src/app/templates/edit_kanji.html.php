@@ -1,5 +1,7 @@
 <?php $this->view->render('_menu.html.php', array('page'=>'')); ?>
 
+<h2 class="title">Update Kanji</h2>
+
 <div class="left_container">
   <form id="kanji-edit" class="framework-form" data-method="post">
     <div class="framework-validation-notice"></div>

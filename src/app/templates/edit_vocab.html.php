@@ -1,5 +1,7 @@
 <?php $this->view->render('_menu.html.php', array('page'=>'')); ?>
 
+<h2 class="title">Update Word</h2>
+
 <div class="left_container">
   <form id="vocab-edit" class="framework-form" data-method="post">
     <div class="framework-validation-notice"></div>
@@ -13,15 +15,15 @@
     <?php $this->view->render('_vocab_form_body.html.php',
       $this->view->formdata); ?>
 
-    <div>
+    <div class="input-container">
       <input type="checkbox" name="allow-duplicate" 
         id="allow-duplicate" />
       <label for="allow-duplicate">Allow duplicate</label>
     </div>
 
     <div>
-      <button type="button" data-uri="<?php $this->base_uri("edit/vocab"); ?>" 
-        class="framework-form-submit">
+      <button ctype="button" data-uri="<?php $this->base_uri("edit/vocab"); ?>" 
+        class="framework-form-submit button">
         Submit
       </button>
     </div>

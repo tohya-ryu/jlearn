@@ -1,4 +1,4 @@
-<div>
+<div class="input-container-collapse">
   <label for="kanji">Kanji</label>
   <input type="text" name="kanji" id="kanji" 
     placeholder="Japanese word in kanji if applicable" 
@@ -7,7 +7,7 @@
   <div id="validation-errors-kanji"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="hiragana">Hiragana</label>
   <input type="text" name="hiragana" id="hiragana" 
     placeholder="Japanese word in kana" maxlength="120" size="50"
@@ -15,13 +15,13 @@
   <div id="validation-errors-hiragana"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="meanings">Translation</label>
   <textarea name="meanings" id="meanings" rows="15" cols="30"><?php $this->print('meanings'); ?></textarea>
   <div id="validation-errors-meanings"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label>Word Types</label>
 
   <select name="wtype1" id="wtype1" 
@@ -83,7 +83,7 @@
   <div id="validation-errors-wtype7"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="transitivity">Verb Transitivity</label>
   <select name="transitivity" id="transitivity" 
     data-default="<?php $this->print('transitivity') ?>">
@@ -103,7 +103,7 @@
   <div id="validation-errors-transitivity"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="jlpt">JLPT Level</label>
   <select name="jlpt" id="jlpt" 
     data-default="<?php $this->print('jlpt') ?>">
@@ -129,7 +129,7 @@
   <div id="validation-errors-jlpt"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="tags">Tags</label>
   <input type="text" name="tags" id="tags" 
     placeholder="Tags separated by pipes (|)" 

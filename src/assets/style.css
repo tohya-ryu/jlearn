@@ -315,7 +315,8 @@ body {
 /* form elements */
 select {
   border: 1px solid #1c5765;
-  background-color: #d8eff4; }
+  background-color: #d8eff4;
+  margin-bottom: 0.4em; }
 
 input, button {
   border: 1px solid #1c5765;
@@ -416,10 +417,11 @@ span.menu-link-disabled {
   box-shadow: 4px 4px 2px 1px rgba(99, 99, 99, 0.2);
   cursor: default; }
 
-.input-container {
+.input-container, .input-container-collapse {
   border-left: 0.3em solid #1c5765;
   padding-left: 0.4em;
-  margin-bottom: 0.4em; }
+  margin-bottom: 0.4em;
+  overflow-x: auto; }
 
 .input-sub-container {
   margin-bottom: 0.4em; }
@@ -432,13 +434,26 @@ span.menu-link-disabled {
       display: inline-block;
       width: 400px; } }
 
+.input-container-collapse label {
+  display: block;
+  margin-bottom: 0.4em; }
+
 .input-container.with-border {
   border: 1px solid, #5d1c61; }
 
+/*
 #hiragana, #content, #meanings, #onyomi, #kunyomi {
+  display: none;
+}
+*/
+.hidden {
   display: none; }
 
 .bm {
   margin-bottom: 0.4em; }
+
+.kanji_title {
+  font-weight: bold;
+  color: #1c5765; }
 
 /*# sourceMappingURL=style.css.map */

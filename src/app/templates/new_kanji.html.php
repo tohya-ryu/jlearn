@@ -1,5 +1,7 @@
 <?php $this->view->render('_menu.html.php', array('page'=>'new_kanji')); ?>
 
+<h2 class="title">New Kanji</h2>
+
 <div class="left_container">
   <form id="kanji-new" class="framework-form" data-method="post">
     <div class="framework-validation-notice"></div>
@@ -10,7 +12,7 @@
     <?php $this->view->render('_kanji_form_body.html.php',
       $this->view->formdata); ?>
 
-    <div>
+    <div class="input-container">
       <input type="checkbox" name="allow-duplicate" 
         id="allow-duplicate" />
       <label for="allow-duplicate">Allow duplicate</label>

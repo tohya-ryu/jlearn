@@ -1,4 +1,4 @@
-<div>
+<div class="input-container-collapse">
   <label for="kanji">Kanji Character</label>
   <input type="text" name="kanji" id="kanji" maxlength="3" size="3" 
     data-type="kanji" 
@@ -6,7 +6,7 @@
   <div id="validation-errors-kanji"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="onyomi">Onyomi</label>
   <input type="text" name="onyomi" id="onyomi" 
     placeholder="Chinese readings" maxlength="255" size="50"
@@ -14,7 +14,7 @@
   <div id="validation-errors-onyomi"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="kunyomi">Kunyomi</label>
   <input type="text" name="kunyomi" id="kunyomi" 
     placeholder="Japanese readings" maxlength="255" size="50"
@@ -22,13 +22,13 @@
   <div id="validation-errors-kunyomi"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="meanings">Translation</label>
   <textarea name="meanings" id="meanings" rows="15" cols="30"><?php $this->print('meanings'); ?></textarea>
   <div id="validation-errors-meanings"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="jlpt">JLPT Level</label>
   <select name="jlpt" id="jlpt" 
     data-default="<?php $this->print('jlpt') ?>">
@@ -54,7 +54,7 @@
   <div id="validation-errors-jlpt"></div>
 </div>
 
-<div>
+<div class="input-container-collapse">
   <label for="tags">Tags</label>
   <input type="text" name="tags" id="tags" 
     placeholder="Tags separated by pipes (|)" 

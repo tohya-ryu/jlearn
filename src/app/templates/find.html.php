@@ -1,17 +1,17 @@
 <?php $request = FrameworkRequest::get() ?>
 <?php $this->view->render('_menu.html.php', array('page'=>'search')); ?>
 
-<div class="left_container">
+<h2 class="title">Search Data</h2>
+
+<div class="left_container-collapse">
   <form id="find" class="framework-form" method="post">
     <div class="framework-validation-notice"></div>
 
     <input type="hidden" id="csrf-token" name="csrf-token"
       value="<?php echo $this->view->csrf_token ?>"/>
 
-    <div>
+    <div class="input-container-collapse">
       <label for="find-type">Find in</label>
-    </div>
-    <div> 
       <select id="find-type" name="find-type">
         <option value="1" selected>Words by Kanji</option>
         <option value="2">Words by Hiragana</option>
@@ -25,10 +25,8 @@
       </select>
     </div>
 
-    <div>
+    <div class="input-container-collapse">
       <label for="find-string">Search string</label>
-    </div>
-    <div>
       <input type="text" name="find-string" id="find-string" size="12" 
         maxlen="120" />
     </div>
@@ -46,6 +44,7 @@
     <?php if ($this->view->find_result): ?>
       <?php if ($request->param->post('find-type')->value < 5): ?>
         <?php foreach ($this->view->find_result as $vocab): ?>
+        <div class="input-container">
           <div>
             <a href="<?php $this->base_uri('edit/vocab/'.$vocab->id); ?>" 
               class="kanji_title"><?php echo $vocab->kanji_name ?>
@@ -63,9 +62,11 @@
           <div class="lookup-limiter">
             <?php echo $vocab->tags ?>
           </div>
+        </div>
         <?php endforeach ?>
       <?php else : ?>
         <?php foreach ($this->view->find_result as $kanji): ?>
+        <div class="input-container">
           <div>
             <a href="<?php $this->base_uri('edit/kanji/'.$kanji->id); ?>" 
               class="kanji_title"><?php echo $kanji->kanji ?>
@@ -86,6 +87,7 @@
           <div class="lookup-limiter">
             <?php echo $kanji->tags ?>
           </div>
+        </div>
         <?php endforeach ?>
       <?php endif ?>
     <?php endif ?>

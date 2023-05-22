@@ -14,7 +14,7 @@
     <a onclick="document.getElementById('meanings').style.display = 'block'">
       定義表示 </a>
   </div>
-  <div id="meanings" class="content bm">
+  <div id="meanings" class="content bm hidden">
     <?php echo $this->view->kanji->meanings; ?>
   </div>
 </div>
@@ -24,7 +24,7 @@
     <a onclick="document.getElementById('onyomi').style.display = 'block'">
       おんよみ表示 </a>
   </div>
-  <div id="onyomi" class="hiragana_title bm">
+  <div id="onyomi" class="hiragana_title bm hidden">
     <?php echo $this->view->kanji->onyomi; ?>
   </div>
 </div>
@@ -34,7 +34,7 @@
     <a onclick="document.getElementById('kunyomi').style.display = 'block'">
       くんよみ表示 </a>
   </div>
-  <div id="kunyomi" class="hiragana_title bm">
+  <div id="kunyomi" class="hiragana_title bm hidden">
     <?php echo $this->view->kanji->kunyomi; ?>
   </div>
 </div>
