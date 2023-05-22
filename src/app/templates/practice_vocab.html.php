@@ -84,7 +84,7 @@
     <input type="hidden" name="current_word_counter" 
       value="<?php $this->print('current_word_counter') ?>" />
 
-    <p><input type="submit" name="form-submit" value="次へ" /></p>
+    <p><input class="button" type="submit" name="form-submit" value="次へ" /></p>
 
   </form>
 </div>

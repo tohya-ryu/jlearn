@@ -1,56 +1,45 @@
 <?php $this->view->render('_menu.html.php', array('page'=>'')); ?>
 
-<div>
+<h2 class="title">
 <?php echo $this->view->formdata->get_current_word_counter() ?> / 
 <?php echo $this->view->formdata->get_query_counter() ?>
+</h2>
 
-</div>
-
-<div>
+<div class="input-container">
   <span class="kanji_title"><?php echo $this->view->kanji->kanji ?></span>
 </div>
 
-<div class="line"></div>
-
-<div>
-  <a onclick="document.getElementById('meanings').style.display = 'block'">
-    定義表示 </a>
+<div class="input-container">
+  <div class="bm">
+    <a onclick="document.getElementById('meanings').style.display = 'block'">
+      定義表示 </a>
+  </div>
+  <div id="meanings" class="content bm">
+    <?php echo $this->view->kanji->meanings; ?>
+  </div>
 </div>
 
-<div class="line"></div>
-
-<div id="meanings" class="content">
-  <?php echo $this->view->kanji->meanings; ?>
+<div class="input-container">
+  <div class="bm">
+    <a onclick="document.getElementById('onyomi').style.display = 'block'">
+      おんよみ表示 </a>
+  </div>
+  <div id="onyomi" class="hiragana_title bm">
+    <?php echo $this->view->kanji->onyomi; ?>
+  </div>
 </div>
 
-<div class="line"></div>
-
-<div>
-  <a onclick="document.getElementById('onyomi').style.display = 'block'">
-    おんよみ表示 </a>
+<div class="input-container">
+  <div class="bm">
+    <a onclick="document.getElementById('kunyomi').style.display = 'block'">
+      くんよみ表示 </a>
+  </div>
+  <div id="kunyomi" class="hiragana_title bm">
+    <?php echo $this->view->kanji->kunyomi; ?>
+  </div>
 </div>
 
-<div class="line"></div>
-
-<div id="onyomi" class="hiragana_title">
-  <?php echo $this->view->kanji->onyomi; ?>
-</div>
-
-<div class="line"></div>
-
-<div>
-  <a onclick="document.getElementById('kunyomi').style.display = 'block'">
-    くんよみ表示 </a>
-</div>
-
-<div class="line"></div>
-
-<div id="kunyomi" class="hiragana_title">
-  <?php echo $this->view->kanji->kunyomi; ?>
-</div>
-
-<div class="line"></div>
-<div>
+<div class="bm">
   <form action="<?php $this->base_uri('practice/kanji') ?>" method="post" 
       accept-charset="utf-8">
 
@@ -103,9 +92,7 @@
     <input type="hidden" name="current_word_counter" 
       value="<?php $this->print('current_word_counter') ?>" />
 
-    <div class="line"></div>
-
-    <p><input type="submit" name="form-submit" value="次へ" /></p>
+    <p><input class="button" type="submit" name="form-submit" value="次へ" /></p>
 
   </form>
 </div>

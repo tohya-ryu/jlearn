@@ -435,7 +435,7 @@ span.menu-link-disabled {
 .input-container.with-border {
   border: 1px solid, #5d1c61; }
 
-#hiragana, #content {
+#hiragana, #content, #meanings, #onyomi, #kunyomi {
   display: none; }
 
 .bm {
