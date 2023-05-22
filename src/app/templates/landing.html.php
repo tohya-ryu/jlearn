@@ -61,14 +61,15 @@ $ignore_month    = $time - 2419200;
         <option value="1" selected>Limit By Entry Date</option>
         <option value="2">Limit By Learn Date</option>
       </select>
-      <div class="input-sub-container">From
+      <div class="input-sub-container">
+      <label>From, to</label>
       <?php $timespace = date("Y-m-d 00:00", $time-86400); ?>
       <input type="text" name="timespace_start" 
         value="<?php echo $timespace ?>" maxlength="16" size="16" />
-      to 
       <?php $timespace = date("Y-m-d 00:00", $time); ?>
       <input type="text" name="timespace_end" 
-        value="<?php echo $timespace ?>" maxlength="16" size="16" /></div>
+        value="<?php echo $timespace ?>" maxlength="16" size="16" />
+      </div>
     </div>
 
     <div class="input-container"> 
@@ -167,15 +168,16 @@ $ignore_month    = $time - 2419200;
     <select name="timespace_type">
       <option value="1" selected>Limit By Entry Date</option>
       <option value="2">Limit By Learn Date</option>
-    </select></p>
-    <div class="input-sub-container">From
-    <?php $timespace = date("Y-m-d 00:00", $time-86400); ?>
-    <input type="text" name="timespace_start" 
-      value="<?php echo $timespace ?>" maxlength="16" size="16" />
-    to 
-    <?php $timespace = date("Y-m-d 00:00", $time); ?>
-    <input type="text" name="timespace_end" 
-      value="<?php echo $timespace ?>" maxlength="16" size="16" /></div>
+    </select>
+    <div class="input-sub-container">
+      <label>From, to</label>
+      <?php $timespace = date("Y-m-d 00:00", $time-86400); ?>
+      <input type="text" name="timespace_start" 
+        value="<?php echo $timespace ?>" maxlength="16" size="16" />
+      <?php $timespace = date("Y-m-d 00:00", $time); ?>
+      <input type="text" name="timespace_end" 
+        value="<?php echo $timespace ?>" maxlength="16" size="16" />
+    </div> 
   </div>
     
   <div class="input-container">
