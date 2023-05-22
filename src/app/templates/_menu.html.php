@@ -6,7 +6,7 @@
   </a>
 
 <?php if ($this->get('page') == 'practice'): ?>
-  <span class="menu-link-disabled button">Practice</span>
+  <span class="button-disabled menu-link-disabled">Practice</span>
 <?php else : ?>
   <a class="menu-link button" href="<?php $this->base_uri('') ?>">
     Practice
@@ -14,7 +14,7 @@
 <?php endif ?>
 
 <?php if ($this->get('page') == 'new_vocab'): ?>
-  <span class="menu-link-disabled button">New Word</span>
+  <span class="button-disabled menu-link-disabled">New Word</span>
 <?php else : ?>
   <a class="menu-link button" href="<?php $this->base_uri('new/vocab') ?>">
     New Word
@@ -22,7 +22,7 @@
 <?php endif ?>
 
 <?php if ($this->get('page') == 'new_kanji'): ?>
-  <span class="menu-link-disabled button">New Kanji</span>
+  <span class="button-disabled menu-link-disabled">New Kanji</span>
 <?php else : ?>
   <a class="menu-link button" href="<?php $this->base_uri('new/kanji') ?>">
     New Kanji
@@ -30,7 +30,7 @@
 <?php endif ?>
 
 <?php if ($this->get('page') == 'search'): ?>
-  <span class="menu-link-disabled button">Search</span>
+  <span class="button-disabled menu-link-disabled">Search</span>
 <?php else : ?>
   <a class="menu-link button" href="<?php $this->base_uri('find') ?>">
     Search
@@ -38,7 +38,7 @@
 <?php endif ?>
 
 <?php if ($this->get('page') == 'update'): ?>
-  <span class="menu-link-disabled button">Update</span>
+  <span class="button-disabled menu-link-disabled">Update</span>
 <?php else : ?>
   <a class="menu-link button" 
     href="<?php $this->base_uri('update/counters') ?>">Update</a>

@@ -309,6 +309,9 @@ body {
   color: black;
   background-color: white; }
 
+.title {
+  color: #1c5765; }
+
 /* form elements */
 select {
   border: 1px solid #1c5765;
@@ -317,6 +320,12 @@ select {
 input, button {
   border: 1px solid #1c5765;
   background-color: #d8eff4; }
+
+input, button, select {
+  margin-bottom: 0.4em; }
+
+.with-border {
+  border: 1px solid #1c5765; }
 
 div.line {
   margin-top: 4px;
@@ -369,29 +378,54 @@ a.menu-link {
   text-decoration: none;
   flex-basis: 6em;
   color: black;
-  border: 1px solid #1c5765;
-  padding: 0.2em 1.2em 0.2em 1.2em;
-  text-align: center;
-  background-color: #d8eff4;
-  margin-bottom: 0.4em;
-  box-shadow: 4px 4px 2px 1px rgba(28, 87, 101, 0.2); }
+  padding: 0.2em 1.2em 0.2em 1.2em; }
   a.menu-link:visited {
     color: black; }
-  a.menu-link:hover {
-    border: 1px solid #5d1c61;
-    background-color: #f1d5f3;
-    box-shadow: 4px 4px 2px 1px rgba(93, 28, 97, 0.2); }
 
 span.menu-link-disabled {
-  border: 1px solid #636363;
   padding: 0.2em 1.2em 0.2em 1.2em;
-  text-align: center;
-  background-color: white;
-  flex-basis: 6em;
-  margin-bottom: 0.4em;
-  box-shadow: 4px 4px 2px 1px rgba(99, 99, 99, 0.2); }
+  flex-basis: 6em; }
 
-.button:focus {
-  box-shadow: none; }
+.button {
+  border: 1px solid #1c5765;
+  background-color: #d8eff4;
+  text-align: center;
+  margin-bottom: 0.4em;
+  box-shadow: 4px 4px 2px 1px rgba(28, 87, 101, 0.2); }
+  .button:hover {
+    border: 1px solid #5d1c61;
+    background-color: #f1d5f3;
+    box-shadow: 4px 4px 2px 1px rgba(93, 28, 97, 0.2);
+    cursor: default; }
+  .button:focus {
+    box-shadow: none; }
+
+.button-disabled {
+  border: 1px solid #636363;
+  background-color: white;
+  text-align: center;
+  margin-bottom: 0.4em;
+  text-align: center;
+  box-shadow: 4px 4px 2px 1px rgba(99, 99, 99, 0.2);
+  cursor: default; }
+
+.input-container {
+  border-left: 0.3em solid #5d1c61;
+  padding-left: 0.4em;
+  margin-bottom: 0.4em; }
+
+.input-sub-container {
+  margin-bottom: 0.4em; }
+
+.input-container label {
+  display: block;
+  margin-bottom: 0.4em; }
+  @media screen and (min-width: 800px) {
+    .input-container label {
+      display: inline-block;
+      width: 200px; } }
+
+.input-container.with-border {
+  border: 1px solid, #5d1c61; }
 
 /*# sourceMappingURL=style.css.map */

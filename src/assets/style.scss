@@ -45,6 +45,10 @@ body {
   background-color: $background-color;
 }
 
+.title {
+  color: $primary-color;
+}
+
 /* form elements */
 
 select {
@@ -55,6 +59,14 @@ select {
 input, button {
   border: 1px solid $primary-color;
   background-color: $primary-color-light;
+}
+
+input, button, select {
+  margin-bottom: $spacing-unit;
+}
+
+.with-border {
+  border: 1px solid $primary-color;
 }
 
 div.line {
@@ -115,34 +127,63 @@ a.menu-link {
   text-decoration: none;
   flex-basis: 6em;
   color: $text-color;
-  border: 1px solid $primary-color;
   padding: 0.2em 1.2em 0.2em 1.2em;
-  text-align: center;
-  background-color: $primary-color-light;
-  margin-bottom: $spacing-unit;
-  box-shadow: 4px 4px 2px 1px $primary-color-shadow;
   &:visited {
     color: $text-color;
-  }
-  &:hover {
-    border: 1px solid $secondary-color;
-    background-color: $secondary-color-light;
-    box-shadow: 4px 4px 2px 1px $secondary-color-shadow;
   }
 }
 
 span.menu-link-disabled {
-  border: 1px solid $disabled-color;
   padding: 0.2em 1.2em 0.2em 1.2em;
-  text-align: center;
-  background-color: $disabled-color-light;
   flex-basis: 6em;
-  margin-bottom: $spacing-unit;
-  box-shadow: 4px 4px 2px 1px $disabled-color-shadow;
 }
 
 .button {
+  border: 1px solid $primary-color;
+  background-color: $primary-color-light;
+  text-align: center;
+  margin-bottom: $spacing-unit;
+  box-shadow: 4px 4px 2px 1px $primary-color-shadow;
+  &:hover {
+    border: 1px solid $secondary-color;
+    background-color: $secondary-color-light;
+    box-shadow: 4px 4px 2px 1px $secondary-color-shadow;
+    cursor: default;
+  }
   &:focus {
     box-shadow: none;
   }
+}
+
+.button-disabled {
+  border: 1px solid $disabled-color;
+  background-color: $disabled-color-light;
+  text-align: center;
+  margin-bottom: $spacing-unit;
+  text-align: center;
+  box-shadow: 4px 4px 2px 1px $disabled-color-shadow;
+  cursor: default;
+}
+
+.input-container {
+  border-left: 0.3em solid $secondary-color;
+  padding-left: $spacing-unit;
+  margin-bottom: $spacing-unit;
+}
+
+.input-sub-container {
+  margin-bottom: $spacing-unit;
+}
+
+.input-container label {
+  display: block;
+  margin-bottom: $spacing-unit;
+  @include media-query($desktop-start) {
+    display: inline-block;
+    width: 200px;
+  }
+}
+
+.input-container.with-border {
+  border: 1px solid, $secondary-color;
 }
