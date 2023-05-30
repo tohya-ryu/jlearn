@@ -63,7 +63,7 @@ class PracticeService implements FrameworkServiceBase {
             break;
         case 3:
             $counter++;
-            $success++;
+            $miss++;
             $success_rate = $this->calc_success_rate($success, $counter);
             $time = (new DateTime())->getTimestamp();
             $sql = "UPDATE `$type` SET `miss_counter` = ?, ".

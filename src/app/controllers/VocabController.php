@@ -102,7 +102,7 @@ class VocabController extends FrameworkControllerBase {
                 $this->redirect($this->base_uri(''));
             }
             # update last vocab if not first request of a practice session
-            if (!$this->request->param->post('practice-start'))
+            if (is_null($this->request->param->post('practice-start')->value))
                 $this->practice->update('vocab');
             # session handling
             $this->practice->vocab();
