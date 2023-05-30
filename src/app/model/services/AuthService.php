@@ -313,10 +313,11 @@ class AuthService implements FrameworkServiceBase {
 
     private function insert_auth_token($token)
     {
-        $sql = "INSERT INTO `auth_token` (`user_id`, `text`,".
-            "`device`) VALUES (?,?,?);";
-        $id = $this->db->insert($sql, 'iss', $this->user->id(),
-            $token, $this->request->useragent);
+        $this->db->insert_into('auth_token');
+        $this->db->set('user_id', 'i', $this->user->id);
+        $this->db->set('text', 's', $token);
+        $this->db->set('device', 's', $this->request->useragent);
+        $id = $this->db->run();
     }
 
     private function fetch_user_data($id)
