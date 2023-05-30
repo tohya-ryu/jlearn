@@ -32,13 +32,14 @@ if (!$db) {
     exit();
 }
 
-$db->assoc('name',      's', $user);
-$db->assoc('email',     's', $email);
-$db->assoc('password',  's', $passw);
-$db->assoc('activated', 'i', 1);
+$db->insert_into('user');
+$db->set('name',      's', $user);
+$db->set('email',     's', $email);
+$db->set('password',  's', $passw);
+$db->set('activated', 'i', 1);
 
 try {
-    $id = $db->insert('user');
+    $id = $db->run();
     echo "Successfully created user with id $id.\n";
 } catch (Exception $e) {
     echo "Failed to create user: $e\n";
