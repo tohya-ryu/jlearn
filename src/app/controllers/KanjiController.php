@@ -102,7 +102,8 @@ class KanjiController extends FrameworkControllerBase {
                 $this->redirect($this->base_uri(''));
             }
             # update last kanji if not first request of a practice session
-            $this->practice->update('kanji');
+            if (is_null($this->request->param->post('practice-start')->value))
+                $this->practice->update('kanji');
             # session handling
             $this->practice->kanji();
             $view = new KanjiView($this);
