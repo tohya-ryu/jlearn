@@ -456,4 +456,7 @@ span.menu-link-disabled {
   font-weight: bold;
   color: #1c5765; }
 
+.input-container > .kanji_title {
+  font-size: 1.6em; }
+
 /*# sourceMappingURL=style.css.map */
