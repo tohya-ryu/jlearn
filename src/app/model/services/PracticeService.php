@@ -38,6 +38,12 @@ class PracticeService implements FrameworkServiceBase {
 
     public function at_end()
     {
+        if (!$this->continue) {
+            $session = new SessionPractice();
+            $session->register('practice');
+            $session->reset();
+            $session->save();
+        }
         return !$this->continue;
     }
 
@@ -81,14 +87,16 @@ class PracticeService implements FrameworkServiceBase {
     public function vocab()
     {
         $this->collect_formdata('vocab');
-        $this->construct_query('vocab');
+        if ($this->formdata->get_practice_start())
+            $this->construct_query('vocab');
         $this->prepare_session('vocab');
     }
 
     public function kanji()
     {
         $this->collect_formdata('kanji');
-        $this->construct_query('kanji');
+        if ($this->formdata->get_practice_start())
+            $this->construct_query('kanji');
         $this->prepare_session('kanji');
     }
 
@@ -205,21 +213,36 @@ class PracticeService implements FrameworkServiceBase {
 
     private function prepare_session($type)
     {
+        $session = new SessionPractice();
+        $session->register('practice');
         if ($this->formdata->get_practice_start()) {
-            $sql = "SELECT COUNT(`id`) ".$this->sqltmp;
-            $this->formdata->set_query_counter($this->db->pquery($sql,
-                $this->query_param_types,
-                ...$this->query_params)->fetch_row()[0]);
+            $sql = "SELECT * ".$this->sqltmp;
+            $res = $this->db->pquery($sql, $this->query_param_types,
+                ...$this->query_params);
+            $set = array();
+            while ($row = $res->fetch_assoc())
+                array_push($set, $row);
+            $this->formdata->set_query_counter(count($set));
+            $session->set($set);
+            $session->save();
+            //$sql = "SELECT COUNT(`id`) ".$this->sqltmp;
+            //$this->formdata->set_query_counter($this->db->pquery($sql,
+            //    $this->query_param_types,
+            //    ...$this->query_params)->fetch_row()[0]);
         }
-        $n = $this->db->escape($this->formdata->get_current_word_counter());
-        $sql = "SELECT * ".$this->sqltmp;
-        $sql .= "LIMIT 1 OFFSET $n";
-        $res = $this->db->pquery($sql, $this->query_param_types,
-            ...$this->query_params);
-        if ($res->num_rows === 0) {
+        $index = $this->formdata->get_current_word_counter();
+        //$n = $this->db->escape($this->formdata->get_current_word_counter());
+        //$sql = "SELECT * ".$this->sqltmp;
+        //$sql .= "LIMIT 1 OFFSET $n";
+        //var_dump($sql);
+        //$res = $this->db->pquery($sql, $this->query_param_types,
+        //    ...$this->query_params);
+        if ($index >= count($session->set)) {
+        //if ($res->num_rows === 0) {
             $this->continue = false;
         } else {
-            $row = $res->fetch_assoc();
+            $row = $session->set[$index];
+            //$row = $res->fetch_assoc();
             if ($type == 'vocab')
                 $this->data_obj = new VocabData($row);
             if ($type == 'kanji')

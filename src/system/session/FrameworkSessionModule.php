@@ -18,6 +18,12 @@ class FrameworkSessionModule {
         }
     }
 
+    public function save()
+    {
+        $session = FrameworkSession::get();
+        $session->register_module($this->key, $this);
+    }
+
     public function unregister()
     {
         $session = FrameworkSession::get();
