@@ -258,8 +258,13 @@ class PracticeService implements FrameworkServiceBase {
         $this->setqp('i', $this->controller->auth->get_user_id());
         # apply search by kanji
         if ($this->formdata->get_search_kanji()) {
-            $this->sqltmp .= "AND `kanji_name` LIKE ? ";
-            $this->setqp('s', "%".$this->formdata->get_search_kanji()."%");
+            if ($type === 'kanji') {
+                $this->sqltmp .= "AND `kanji` = ? ";
+                $this->setqp('s', $this->formdata->get_search_kanji());
+            } else {
+                $this->sqltmp .= "AND `kanji_name` LIKE ? ";
+                $this->setqp('s', "%".$this->formdata->get_search_kanji()."%");
+            }
         }
         # apply search by tags
         if ($this->formdata->get_tags()) {
