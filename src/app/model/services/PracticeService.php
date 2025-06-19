@@ -6,6 +6,8 @@ class PracticeService implements FrameworkServiceBase {
          'controller', 'validator'
     );
 
+    const SESSION_LIMIT = 100;
+
     private $controller;
     private $session;
     private $user;
@@ -359,6 +361,9 @@ class PracticeService implements FrameworkServiceBase {
         default:
             $this->sqltmp .= "ORDER BY RAND('$session_id') ";
         }
+        # limit query
+        $this->sqltmp .= "LIMIT ?";
+        $this->setqp('i', self::SESSION_LIMIT);
     }
 
     private function setqp($type, $param)
