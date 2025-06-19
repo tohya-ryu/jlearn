@@ -79,9 +79,9 @@ $ignore_month    = $time - 2419200;
     </div>
 
     <div class="input-container">
-      <label>Maximum Success Rate</label>
-      <input type="text" name="success_limit" value="100" maxlength="3" 
-        size="3"/>
+      <label>Success rate</label>
+      <input type="text" name="min_success_limit" value="0" maxlength="3" size="3" />
+      <input type="text" name="max_success_limit" value="100" maxlength="3" size="3" />
     </div>
 
     <div class="input-container">
@@ -194,9 +194,9 @@ $ignore_month    = $time - 2419200;
   </div>
 
   <div class="input-container">
-    <label>Maximum Success Rate</label>
-    <input type="text" name="success_limit" value="100" maxlength="3" 
-      size="3"/>
+    <label>Success rate</label>
+    <input type="text" name="min_success_limit" value="0" maxlength="3" size="3" />
+    <input type="text" name="max_success_limit" value="100" maxlength="3" size="3" />
   </div>
 
   <div class="input-container">

@@ -79,8 +79,10 @@
       value="<?php $this->print('ignore_latest') ?>" />
     <input type="hidden" name="counter_limit" 
       value="<?php $this->print('counter_limit') ?>" />
-    <input type="hidden" name="success_limit" 
-      value="<?php $this->print('success_limit') ?>" />
+    <input type="hidden" name="min_success_limit" 
+      value="<?php $this->print('min_success_limit') ?>" />
+    <input type="hidden" name="max_success_limit" 
+      value="<?php $this->print('max_success_limit') ?>" />
     <input type="hidden" name="jlpt" 
       value="<?php $this->print('jlpt') ?>" />
     <input type="hidden" name="min_words" 

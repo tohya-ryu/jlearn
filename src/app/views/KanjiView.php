@@ -95,8 +95,10 @@ class KanjiView extends FrameworkViewBase {
                 $this->formdata->get_ignore_latest()),
             'counter_limit' => $this->enc(
                 $this->formdata->get_counter_limit()),
-            'success_limit' => $this->enc(
-                $this->formdata->get_success_limit()),
+            'min_success_limit' => $this->enc(
+                $this->formdata->get_min_success_limit()),
+            'max_success_limit' => $this->enc(
+                $this->formdata->get_max_success_limit()),
             'jlpt' => $this->enc($this->formdata->get_jlpt()),
             'type' => $this->enc($this->formdata->get_type()),
             'transitivity' => $this->enc($this->formdata->get_transitivity()),

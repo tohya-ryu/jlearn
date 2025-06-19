@@ -144,7 +144,9 @@ class PracticeService implements FrameworkServiceBase {
         $this->validator->validate(
             $this->request->param->post('counter_limit'));
         $this->validator->validate(
-            $this->request->param->post('success_limit'));
+            $this->request->param->post('min_success_limit'));
+        $this->validator->validate(
+            $this->request->param->post('max_success_limit'));
         $this->validator->required();
         $this->validator->regex_match('/^[0-9]*$/', 'Requires integer.');
 
@@ -303,8 +305,9 @@ class PracticeService implements FrameworkServiceBase {
         $this->sqltmp .= "AND `counter` <= ? ";
         $this->setqp('i', $this->formdata->get_counter_limit());
         # apply search by success rate
-        $this->sqltmp .= "AND `success_rate` <= ? ";
-        $this->setqp('d', $this->formdata->get_success_limit());
+        $this->sqltmp .= "AND (`success_rate` BETWEEN ? AND ?) ";
+        $this->setqp('d', $this->formdata->get_min_success_limit());
+        $this->setqp('d', $this->formdata->get_max_success_limit());
         # apply search by jlpt level
         if ($this->formdata->get_jlpt()) {
             $this->sqltmp .= "AND `jlpt` = ? ";

@@ -21,7 +21,8 @@ class PracticeFormData {
     private $timespace_end;
     private $ignore_latest;
     private $counter_limit;
-    private $success_limit;
+    private $min_success_limit;
+    private $max_success_limit;
     private $jlpt;
     private $query_counter;
     private $current_word_counter; # word = vocab/kanji
@@ -63,8 +64,10 @@ class PracticeFormData {
             $request->param->post('ignore_latest')->value;
         $this->counter_limit =
             $request->param->post('counter_limit')->value;
-        $this->success_limit =
-            $request->param->post('success_limit')->value;
+        $this->min_success_limit =
+            $request->param->post('min_success_limit')->value;
+        $this->max_success_limit =
+            $request->param->post('max_success_limit')->value;
         $this->jlpt = $request->param->post('jlpt')->value;
         $this->query_counter =
             $request->param->post('query_counter')->value;
@@ -143,9 +146,14 @@ class PracticeFormData {
         return $this->counter_limit;
     }
 
-    public function get_success_limit()
+    public function get_min_success_limit()
     {
-        return $this->success_limit;
+        return $this->min_success_limit;
+    }
+
+    public function get_max_success_limit()
+    {
+        return $this->max_success_limit;
     }
 
     public function get_jlpt()
